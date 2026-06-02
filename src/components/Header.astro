@@ -1,0 +1,45 @@
+---
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/docs/intro', label: 'Guide' },
+  { href: '/apply', label: 'Apply' },
+  { href: '/community', label: 'Community' },
+  { href: '/prismaui-f4', label: 'PrismaUI' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-50 border-b border-white/10 bg-[#0a0a0a]/95 backdrop-blur">
+  <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
+    <a href="/" class="text-lg font-bold tracking-widest text-white uppercase hover:text-emerald-500 transition-colors">
+      Fallen World
+    </a>
+    <ul class="flex items-center gap-6 text-sm font-medium">
+      {navLinks.map(({ href, label }) => (
+        <li>
+          <a
+            href={href}
+            class={`transition-colors hover:text-emerald-400 ${
+              currentPath === href || currentPath.startsWith(href + '/')
+                ? 'text-emerald-400'
+                : 'text-gray-300'
+            }`}
+          >
+            {label}
+          </a>
+        </li>
+      ))}
+      <li>
+        <a
+          href="https://discord.com/invite/TAueAV8Utk"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="rounded-md bg-[#5865F2] px-3 py-1.5 text-sm font-semibold text-white hover:bg-[#4752c4] transition-colors"
+        >
+          Discord
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>

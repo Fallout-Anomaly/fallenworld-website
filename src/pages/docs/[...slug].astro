@@ -1,0 +1,80 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import TerminalCard from '../../components/TerminalCard.astro';
+import LinkCard from '../../components/LinkCard.astro';
+import { docsNav, isNavGroup } from '../../data/nav';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('docs');
+  return entries.map((entry) => ({
+    params: { slug: entry.id.replace(/\.(md|mdx)$/, '') },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const currentSlug = entry.id.replace(/\.(md|mdx)$/, '');
+---
+
+<Layout title={entry.data.title}>
+  <div class="mx-auto flex max-w-6xl gap-8 px-6 py-10">
+    <!-- Sidebar -->
+    <aside class="hidden w-56 shrink-0 lg:block">
+      <nav class="sticky top-20">
+        <ul class="space-y-1 text-sm">
+          {docsNav.map((item) => {
+            if (isNavGroup(item)) {
+              return (
+                <li>
+                  <details open class="group">
+                    <summary class="flex cursor-pointer items-center justify-between rounded px-2 py-1.5 font-semibold text-gray-400 hover:bg-white/5 hover:text-gray-200 select-none">
+                      {item.label}
+                      <span class="transition-transform group-open:rotate-180">▾</span>
+                    </summary>
+                    <ul class="mt-1 ml-3 space-y-0.5">
+                      {item.items.map((child) => (
+                        <li>
+                          <a
+                            href={`/docs/${child.slug}`}
+                            class={`block rounded px-2 py-1 transition-colors hover:text-emerald-400 ${
+                              currentSlug === child.slug
+                                ? 'bg-emerald-500/10 text-emerald-400'
+                                : 'text-gray-400'
+                            }`}
+                          >
+                            {child.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                </li>
+              );
+            }
+            return (
+              <li>
+                <a
+                  href={`/docs/${item.slug}`}
+                  class={`block rounded px-2 py-1.5 font-medium transition-colors hover:text-emerald-400 ${
+                    currentSlug === item.slug
+                      ? 'bg-emerald-500/10 text-emerald-400'
+                      : 'text-gray-400'
+                  }`}
+                >
+                  {item.label}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Content -->
+    <article class="prose-doc min-w-0 flex-1">
+      <Content components={{ TerminalCard, LinkCard }} />
+    </article>
+  </div>
+</Layout>

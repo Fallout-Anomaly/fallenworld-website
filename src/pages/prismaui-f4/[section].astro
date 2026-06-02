@@ -1,0 +1,71 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('prismaui');
+  return entries.map((entry) => ({
+    params: { section: entry.id.replace(/\.(md|mdx)$/, '') },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const currentSection = entry.id.replace(/\.(md|mdx)$/, '');
+
+const allEntries = await getCollection('prismaui');
+const sidebarOrder = [
+  'getting-started',
+  'api-reference',
+  'html-views',
+  'examples',
+  'view-lifecycle',
+  'papyrus-bridge',
+  'prismamcm',
+  'modern-frameworks',
+  'translations',
+  'limitations',
+  'CHANGELOG',
+];
+const sorted = sidebarOrder
+  .map((slug) => allEntries.find((e) => e.id.replace(/\.(md|mdx)$/, '') === slug))
+  .filter((e) => e != null);
+---
+
+<Layout title={entry.data.title ?? 'PrismaUI F4'}>
+  <div class="mx-auto flex max-w-6xl gap-8 px-6 py-10">
+    <!-- Sidebar -->
+    <aside class="hidden w-56 shrink-0 lg:block">
+      <nav class="sticky top-20">
+        <div class="mb-3 text-xs font-semibold uppercase tracking-widest text-emerald-500">
+          PrismaUI F4
+        </div>
+        <ul class="space-y-0.5 text-sm">
+          {sorted.map((e) => {
+            const slug = e.id.replace(/\.(md|mdx)$/, '');
+            return (
+              <li>
+                <a
+                  href={`/prismaui-f4/${slug}`}
+                  class={`block rounded px-2 py-1 transition-colors hover:text-emerald-400 ${
+                    currentSection === slug
+                      ? 'bg-emerald-500/10 text-emerald-400'
+                      : 'text-gray-400'
+                  }`}
+                >
+                  {e.data.title ?? slug}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Content -->
+    <article class="prose-doc min-w-0 flex-1">
+      <Content />
+    </article>
+  </div>
+</Layout>

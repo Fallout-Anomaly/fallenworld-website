@@ -1,0 +1,28 @@
+# dependencies
+/node_modules
+
+# build output
+/dist
+
+# Astro cache
+.astro/
+
+# env files
+.env
+.env.local
+.env.*
+
+# OS
+.DS_Store
+
+# editor
+.cursor/
+.vscode/
+
+# local-only / do-not-commit
+AGENTS.md
+CLAUDE.md
+README.md
+*.bat
+issues.md
+task.md

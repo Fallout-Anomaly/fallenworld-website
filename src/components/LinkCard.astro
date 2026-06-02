@@ -1,0 +1,19 @@
+---
+interface Props {
+  title: string;
+  meta?: string;
+  href: string;
+}
+const { title, meta, href } = Astro.props;
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  style="display: block; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 1rem 1.25rem; margin: 1rem 0; text-decoration: none; transition: border-color 0.2s;"
+>
+  <div style="font-weight: 700; color: var(--text); margin-bottom: 0.25rem;">{title}</div>
+  {meta && <div style="font-size: 0.875rem; color: var(--text-muted);">{meta}</div>}
+  <div style="font-size: 0.8rem; color: var(--highlight); margin-top: 0.5rem;">↗ {href}</div>
+</a>

@@ -1,0 +1,58 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="PrismaUI F4 — Fallout 4 UI Framework">
+  <div class="mx-auto max-w-4xl px-6 py-20 text-center">
+    <div class="mb-3 text-xs font-semibold uppercase tracking-widest text-emerald-500">
+      Framework
+    </div>
+    <h1 class="mb-4 text-4xl font-extrabold tracking-tight text-white uppercase">
+      PrismaUI F4
+    </h1>
+    <p class="mx-auto mb-10 max-w-2xl text-lg text-gray-400">
+      A Fallout 4 UI framework built on Ultralight — create HTML/CSS/JS panels that render in-game through F4SE. Zero Scaleform. Zero Flash.
+    </p>
+    <div class="flex flex-wrap justify-center gap-4">
+      <a
+        href="/prismaui-f4/getting-started"
+        class="rounded-md bg-emerald-600 px-5 py-2.5 font-semibold text-white hover:bg-emerald-500 transition-colors"
+      >
+        Get Started
+      </a>
+      <a
+        href="/prismaui-f4/api-reference"
+        class="rounded-md border border-white/20 px-5 py-2.5 font-semibold text-gray-300 hover:border-white/40 hover:text-white transition-colors"
+      >
+        API Reference
+      </a>
+      <a
+        href="https://www.nexusmods.com/fallout4/mods/TODO"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="rounded-md border border-white/20 px-5 py-2.5 font-semibold text-gray-300 hover:border-white/40 hover:text-white transition-colors"
+      >
+        Download on Nexus ↗
+      </a>
+    </div>
+
+    <div class="mt-16 grid grid-cols-1 gap-4 text-left sm:grid-cols-2 lg:grid-cols-3">
+      {[
+        { href: '/prismaui-f4/getting-started', title: 'Getting Started', desc: 'Install and create your first view in minutes.' },
+        { href: '/prismaui-f4/api-reference', title: 'API Reference', desc: 'Full reference for IVPrismaUI2 and helper types.' },
+        { href: '/prismaui-f4/html-views', title: 'HTML Views', desc: 'How to structure HTML, CSS, and assets for in-game panels.' },
+        { href: '/prismaui-f4/examples', title: 'Examples', desc: 'Copy-paste patterns for common use cases.' },
+        { href: '/prismaui-f4/papyrus-bridge', title: 'Papyrus Bridge', desc: 'Call Papyrus scripts from your panel JS.' },
+        { href: '/prismaui-f4/view-lifecycle', title: 'View Lifecycle', desc: 'Timing rules for CreateView, DOM ready, and reloads.' },
+      ].map(({ href, title, desc }) => (
+        <a
+          href={href}
+          class="rounded-lg border border-white/10 bg-white/5 p-4 transition-colors hover:border-emerald-500/30 hover:bg-white/10"
+        >
+          <div class="mb-1 font-semibold text-white">{title}</div>
+          <div class="text-sm text-gray-400">{desc}</div>
+        </a>
+      ))}
+    </div>
+  </div>
+</Layout>

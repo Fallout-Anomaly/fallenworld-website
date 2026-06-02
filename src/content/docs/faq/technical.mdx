@@ -1,0 +1,28 @@
+---
+sidebar_position: 2
+title: Display & Technical Fixes
+sidebar_label: Display & Technical Fixes
+---
+
+
+# Display & Technical Fixes
+
+<TerminalCard title="Resolution & Hardware Fixes">
+
+### Screen is in the upper left corner
+This is usually a resolution mismatch or third-party overlay conflict.
+1.  **Fallen World Launcher:** Rerun the launcher and ensure your native resolution is selected.
+2.  **Disable Overlays:** Turn off Steam, Discord, and Medal overlays.
+3.  **DPI Scaling:** Right-click `Fallout4.exe` in your Stock folder → Properties → Compatibility → Change High DPI settings → Enable **High DPI Scaling Override** (Set to Application).
+
+### Ultrawide HUD adjustment
+If your HUD feels off-center on 21:9 or 32:9 monitors:
+1.  Open **MCM** → **FallUI HUD**.
+2.  Use the **Layout Editor** to manually reposition widgets.
+3.  Alternatively, use our [optimized ultrawide layout](/FallUIHUD-Layout-Export.ini).
+
+### NVIDIA Performance Issues
+If your FPS is locked low or stuttering:
+*   Disable **NVIDIA Reflex**, **Smooth Motion**, and **Low Latency** in the NVIDIA Control Panel game settings for Fallout 4. The modlist has its own internal optimizations that conflict with these external settings.
+
+</TerminalCard>

@@ -1,0 +1,17 @@
+---
+interface Props {
+  title?: string;
+}
+const { title } = Astro.props;
+---
+
+<div style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; margin: 1.5rem 0; overflow: hidden;">
+  {title && (
+    <div style="background: var(--card-header-bg); border-bottom: 1px solid var(--card-border); padding: 0.5rem 1rem;">
+      <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">{title}</span>
+    </div>
+  )}
+  <div style="padding: 1.25rem 1.5rem;" class="prose-doc">
+    <slot />
+  </div>
+</div>

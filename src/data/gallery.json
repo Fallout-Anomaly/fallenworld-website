@@ -1,0 +1,32 @@
+{
+  "images": [
+    "/img/anomaly-guide/Fallout4_4_10_2025_11_28_35_PM.webp",
+    "/img/anomaly-guide/Fallout4_9_10_2025_2_45_48_PM.webp",
+    "/img/anomaly-guide/Fallout4_9_12_2025_4_25_00_PM.webp",
+    "/img/anomaly-guide/Fallout4_9_3_2025_12_05_14_PM.webp",
+    "/img/anomaly-guide/Fallout4_9_6_2025_10_40_42_PM.webp",
+    "/img/anomaly-guide/Fallout4_9_7_2025_12_46_25_PM.webp",
+    "/img/anomaly-guide/Fallout4_9_7_2025_9_29_18_PM.webp",
+    "/img/anomaly-guide/Fallout4_9_9_2025_1_02_59_PM.webp",
+    "/img/anomaly-guide/Fallout4_9_9_2025_1_35_15_PM.webp",
+    "/img/anomaly-guide/Photo17.webp",
+    "/img/anomaly-guide/Photo27.webp",
+    "/img/anomaly-guide/Photo4.webp",
+    "/img/anomaly-guide/Screenshot_1048.webp",
+    "/img/anomaly-guide/Screenshot_1127.webp"
+  ],
+  "videos": [
+    {
+      "src": "https://www.youtube.com/embed/QduAobpgRZE",
+      "title": "Fallen World"
+    },
+    {
+      "src": "https://www.youtube.com/embed/GEV6T70Wgzk",
+      "title": "Fallen World"
+    },
+    {
+      "src": "https://www.youtube.com/embed/EScqUiAwNrY",
+      "title": "Fallen World"
+    }
+  ]
+}
