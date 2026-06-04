@@ -1,6 +1,3 @@
----
-title: 'HTML Views'
----
 # Writing HTML Views for PrismaUI_F4
 
 ## The Runtime
@@ -29,7 +26,7 @@ The framework loads views via `file:///` URIs resolved relative to `Data/PrismaU
 
 - **ES2020+**: `const`, `let`, arrow functions, template literals, destructuring, `async/await`, Promises, `class`, optional chaining (`?.`), nullish coalescing (`??`)
 - **DOM API**: Full access to `document`, `window`, `Element`, event listeners, `setTimeout`/`setInterval`, `requestAnimationFrame`
-- **Fetch API**: `fetch` is set to `undefined` by the framework's network sandbox. Use C++ → JS via `InteropCall`/`Invoke` for all data delivery.
+- **Fetch API**: Available for `file://` resources. Not useful for network requests (game process has no internet access by design).
 - **CSS**: Flexbox, Grid, CSS variables (`--var`), animations (`@keyframes`), transitions, `calc()`, `backdrop-filter`, `clip-path`
 - **Web Storage**: `localStorage` and `sessionStorage` are available but data is scoped to the view's URL. Not persistent across game launches.
 - **JSON**: `JSON.parse` / `JSON.stringify` work normally.
@@ -43,15 +40,13 @@ The framework loads views via `file:///` URIs resolved relative to `Data/PrismaU
 | `IntersectionObserver` | Not implemented | Guard with `typeof IntersectionObserver !== 'undefined'` |
 | `ResizeObserver` | Not implemented | Use fixed layout or window resize events |
 | `WebGL` / `WebGPU` | Not available | Use D3D11 from C++ side |
-| `Worker` / `SharedWorker` | Blocked by security sandbox | Keep processing on main JS thread |
+| `Worker` / `SharedWorker` | Not available | Keep processing on main JS thread |
 | `IndexedDB` | Not available | Use `localStorage` or pass data from C++ |
-| `fetch` / `XMLHttpRequest` / `WebSocket` / `EventSource` | **Blocked** — set to `undefined` before page scripts run | All data comes from C++ via `InteropCall`/`Invoke` |
-| `navigator.sendBeacon` / `navigator.serviceWorker` | **Blocked** by security sandbox | N/A |
-| External URLs in `CreateView` | **Rejected** — `http://`/`https://` paths return 0 | Use local `file://` paths only |
+| `WebSockets` / `XMLHttpRequest` to HTTP | No network | All data comes from C++ via `InteropCall`/`Invoke` |
 | `dbg()` | Not a thing | Use `console.log()` only |
 | `alert()` / `confirm()` / `prompt()` | Not implemented | Build your own modal in HTML |
 | CSS `@import` | May not resolve | Inline all CSS in `<style>` tags |
-| External fonts via `@font-face url(http...)` | **Blocked** by CSP | Use system fonts or embed font as base64 data URI |
+| External fonts via `@font-face url(http...)` | No network | Use system fonts or embed font as base64 |
 
 ### Always Guard Optional APIs
 
@@ -118,17 +113,23 @@ api->Invoke(view, script.c_str());
 
 Register a listener from C++ (do this inside your `OnDomReady` callback):
 
+> **Threading:** `JSListenerCallback` fires on the **Ultralight render thread**, not the game thread. Never access `RE::*` singletons directly inside a listener. Dispatch game thread work via `F4SE::GetTaskInterface()->AddTask`. See [api-reference.md — Threading Warning](api-reference.md#threading-warning-js-listener-callbacks).
+
 ```cpp
 // C++
 api->RegisterJSListener(view, "requestClose", [](const char* /*arg*/) {
+    // Safe — no RE:: access, PrismaUI calls marshal internally
     api->Unfocus(view);
     api->Hide(view);
 });
 
 api->RegisterJSListener(view, "onSettingChanged", [](const char* json) {
-    // json is whatever JS passed as the first argument
-    // parse it and apply the setting in-game
-    logger::info("Setting changed: {}", json);
+    // Dispatch to game thread if RE:: access is needed
+    std::string j = json ? json : "";
+    F4SE::GetTaskInterface()->AddTask([j]() {
+        logger::info("Setting changed: {}", j);
+        // RE:: access safe here
+    });
 });
 ```
 
@@ -222,62 +223,6 @@ If you want to block mouse clicks from reaching the game (e.g., a full-screen ov
 
 ---
 
-## Animations
-
-CSS `@keyframes`, `transition`, and `requestAnimationFrame` all work natively — no libraries needed for standard UI motion.
-
-For more complex animation formats, the following are all supported:
-
-### Animated WebP and APNG
-
-Drop-in replacements for GIF. Both support full 32-bit colour, clean transparency, and 60 FPS. Export from any image tool and reference via `<img>` or CSS `background-image`.
-
-```html
-<img src="icon-animated.webp" alt="">
-```
-
-### Lottie (vector JSON animations)
-
-Export from Adobe After Effects via the Bodymovin plugin, or from Adobe Animate. Renders as crisp SVG or Canvas at any resolution.
-
-**Requirements:**
-- Bundle `lottie.min.js` as a local file — external CDN URLs are blocked.
-- Set `renderer: 'svg'` or `renderer: 'canvas'`. Both work.
-- Set `worker: false` — Web Workers are not available.
-
-```html
-<script src="lottie.min.js"></script>
-<div id="anim"></div>
-<script>
-lottie.loadAnimation({
-    container: document.getElementById('anim'),
-    renderer: 'svg',
-    loop: true,
-    autoplay: true,
-    worker: false,      // required — Workers are blocked
-    path: 'animation.json'
-});
-</script>
-```
-
-### Adobe Animate HTML5 Canvas export
-
-Adobe Animate can publish directly to HTML5 Canvas, preserving all vector shapes, keyframes, and timeline animations. The publish output is a `.js` file using the CreateJS library.
-
-**Requirements:**
-- Bundle `createjs.min.js` as a local file — external CDN URLs are blocked.
-- Reference the exported `.js` alongside your HTML file.
-
-```html
-<canvas id="canvas" width="550" height="400"></canvas>
-<script src="createjs.min.js"></script>
-<script src="my_animation.js"></script>
-```
-
-> **Note:** When exporting from Animate, point the publish settings at a local copy of CreateJS rather than the CDN URL it defaults to. The framework blocks all outbound network requests.
-
----
-
 ## Fonts
 
 System fonts available in the game process: `Courier New`, `Arial`, `Segoe UI`, `Consolas`. For a terminal/retro look, `Courier New` or `Consolas` are reliable. You can embed a font as base64 in a `@font-face` rule if needed, but avoid loading fonts from external URLs.
@@ -349,3 +294,20 @@ The inspector is the full WebKit DevTools. You can inspect the DOM, run JS in th
 </body>
 </html>
 ```
+
+---
+
+## Build and Deployment Automation
+
+The PrismaUI_F4 framework includes automated `build-and-deploy.bat` scripts that:
+
+1. **Check GitHub for framework updates** — Queries the latest release from https://github.com/NomadsReach/framework-F4-Conversion and alerts if a newer version is available
+2. **Verify source freshness** — Compares source file timestamps against the built DLL and prompts rebuild if source is newer
+3. **Auto-extract SDK** — Automatically copies the Ultralight SDK from the local cache if it's missing from the build output
+4. **Deploy all artifacts** — Copies DLL, libraries, resources, and assets to the target MO2 mod folder
+
+**Framework build:** `E:\F4SE OG\Prisma\PrismaUI_F4 New Gen\build-and-deploy.bat`
+
+**Example plugin build:** `E:\F4SE OG\Prisma\PrismaUI_F4 New Gen\example-f4se-plugin\build-and-deploy.bat`
+
+Both scripts run from their respective directories and prompt you for the deployment path. No manual SDK extraction or file copying is required.
