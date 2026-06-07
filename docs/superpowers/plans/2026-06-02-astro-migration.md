@@ -1084,7 +1084,7 @@ import Layout from '../../layouts/Layout.astro';
         API Reference
       </a>
       <a
-        href="https://www.nexusmods.com/fallout4/mods/TODO"
+        href="https://www.nexusmods.com/fallout4/mods/105454"
         target="_blank"
         rel="noopener noreferrer"
         class="rounded-md border border-white/20 px-5 py-2.5 font-semibold text-gray-300 hover:border-white/40 hover:text-white transition-colors"
