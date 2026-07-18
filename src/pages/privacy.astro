@@ -1,0 +1,132 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const updated = 'July 18, 2026';
+const discord = 'https://discord.com/invite/TAueAV8Utk';
+---
+
+<Layout
+  title="Privacy Policy"
+  description="How the Fallen World in-game chat handles your information."
+>
+  <div class="mx-auto max-w-3xl px-6 py-20">
+    <div class="mb-3 text-xs font-semibold uppercase tracking-widest text-emerald-500">Legal</div>
+    <h1 class="mb-2 text-4xl font-extrabold uppercase tracking-tight text-white">Privacy Policy</h1>
+    <p class="mb-12 text-sm text-gray-500">Last updated: {updated}</p>
+
+    <div class="space-y-10 text-gray-300 leading-relaxed">
+      <p>
+        This policy explains how the Fallen World in-game chat (the "Chat") handles your information. It
+        applies to the Chat feature provided through our Fallout 4 mods and the chat service at
+        chat.fallenworld.nexus. It does not cover Nexus Mods, Discord, or any other third-party service,
+        each of which has its own privacy policy.
+      </p>
+
+      <section>
+        <h2 class="mb-3 text-xl font-bold uppercase tracking-tight text-white">The chat is public</h2>
+        <p>
+          The Chat is a public, global chat. Every message you send is shown to all other players
+          connected in-game and is mirrored to our Discord server, where it may be visible to the public.
+          Please do not share personal, private, or sensitive information in the Chat.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="mb-3 text-xl font-bold uppercase tracking-tight text-white">What we collect</h2>
+        <p class="mb-4">When you use the Chat, we process:</p>
+        <ul class="list-disc space-y-2 pl-6 marker:text-emerald-500">
+          <li>Messages you send, including their text and any commands.</li>
+          <li>Your display name, which you choose and can change at any time.</li>
+          <li>
+            A randomly generated ID created on your device the first time you use the Chat. It is not
+            linked to your real identity and is used to apply moderation actions consistently.
+          </li>
+          <li>A per-installation key used to recognise legitimate copies of the mod and prevent abuse.</li>
+          <li>Connection details, including your IP address, recorded by our server.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="mb-3 text-xl font-bold uppercase tracking-tight text-white">Why we use it</h2>
+        <p class="mb-4">We use this information only to operate and protect the Chat:</p>
+        <ul class="list-disc space-y-2 pl-6 marker:text-emerald-500">
+          <li>Delivering your messages to other players and to our Discord server.</li>
+          <li>
+            Moderation and enforcement, such as removing banned users, filtering prohibited content, and
+            preventing impersonation of staff.
+          </li>
+          <li>
+            Abuse prevention, such as blocking spam, floods, and connections from proxies or VPNs used to
+            evade bans.
+          </li>
+        </ul>
+        <p class="mt-4">
+          We do not use it for advertising, profiling, or analytics, and we never sell or rent it.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="mb-3 text-xl font-bold uppercase tracking-tight text-white">Where it is stored</h2>
+        <p>
+          Chat data is processed and stored on the FallenWorld chat server, which we operate. It is not
+          stored on Nexus Mods. Your randomly generated ID and chat preferences are also saved locally on
+          your own device.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="mb-3 text-xl font-bold uppercase tracking-tight text-white">Sharing</h2>
+        <p>
+          Messages are mirrored to our Discord server as part of the public chat. Aside from that, we do
+          not share your information with third parties, except where we are required to by law. Your IP
+          address is kept on our server for moderation and firewall purposes and is not shown in public
+          channels or Discord alerts.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="mb-3 text-xl font-bold uppercase tracking-tight text-white">How long we keep it</h2>
+        <p>
+          Recent messages are kept briefly so newcomers can see the latest activity, then discarded. We
+          keep raw connection logs, including IP addresses, only for a limited period and then remove them.
+          After that, we retain only the records needed to enforce moderation, such as the IDs of banned or
+          restricted accounts and blocked names. We do not use any of this data for advertising, profiling,
+          or tracking you across other services.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="mb-3 text-xl font-bold uppercase tracking-tight text-white">Your choices</h2>
+        <p>
+          Taking part in the Chat is optional. If you decline the notice shown when you first open the
+          Chat, you will not connect and no chat data is sent. You can change your display name at any time.
+          If you would like us to review or remove data associated with you, contact us using the details
+          below and we will do our best to help.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="mb-3 text-xl font-bold uppercase tracking-tight text-white">Children</h2>
+        <p>
+          The Chat is not intended for anyone below the age at which they can consent to data processing in
+          their country. Please do not use it if you are under that age.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="mb-3 text-xl font-bold uppercase tracking-tight text-white">Changes to this policy</h2>
+        <p>
+          We may update this policy from time to time. The date at the top shows when it was last changed.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="mb-3 text-xl font-bold uppercase tracking-tight text-white">Contact</h2>
+        <p>
+          Questions or requests about this policy can be sent to us on our
+          <a href={discord} target="_blank" rel="noopener noreferrer" class="font-semibold text-emerald-400 hover:text-emerald-300">Discord server</a>.
+        </p>
+      </section>
+    </div>
+  </div>
+</Layout>
