@@ -22,7 +22,12 @@ jobs:
 
       - uses: oven-sh/setup-bun@v2
 
-      - run: bun install
+      # --frozen-lockfile makes the deploy fail loudly if bun.lock and
+      # package.json have drifted, instead of silently re-resolving the caret
+      # ranges against the live registry on every deploy. Without a lockfile
+      # this step was floating, so each deploy could pick up different
+      # transitive versions than the ones that were reviewed.
+      - run: bun install --frozen-lockfile
 
       - run: bun run build
 

@@ -15,7 +15,13 @@ jobs:
         with:
           node-version: "22"
       - name: Install
-        run: npm ci
+        # --ignore-scripts blocks package lifecycle hooks, which are the vector
+        # used by the npm worms that harvest CI credentials. Safe here: esbuild
+        # 0.28.1 ships its platform binary as an optionalDependency, so it does
+        # not need its postinstall to run. Do not add --omit=optional or
+        # --no-optional alongside this, as that removes the binary and the
+        # fallback that would fetch it.
+        run: npm ci --ignore-scripts
       - name: Run npm audit
         run: |
           npm audit --json --audit-level=moderate > npm-audit-report.json || true
