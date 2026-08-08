@@ -12,12 +12,4 @@ const docs = defineCollection({
   }),
 });
 
-const prismaui = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/prismaui' }),
-  schema: z.object({
-    title: z.string().optional(),
-    description: z.string().optional(),
-  }),
-});
-
-export const collections = { docs, prismaui };
+export const collections = { docs };
