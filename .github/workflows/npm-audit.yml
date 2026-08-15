@@ -5,6 +5,9 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
   audit:
     runs-on: ubuntu-latest
@@ -15,20 +18,15 @@ jobs:
         with:
           node-version: "22"
       - name: Install
-        # --ignore-scripts blocks package lifecycle hooks, which are the vector
-        # used by the npm worms that harvest CI credentials. Safe here: esbuild
-        # 0.28.1 ships its platform binary as an optionalDependency, so it does
-        # not need its postinstall to run. Do not add --omit=optional or
-        # --no-optional alongside this, as that removes the binary and the
-        # fallback that would fetch it.
         run: npm ci --ignore-scripts
       - name: Run npm audit
         run: |
           npm audit --json --audit-level=moderate > npm-audit-report.json || true
       - name: Upload audit report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: npm-audit-report
-          path: |
-            ./npm-audit-report.json
+          path: ./npm-audit-report.json
+          if-no-files-found: error
+          retention-days: 3
