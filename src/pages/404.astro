@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Page not found"
+  description="The requested Fallen World page could not be found."
+>
+  <div class="mx-auto max-w-2xl px-6 py-24 text-center">
+    <div class="mb-3 text-xs font-semibold uppercase tracking-widest text-emerald-500">404</div>
+    <h1 class="mb-4 text-4xl font-extrabold uppercase tracking-tight text-white">Page Not Found</h1>
+    <p class="mb-10 text-lg text-gray-400">
+      This page was moved, removed, or never existed. Use the guide or return to the homepage.
+    </p>
+    <div class="flex flex-wrap justify-center gap-3">
+      <a href="/" class="rounded-md bg-emerald-600 px-5 py-2.5 font-semibold text-white transition-colors hover:bg-emerald-500">Home</a>
+      <a href="/docs/intro" class="rounded-md border border-white/15 px-5 py-2.5 font-semibold text-gray-200 transition-colors hover:border-emerald-500/50 hover:text-white">Guide</a>
+      <a href="https://discord.gg/Q5DmJDZFVR" target="_blank" rel="noopener noreferrer" class="rounded-md bg-[#5865F2] px-5 py-2.5 font-semibold text-white transition-colors hover:bg-[#4752c4]">Discord</a>
+    </div>
+  </div>
+</Layout>
