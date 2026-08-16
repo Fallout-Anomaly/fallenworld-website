@@ -27,7 +27,31 @@ body {
   padding: 0;
 }
 
-/* ---------- Admonitions (from Docusaurus :::type syntax) ---------- */
+:focus-visible {
+  outline: 2px solid #2dd4bf;
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 100;
+  transform: translateY(-200%);
+  border-radius: 0.375rem;
+  background: #f5f5f5;
+  color: #0a0a0a;
+  padding: 0.6rem 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.15s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* Admonitions */
 .admonition {
   border-left: 4px solid var(--card-accent);
   background: var(--card-bg);
@@ -59,7 +83,7 @@ body {
 .admonition-important { border-color: #8b5cf6; }
 .admonition-important .admonition-heading { color: #8b5cf6; }
 
-/* ---------- Prose / doc content ---------- */
+/* Prose / doc content */
 .prose-doc {
   max-width: 72ch;
   color: var(--text);
@@ -143,7 +167,7 @@ body {
   font-weight: 600;
 }
 
-/* ---------- Hero video (home page) ---------- */
+/* Hero video */
 .hero-video-wrap {
   position: fixed;
   inset: 0;
@@ -173,4 +197,13 @@ body {
 @keyframes pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.9; transform: scale(1.05); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
