@@ -17,16 +17,19 @@
   ],
   "videos": [
     {
-      "src": "https://www.youtube.com/embed/QduAobpgRZE",
-      "title": "Fallen World"
+      "id": "QduAobpgRZE",
+      "title": "Fallen World gameplay video",
+      "thumbnail": "/img/anomaly-guide/Screenshot_1048.webp"
     },
     {
-      "src": "https://www.youtube.com/embed/GEV6T70Wgzk",
-      "title": "Fallen World"
+      "id": "GEV6T70Wgzk",
+      "title": "Fallen World showcase video",
+      "thumbnail": "/img/anomaly-guide/Screenshot_1127.webp"
     },
     {
-      "src": "https://www.youtube.com/embed/EScqUiAwNrY",
-      "title": "Fallen World"
+      "id": "EScqUiAwNrY",
+      "title": "Fallen World community video",
+      "thumbnail": "/img/anomaly-guide/Photo17.webp"
     }
   ]
 }
