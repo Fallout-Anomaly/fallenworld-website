@@ -1,0 +1,13 @@
+---
+interface Props {
+  type?: 'warning' | 'tip' | 'info' | 'danger' | 'important';
+  title?: string;
+}
+
+const { type = 'info', title } = Astro.props;
+---
+
+<div class={`admonition admonition-${type}`} role={type === 'danger' || type === 'warning' ? 'alert' : 'note'}>
+  {title && <div class="admonition-heading">{title}</div>}
+  <slot />
+</div>
