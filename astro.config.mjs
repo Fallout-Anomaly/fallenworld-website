@@ -10,7 +10,7 @@ function remarkAdmonitions() {
         node.type === 'containerDirective' &&
         ['warning', 'tip', 'info', 'danger', 'important'].includes(node.name)
       ) {
-        const label = node.children.find((c) => c.type === 'directiveLabel');
+        const label = node.children.find((child) => child.type === 'directiveLabel');
         node.data = node.data || {};
         node.data.hName = 'div';
         node.data.hProperties = { class: `admonition admonition-${node.name}` };
@@ -31,6 +31,9 @@ export default defineConfig({
   base: '/',
   redirects: {
     '/prismaui-f4': PRISMA_DOCS,
+    '/prismaui-f4/getting-started': PRISMA_DOCS,
+    '/roadmap': '/',
+    '/wiki': '/docs/intro',
   },
   integrations: [
     mdx({
