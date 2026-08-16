@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import TerminalCard from '../../components/TerminalCard.astro';
 import LinkCard from '../../components/LinkCard.astro';
+import Admonition from '../../components/Admonition.astro';
 import { docsNav, isNavGroup } from '../../data/nav';
 
 export async function getStaticPaths() {
@@ -78,7 +79,7 @@ const itemClass = (slug: string, compact = false) => `block rounded px-2 ${compa
     </aside>
 
     <article class="prose-doc min-w-0 flex-1">
-      <Content components={{ TerminalCard, LinkCard }} />
+      <Content components={{ TerminalCard, LinkCard, Admonition }} />
     </article>
   </div>
 </Layout>
