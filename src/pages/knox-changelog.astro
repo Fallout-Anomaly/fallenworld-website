@@ -1,0 +1,83 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const currentBaseline = [
+  'Project Zomboid Build 42.20',
+  '32 public slots with no password',
+  'PvP enabled and Steam secure',
+  'Proximity voice chat with 3D audio',
+  'No loot respawn and no zombie respawn',
+  'High population Fast Shamblers with escalating sprinters',
+  'Water and power failure expected in the 14–30 day window',
+  '78 active Workshop mods published on the server overview',
+];
+
+const entries = [
+  {
+    date: '2026-08-22',
+    version: 'Website / server profile 1.1',
+    items: [
+      'Added Steam store screenshots and Build 42 trailers to the rotating Knox Aftermath hero background.',
+      'Corrected background focal positioning so the top of Steam media stays visible on wide displays.',
+      'Added live Steam registration status, direct connect, and copy-address controls.',
+      'Added Quick Start, Rules, World, Roadmap, and Changelog sections for new and returning players.',
+      'Published death and wipe policy, world progression, event overview, FAQ, and community-media area.',
+    ],
+  },
+  {
+    date: '2026-08-22',
+    version: 'Website / server profile 1.0',
+    items: [
+      'Published Fallen World: Knox Aftermath on the Fallen World website.',
+      'Published server address 157.250.203.86:25593 and public-server search instructions.',
+      'Published the current 78-mod Workshop manifest grouped by category.',
+      'Published current zombie, loot, survival, PvP, and voice-chat settings.',
+    ],
+  },
+];
+---
+
+<Layout
+  title="Knox Aftermath Changelog"
+  description="Server and website changelog for Fallen World: Knox Aftermath."
+>
+  <div class="mx-auto max-w-5xl px-6 py-16 sm:py-20">
+    <header class="max-w-3xl">
+      <div class="mb-3 text-xs font-semibold uppercase tracking-widest text-emerald-500">Fallen World: Knox Aftermath</div>
+      <h1 class="text-4xl font-extrabold uppercase tracking-tight text-white sm:text-5xl">Changelog</h1>
+      <p class="mt-5 text-lg leading-8 text-gray-400">
+        Server-facing changes belong here so players can tell what actually changed without digging through Discord history.
+      </p>
+    </header>
+
+    <section class="mt-12 border-l-4 border-teal-600 bg-[#111] px-5 py-5">
+      <div class="text-xs font-semibold uppercase tracking-widest text-emerald-500">Current baseline</div>
+      <ul class="mt-4 grid gap-x-8 gap-y-2 text-sm leading-6 text-gray-300 sm:grid-cols-2">
+        {currentBaseline.map((item) => <li>• {item}</li>)}
+      </ul>
+    </section>
+
+    <section class="mt-14 border-t border-gray-800 pt-10">
+      <div class="mb-7 text-xs font-semibold uppercase tracking-widest text-emerald-500">History</div>
+      <div class="divide-y divide-gray-800 border-y border-gray-800">
+        {entries.map((entry) => (
+          <article class="grid gap-4 py-7 md:grid-cols-[150px_220px_1fr] md:gap-8">
+            <time class="font-mono text-sm text-gray-600">{entry.date}</time>
+            <h2 class="font-semibold text-white">{entry.version}</h2>
+            <ul class="space-y-2 text-sm leading-6 text-gray-400">
+              {entry.items.map((item) => <li>• {item}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="mt-14 border-t border-gray-800 pt-10">
+      <div class="mb-3 text-xs font-semibold uppercase tracking-widest text-emerald-500">Going forward</div>
+      <h2 class="text-2xl font-bold text-white">What gets logged</h2>
+      <p class="mt-3 max-w-3xl text-sm leading-6 text-gray-400">
+        Mod additions and removals, major balance changes, wipe notices, changes to zombie progression, loot or utility settings, server events, rules changes, and other updates that materially affect how Knox Aftermath plays should be recorded here.
+      </p>
+    </section>
+  </div>
+</Layout>
