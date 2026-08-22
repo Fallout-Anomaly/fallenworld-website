@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import InstallReadiness from '../components/InstallReadiness.astro';
 import homeData from '../data/fallenworld-home.json';
 
 const categories = ['All', ...new Set(homeData.features.map((feature) => feature.category))];
@@ -18,7 +19,11 @@ const categories = ['All', ...new Set(homeData.features.map((feature) => feature
       </p>
     </header>
 
-    <section class="mt-12 border-y border-gray-800 py-8" aria-label="Feature filters">
+    <section class="mt-12">
+      <InstallReadiness />
+    </section>
+
+    <section class="mt-14 border-y border-gray-800 py-8" aria-label="Feature filters">
       <label for="feature-search" class="text-xs font-semibold uppercase tracking-widest text-gray-500">Search systems</label>
       <input
         id="feature-search"
