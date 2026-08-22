@@ -1,12 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
+const serverImage = 'https://media.discordapp.net/attachments/1534729638494863433/1536367098539016313/content.png?ex=6a8af6dc&is=6a89a55c&hm=00b0b5f83ab56cca02e0ac790f4c1f4423bea422a2dc5cb1fb9c878fd4b3eaf1&=&format=webp&quality=lossless';
+
 const serverDetails = [
   { label: 'Map', value: 'Muldraugh, KY' },
   { label: 'Build', value: '42.20' },
-  { label: 'Players', value: '32' },
-  { label: 'Password', value: 'None' },
+  { label: 'Slots', value: '32' },
+  { label: 'Server', value: 'Public' },
   { label: 'PvP', value: 'Enabled' },
+  { label: 'Security', value: 'Steam Secure' },
+  { label: 'Password', value: 'None' },
   { label: 'Voice Chat', value: 'Proximity + 3D Audio' },
 ];
 
@@ -36,27 +40,177 @@ const survivalRules = [
   'Fire spread enabled',
   'Bandit NPCs enabled',
 ];
+
+const modCategories = [
+  {
+    name: 'Phun mod suite',
+    mods: [
+      ['PhunCure 2', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3676251425'],
+      ['PhunLewt 2.1', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3676250472'],
+      ['PhunLib', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3411695932'],
+      ['PhunMart 2', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3689006725'],
+      ['PhunServer Tools', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3623897097'],
+      ['PhunSprinters 2', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3676252110'],
+      ['PhunZones 2', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3676252660'],
+    ],
+  },
+  {
+    name: 'Character / progression',
+    mods: [
+      ['Detailed Descriptions for Occupations and Traits', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3387957272'],
+      ['Hacking Skill', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3539339798'],
+      ['RPG Skills Systems B42 – RPGMenu', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3666281346'],
+      ['This Is Your Life', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3773911887'],
+    ],
+  },
+  {
+    name: 'Crafting / building',
+    mods: [
+      ['Computer Mod', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3725497089'],
+      ['Neat Building [B42.12]', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3536052310'],
+      ['Neat Crafting [B42.12]', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3502080466'],
+    ],
+  },
+  {
+    name: 'Frameworks / dependencies',
+    mods: [
+      ['damnlib', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3171167894'],
+      ['KATTAJ1 Clothes Core', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3470422050'],
+      ['MoodleFramework', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3396446795'],
+      ['NeatUI_Framework', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3508537032'],
+      ['TchernoLib', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3389605231'],
+      ['tsarslib', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3402491515'],
+      ['YetAnotherPZLib', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3624971238'],
+    ],
+  },
+  {
+    name: 'Maps / world',
+    mods: [
+      ['Ladder Climb Animations', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3778915544'],
+      ['Ladders?! [B42.20 Unofficial]', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3775841600'],
+      ['PZ Map', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3770149036'],
+      ['Tuna_MultiVHS', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3776747895'],
+    ],
+  },
+  {
+    name: 'Other / unclassified',
+    mods: [
+      ['Knox Protocol Rules Gate', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3781073085'],
+    ],
+  },
+  {
+    name: 'Survival / atmosphere',
+    mods: [
+      ['[B42.20] Infirmities', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3579088411'],
+      ['[B42] BetterFlashlights', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3420478458'],
+      ['Bandits Creator', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3469292499'],
+      ['Bandits NPC', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3268487204'],
+      ['Become Desensitized (Unofficial B42.20)', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3738669352'],
+      ['Better Vanilla ALICE Backpacks', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3682395520'],
+      ['Better Vanilla ALICE Suspenders', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3676721528'],
+      ['Better Vanilla Military Misc', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3697369580'],
+      ['Daily Report Journal [Reforged]', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3580557206'],
+      ['gasmask (M40 replacer)', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3701820916'],
+      ["JB's Bugs In Lights", 'https://steamcommunity.com/sharedfiles/filedetails/?id=3717902500'],
+      ['KATTAJ1 Military Pack', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3470426196'],
+      ['Long Term Preservation', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3406392630'],
+      ['More Damaged Objects', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3413150945'],
+      ['Project Seasons', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3412105017'],
+      ['Random Airdrops [B42.13.2]', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3655233584'],
+      ['Realistic Temperature Mod', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3600401184'],
+      ["Skully's Zombie Collision", 'https://steamcommunity.com/sharedfiles/filedetails/?id=3778511497'],
+      ['Take A Bath And Shower', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3592172476'],
+      ['Unseasonal Weather', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3582891045'],
+      ['Water Pipes', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3546314080'],
+    ],
+  },
+  {
+    name: 'UI / quality of life',
+    mods: [
+      ['Better Generator Info', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3576056135'],
+      ['Better Item Info', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3758971325'],
+      ['CH Status HUD', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3776182375'],
+      ['Clean HotBar', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3461263912'],
+      ['Common Sense', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3750253491'],
+      ['Gas Pump Indicator', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3755993986'],
+      ['Load All Magazines', 'https://steamcommunity.com/sharedfiles/filedetails/?id=2920899878'],
+      ['Long Term Preservation Extended [42.12 Legacy]', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3597673472'],
+      ['Lua Digital Watch UI', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3676456221'],
+      ['Mini Health Panel [B41/B42.20]', 'https://steamcommunity.com/sharedfiles/filedetails/?id=2866258937'],
+      ['Neat Crafting & Building – XP Display', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3540503606'],
+      ['Palm Pilots', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3776531193'],
+      ['Ping Items! Friends! - Core', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3776262249'],
+      ['PZ Pulse', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3753700423'],
+      ['Replace Bandage', 'https://steamcommunity.com/sharedfiles/filedetails/?id=2944344655'],
+      ['ScarSystem', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3750907049'],
+    ],
+  },
+  {
+    name: 'Vehicles / mechanics',
+    mods: [
+      ['86 Chevy CUCV', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3428008364'],
+      ['90 Pierce Arrow', 'https://steamcommunity.com/sharedfiles/filedetails/?id=2942793445'],
+      ['91 Ford LTD', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3366300557'],
+      ['93 Chevy Suburban', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3152529790'],
+      ['Arcadia RV Interior', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3773972040'],
+      ['Better Auto Mechanics', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3635856965'],
+      ['Chopped Vehicle Salvage', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3727602756'],
+      ["fhqwhgads' Motorious Zone", 'https://steamcommunity.com/sharedfiles/filedetails/?id=2791656602'],
+      ['Project Summer Car [B42MP]', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3564950449'],
+      ['rSemiTruck', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3409472393'],
+      ['RVs Heavy Duty Trailers', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3773998539'],
+      ['Vehicle Heater Sound System + Cabin Muffling', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3543941897'],
+    ],
+  },
+  {
+    name: 'Weapons / combat',
+    mods: [
+      ['Vanilla Firearms Expansion', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3761077099'],
+      ["Vanilla firearms expansion - Post '93", 'https://steamcommunity.com/sharedfiles/filedetails/?id=3762355926'],
+    ],
+  },
+  {
+    name: 'World / events',
+    mods: [
+      ['VehicleMilitaryZones', 'https://steamcommunity.com/sharedfiles/filedetails/?id=3436499337'],
+    ],
+  },
+];
+
+const modCount = modCategories.reduce((total, category) => total + category.mods.length, 0);
 ---
 
 <Layout
   title="Fallen World: Knox Aftermath | Project Zomboid Server"
   description="Fallen World: Knox Aftermath is a hardcore Project Zomboid survival server with scarce resources, dangerous zombies, PvP, and no second chances."
 >
-  <section class="relative overflow-hidden border-b border-white/10 bg-[#090909] px-6 py-20 sm:py-28">
+  <section class="relative overflow-hidden border-b border-white/10 bg-[#090909] px-6 py-14 sm:py-20">
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(180,83,9,0.16),transparent_35%),radial-gradient(circle_at_bottom_left,rgba(13,148,136,0.12),transparent_40%)]"></div>
-    <div class="relative mx-auto max-w-6xl">
-      <div class="mb-5 inline-flex items-center gap-2 rounded-full border border-amber-500/25 bg-amber-500/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-amber-300">
-        Project Zomboid Server
+    <div class="relative mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+      <div>
+        <div class="mb-5 inline-flex items-center gap-2 rounded-full border border-amber-500/25 bg-amber-500/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-amber-300">
+          Project Zomboid Server
+        </div>
+        <h1 class="max-w-4xl text-4xl font-extrabold uppercase tracking-[0.08em] text-white sm:text-5xl lg:text-6xl">
+          Fallen World: Knox Aftermath
+        </h1>
+        <p class="mt-6 max-w-3xl text-lg leading-8 text-gray-300 sm:text-xl">
+          Hardcore survival RPG Project Zomboid server with scarce resources, dangerous zombies, PvP, and no second chances.
+        </p>
+        <p class="mt-6 max-w-3xl text-sm font-semibold uppercase tracking-[0.12em] text-amber-300">
+          Build. Scavenge. Trade. Fight. Make what you find count.
+        </p>
       </div>
-      <h1 class="max-w-4xl text-4xl font-extrabold uppercase tracking-[0.08em] text-white sm:text-5xl lg:text-6xl">
-        Fallen World: Knox Aftermath
-      </h1>
-      <p class="mt-6 max-w-3xl text-lg leading-8 text-gray-300 sm:text-xl">
-        Hardcore Project Zomboid survival with scarce resources, dangerous zombies, PvP, and no second chances.
-      </p>
-      <p class="mt-6 max-w-3xl text-sm font-semibold uppercase tracking-[0.12em] text-amber-300">
-        Build. Scavenge. Trade. Fight. Make what you find count.
-      </p>
+
+      <div class="overflow-hidden rounded-xl border border-white/10 bg-black/40 shadow-2xl shadow-black/40">
+        <img
+          src={serverImage}
+          alt="Fallen World: Knox Aftermath Project Zomboid server"
+          class="aspect-video h-full w-full object-cover"
+          loading="eager"
+          referrerpolicy="no-referrer"
+        />
+      </div>
     </div>
   </section>
 
@@ -67,13 +221,41 @@ const survivalRules = [
         <h2 class="mt-2 text-3xl font-extrabold uppercase tracking-[0.08em] text-white">Knox County Ruleset</h2>
       </div>
 
-      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {serverDetails.map(({ label, value }) => (
           <div class="rounded-lg border border-white/10 bg-[#111] p-5">
             <div class="text-xs font-bold uppercase tracking-[0.14em] text-gray-500">{label}</div>
             <div class="mt-2 text-lg font-bold text-gray-100">{value}</div>
           </div>
         ))}
+      </div>
+
+      <div class="mt-8 grid gap-6 lg:grid-cols-2">
+        <div class="rounded-xl border border-teal-500/20 bg-teal-950/10 p-6 sm:p-7">
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-teal-300">Direct Connection</p>
+          <h2 class="mt-2 text-2xl font-extrabold uppercase tracking-[0.08em] text-white">Server Address</h2>
+          <div class="mt-5 grid gap-3 sm:grid-cols-2">
+            <div class="rounded-lg border border-white/10 bg-black/30 p-4">
+              <div class="text-xs font-bold uppercase tracking-[0.14em] text-gray-500">IP</div>
+              <code class="mt-2 block break-all text-lg font-bold text-teal-300">157.250.203.86</code>
+            </div>
+            <div class="rounded-lg border border-white/10 bg-black/30 p-4">
+              <div class="text-xs font-bold uppercase tracking-[0.14em] text-gray-500">Port</div>
+              <code class="mt-2 block text-lg font-bold text-teal-300">25593</code>
+            </div>
+          </div>
+          <p class="mt-4 text-sm text-gray-400">No password required. The server is public and Steam secure.</p>
+        </div>
+
+        <div class="rounded-xl border border-amber-500/20 bg-amber-950/10 p-6 sm:p-7">
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-amber-300">In-Game Browser</p>
+          <h2 class="mt-2 text-2xl font-extrabold uppercase tracking-[0.08em] text-white">Find the Server</h2>
+          <p class="mt-5 text-sm leading-6 text-gray-300">Open Project Zomboid and use:</p>
+          <div class="mt-3 rounded-lg border border-white/10 bg-black/30 p-4 font-mono text-sm leading-7 text-amber-200">
+            Join &gt; Public Servers &gt; Search for:<br />
+            <strong class="text-white">Fallen World: Knox Aftermath</strong>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -121,7 +303,54 @@ const survivalRules = [
     </div>
   </section>
 
-  <section class="bg-[#0a0a0a] px-6 py-20">
+  <section class="bg-[#0a0a0a] px-6 py-16">
+    <div class="mx-auto max-w-6xl">
+      <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.16em] text-teal-400">Workshop Collection</p>
+          <h2 class="mt-2 text-3xl font-extrabold uppercase tracking-[0.08em] text-white">Current Mod List</h2>
+          <p class="mt-3 max-w-3xl text-sm leading-6 text-gray-400">
+            Knox Aftermath currently runs {modCount} mods. Open any category below to view the active Workshop entries.
+          </p>
+        </div>
+        <div class="rounded-full border border-white/10 bg-[#111] px-4 py-2 text-sm font-bold text-gray-300">
+          {modCount} mods
+        </div>
+      </div>
+
+      <div class="grid gap-3 lg:grid-cols-2">
+        {modCategories.map((category) => (
+          <details class="group rounded-xl border border-white/10 bg-[#111] open:border-teal-500/30">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-left">
+              <span class="font-bold text-gray-100">{category.name}</span>
+              <span class="rounded-full border border-white/10 bg-black/25 px-2.5 py-1 text-xs font-bold text-gray-400">
+                {category.mods.length}
+              </span>
+            </summary>
+            <div class="border-t border-white/10 px-5 py-4">
+              <ul class="space-y-2">
+                {category.mods.map(([name, url]) => (
+                  <li>
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="flex items-start justify-between gap-4 rounded-md px-2 py-2 text-sm text-gray-300 transition-colors hover:bg-white/5 hover:text-teal-300"
+                    >
+                      <span>{name}</span>
+                      <span aria-hidden="true" class="shrink-0 text-gray-600">↗</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-white/10 bg-[#0d0d0d] px-6 py-20">
     <div class="mx-auto max-w-4xl rounded-xl border border-white/10 bg-[#111] p-8 text-center sm:p-12">
       <p class="text-xs font-bold uppercase tracking-[0.16em] text-amber-300">Hardcore Survival RPG</p>
       <h2 class="mt-3 text-3xl font-extrabold uppercase tracking-[0.08em] text-white sm:text-4xl">No Reset Button</h2>
