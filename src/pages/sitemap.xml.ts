@@ -20,7 +20,11 @@ export const GET: APIRoute = async () => {
     '/apply',
     '/community',
     '/knox-aftermath',
+    '/knox-start',
+    '/knox-rules',
+    '/knox-world',
     '/knox-roadmap',
+    '/knox-changelog',
     '/privacy',
     ...docs.map((entry) => `/docs/${entry.id.replace(/\.(md|mdx)$/, '')}`),
   ];
