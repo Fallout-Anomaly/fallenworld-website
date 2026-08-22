@@ -1,0 +1,94 @@
+---
+const currentPath = Astro.url.pathname;
+const links = [
+  { href: '/knox-aftermath', label: 'Overview' },
+  { href: '/knox-start', label: 'Quick Start' },
+  { href: '/knox-rules', label: 'Rules' },
+  { href: '/knox-world', label: 'World' },
+  { href: '/knox-roadmap', label: 'Roadmap' },
+  { href: '/knox-changelog', label: 'Changelog' },
+];
+
+const linkClass = (href: string) => currentPath === href
+  ? 'text-emerald-400'
+  : 'text-gray-400 hover:text-white';
+
+const showStatus = currentPath === '/knox-aftermath';
+---
+
+<div class="border-b border-white/10 bg-[#0d0d0d]">
+  <div class="mx-auto flex max-w-6xl items-center gap-5 overflow-x-auto px-4 py-2.5 text-xs font-semibold uppercase tracking-wider sm:px-6" aria-label="Knox Aftermath navigation">
+    {links.map(({ href, label }) => (
+      <a href={href} class={`shrink-0 transition-colors ${linkClass(href)}`} aria-current={currentPath === href ? 'page' : undefined}>
+        {label}
+      </a>
+    ))}
+  </div>
+</div>
+
+{showStatus && (
+  <div class="border-b border-gray-800 bg-[#0a0a0a]">
+    <div class="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-3 px-6 py-4 text-sm">
+      <div class="flex items-center gap-2">
+        <span id="knox-status-dot" class="h-2 w-2 rounded-full bg-gray-600" aria-hidden="true"></span>
+        <span id="knox-status-text" class="font-semibold text-gray-300">Checking Steam status…</span>
+      </div>
+      <span class="text-gray-500">Build <strong class="font-semibold text-gray-300">42.20</strong></span>
+      <span class="text-gray-500">Slots <strong class="font-semibold text-gray-300">32</strong></span>
+      <span id="knox-secure-text" class="text-gray-500">Steam Secure</span>
+      <span class="font-mono text-gray-400">157.250.203.86:25593</span>
+      <div class="ml-auto flex flex-wrap gap-2">
+        <button id="knox-copy-address" type="button" class="rounded-md border border-gray-700 px-3 py-1.5 font-semibold text-gray-300 transition-colors hover:border-gray-500 hover:text-white">
+          Copy address
+        </button>
+        <a href="steam://connect/157.250.203.86:25593" class="rounded-md bg-[#0d9488] px-3 py-1.5 font-semibold text-white transition-colors hover:bg-[#0f766e]">
+          Join server
+        </a>
+      </div>
+    </div>
+  </div>
+)}
+
+{showStatus && (
+  <script is:inline>
+    (() => {
+      const dot = document.getElementById('knox-status-dot');
+      const text = document.getElementById('knox-status-text');
+      const secure = document.getElementById('knox-secure-text');
+      const copy = document.getElementById('knox-copy-address');
+      const address = '157.250.203.86:25593';
+      const endpoint = `https://api.steampowered.com/ISteamApps/GetServersAtAddress/v1/?addr=${encodeURIComponent(address)}`;
+
+      copy?.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(address);
+          copy.textContent = 'Copied';
+          window.setTimeout(() => { copy.textContent = 'Copy address'; }, 1600);
+        } catch {
+          copy.textContent = address;
+        }
+      });
+
+      fetch(endpoint, { mode: 'cors', cache: 'no-store' })
+        .then((response) => response.ok ? response.json() : Promise.reject(new Error('status')))
+        .then((payload) => {
+          const servers = Array.isArray(payload?.response?.servers) ? payload.response.servers : [];
+          const server = servers.find((item) => item?.appid === 108600 && (item?.addr === address || item?.gameport === 25593));
+
+          if (!server) {
+            if (text) text.textContent = 'Not currently registered on Steam';
+            if (dot) dot.className = 'h-2 w-2 rounded-full bg-red-500';
+            return;
+          }
+
+          if (text) text.textContent = 'Online on Steam';
+          if (dot) dot.className = 'h-2 w-2 rounded-full bg-emerald-500';
+          if (secure) secure.textContent = server.secure ? 'Steam Secure' : 'Steam registration active';
+        })
+        .catch(() => {
+          if (text) text.textContent = 'Live status unavailable';
+          if (dot) dot.className = 'h-2 w-2 rounded-full bg-gray-600';
+        });
+    })();
+  </script>
+)}
