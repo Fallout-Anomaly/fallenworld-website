@@ -4,6 +4,66 @@ import Layout from '../layouts/Layout.astro';
 const serverImage = 'https://media.discordapp.net/attachments/1534729638494863433/1536367098539016313/content.png?ex=6a8af6dc&is=6a89a55c&hm=00b0b5f83ab56cca02e0ac790f4c1f4423bea422a2dc5cb1fb9c878fd4b3eaf1&=&format=webp&quality=lossless';
 const workshop = (id: string) => `https://steamcommunity.com/sharedfiles/filedetails/?id=${id}`;
 
+const steamAppId = 108600;
+const steamApiUrl = `https://store.steampowered.com/api/appdetails?appids=${steamAppId}&cc=us&l=en`;
+
+const fallbackSteamScreenshots = [
+  'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/108600/e0dd37d69051f7da85896d11027ab018d23893fa/ss_e0dd37d69051f7da85896d11027ab018d23893fa.1920x1080.jpg',
+  'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/108600/d9df2102dd12526700b15660bc5ec8f039dc8742/ss_d9df2102dd12526700b15660bc5ec8f039dc8742.1920x1080.jpg',
+  'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/108600/4c8860818ac52c685bbe0988aa137d52bad4aac5/ss_4c8860818ac52c685bbe0988aa137d52bad4aac5.1920x1080.jpg',
+  'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/108600/ss_eb1862af5109e4658e2538d897cbd16b87ad1818.1920x1080.jpg',
+  'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/108600/ss_507e952789822b69868d768e1e4476946f37b1fb.1920x1080.jpg',
+  'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/108600/ss_eca8be032b3f5508bf5bea74cfbc823a4df047ce.1920x1080.jpg',
+  'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/108600/ss_0dc0cb896202ecfa344a0af981b695f2349317e1.1920x1080.jpg',
+  'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/108600/ss_d80677c526a1c9494a7147189e52fbf438f0a9ca.1920x1080.jpg',
+];
+
+const fallbackSteamMovies = [
+  {
+    name: 'Build 42 Zomboid Trailer',
+    url: 'https://video.akamai.steamstatic.com/store_trailers/108600/619982392/141cfd121ea068a87c023951bdbfee87ca524de1/1785320937/hls_264_master.m3u8',
+    thumbnail: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/257387571/7413640d5700fc7020002682b958233c04463d0e/movie_600x337.jpg',
+  },
+  {
+    name: 'Build 42 Map Trailer',
+    url: 'https://video.akamai.steamstatic.com/store_trailers/108600/1068764969/0b5bcb57cecb7b05c21f23de1ea92a8287c343e7/1785321988/hls_264_master.m3u8',
+    thumbnail: 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/257387576/319e56e0fdf699518dfa5661e79b103fc8f12ad7/movie_600x337.jpg',
+  },
+];
+
+let steamScreenshots = fallbackSteamScreenshots;
+let steamMovies = fallbackSteamMovies;
+
+try {
+  const response = await fetch(steamApiUrl);
+  if (response.ok) {
+    const payload = await response.json() as Record<string, any>;
+    const steamData = payload[String(steamAppId)]?.data;
+
+    const apiScreenshots = Array.isArray(steamData?.screenshots)
+      ? steamData.screenshots
+          .map((screenshot: any) => screenshot?.path_full)
+          .filter((url: unknown): url is string => typeof url === 'string' && url.length > 0)
+      : [];
+
+    const apiMovies = Array.isArray(steamData?.movies)
+      ? steamData.movies
+          .map((movie: any) => ({
+            name: movie?.name,
+            url: movie?.hls_h264,
+            thumbnail: movie?.thumbnail,
+          }))
+          .filter((movie: any) => typeof movie.url === 'string' && movie.url.length > 0)
+      : [];
+
+    if (apiScreenshots.length > 0) steamScreenshots = apiScreenshots.slice(0, 8);
+    if (apiMovies.length > 0) steamMovies = apiMovies.slice(0, 2);
+  }
+} catch {
+  steamScreenshots = fallbackSteamScreenshots;
+  steamMovies = fallbackSteamMovies;
+}
+
 const serverDetails = [
   { label: 'Map', value: 'Muldraugh, KY' },
   { label: 'Build', value: '42.20' },
@@ -181,16 +241,27 @@ const modCount = modCategories.reduce((total, category) => total + category.mods
   title="Fallen World: Knox Aftermath | Project Zomboid Server"
   description="Fallen World: Knox Aftermath is a hardcore Project Zomboid survival server with scarce resources, dangerous zombies, PvP, and no second chances."
 >
-  <div class="mx-auto max-w-6xl px-6 py-14 sm:py-16">
-    <header class="max-w-3xl">
-      <div class="mb-3 text-xs font-semibold uppercase tracking-widest text-emerald-500">Project Zomboid Server</div>
-      <h1 class="text-4xl font-extrabold uppercase tracking-tight text-white sm:text-5xl">Fallen World: Knox Aftermath</h1>
-      <p class="mt-4 text-lg leading-8 text-gray-400">
-        Hardcore survival RPG with scarce resources, dangerous zombies, PvP, and no second chances.
-      </p>
-    </header>
+  <section class="knox-hero">
+    <div class="knox-steam-bg" aria-hidden="true">
+      <img id="knox-bg-a" class="knox-bg-media knox-bg-active" src={steamScreenshots[0]} alt="" />
+      <img id="knox-bg-b" class="knox-bg-media" src="" alt="" />
+      <video id="knox-bg-video" class="knox-bg-media" muted playsinline preload="metadata" poster={steamMovies[0]?.thumbnail ?? steamScreenshots[0]}></video>
+      <div class="knox-bg-scrim"></div>
+    </div>
 
-    <div class="mt-10 overflow-hidden rounded-md border border-gray-700 bg-[#111]">
+    <div class="relative z-10 mx-auto w-full max-w-6xl px-6 py-20 sm:py-24">
+      <div class="max-w-3xl">
+        <div class="mb-3 text-xs font-semibold uppercase tracking-widest text-emerald-400">Project Zomboid Server</div>
+        <h1 class="text-4xl font-extrabold uppercase tracking-tight text-white drop-shadow-lg sm:text-5xl">Fallen World: Knox Aftermath</h1>
+        <p class="mt-4 max-w-2xl text-lg leading-8 text-gray-200 drop-shadow-md">
+          Hardcore survival RPG with scarce resources, dangerous zombies, PvP, and no second chances.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-6xl px-6 py-12 sm:py-14">
+    <div class="overflow-hidden rounded-md border border-gray-700 bg-[#111]">
       <img
         src={serverImage}
         alt="Fallen World: Knox Aftermath Project Zomboid server"
@@ -199,6 +270,10 @@ const modCount = modCategories.reduce((total, category) => total + category.mods
         referrerpolicy="no-referrer"
       />
     </div>
+
+    <p class="mt-2 text-right text-xs text-gray-600">
+      Background media sourced from the official Project Zomboid Steam store page.
+    </p>
 
     <section class="mt-12 border-t border-gray-800 pt-10">
       <div class="mb-7 text-xs font-semibold uppercase tracking-widest text-emerald-500">Server</div>
@@ -303,3 +378,193 @@ const modCount = modCategories.reduce((total, category) => total + category.mods
     </p>
   </footer>
 </Layout>
+
+<script is:inline src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js"></script>
+<script define:vars={{ steamScreenshots, steamMovies }}>
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const imageA = document.getElementById('knox-bg-a');
+  const imageB = document.getElementById('knox-bg-b');
+  const video = document.getElementById('knox-bg-video');
+
+  let activeImage = imageA;
+  let inactiveImage = imageB;
+  let hls = null;
+
+  const IMAGE_HOLD_MS = 8000;
+  const VIDEO_MAX_MS = 45000;
+
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  function stopVideo() {
+    if (hls) {
+      hls.destroy();
+      hls = null;
+    }
+
+    if (video) {
+      video.pause();
+      video.removeAttribute('src');
+      video.load();
+      video.classList.remove('knox-bg-active');
+    }
+  }
+
+  async function showImage(src) {
+    if (!activeImage || !inactiveImage || !src) return;
+
+    stopVideo();
+    inactiveImage.src = src;
+
+    try {
+      await inactiveImage.decode();
+    } catch {}
+
+    inactiveImage.classList.add('knox-bg-active');
+    activeImage.classList.remove('knox-bg-active');
+
+    const previous = activeImage;
+    activeImage = inactiveImage;
+    inactiveImage = previous;
+
+    await sleep(IMAGE_HOLD_MS);
+  }
+
+  async function showVideo(movie) {
+    if (!video || reduceMotion || !movie?.url) return false;
+
+    return new Promise((resolve) => {
+      let finished = false;
+      let timeoutId;
+
+      const finish = () => {
+        if (finished) return;
+        finished = true;
+        window.clearTimeout(timeoutId);
+        video.removeEventListener('ended', finish);
+        video.removeEventListener('error', finish);
+        stopVideo();
+        resolve(true);
+      };
+
+      video.poster = movie.thumbnail || '';
+      video.muted = true;
+      video.playsInline = true;
+      video.addEventListener('ended', finish, { once: true });
+      video.addEventListener('error', finish, { once: true });
+
+      if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = movie.url;
+      } else if (window.Hls && window.Hls.isSupported()) {
+        hls = new window.Hls({ enableWorker: true });
+        hls.loadSource(movie.url);
+        hls.attachMedia(video);
+      } else {
+        finish();
+        return;
+      }
+
+      const play = () => {
+        video.play().then(() => {
+          video.classList.add('knox-bg-active');
+          activeImage?.classList.remove('knox-bg-active');
+          inactiveImage?.classList.remove('knox-bg-active');
+          timeoutId = window.setTimeout(finish, VIDEO_MAX_MS);
+        }).catch(finish);
+      };
+
+      if (video.readyState >= 2) {
+        play();
+      } else {
+        video.addEventListener('canplay', play, { once: true });
+      }
+    });
+  }
+
+  async function runMediaRotation() {
+    if (!imageA || !imageB || steamScreenshots.length === 0) return;
+
+    if (reduceMotion) {
+      imageA.src = steamScreenshots[0];
+      imageA.classList.add('knox-bg-active');
+      return;
+    }
+
+    let screenshotIndex = 1;
+    let movieIndex = 0;
+    let imagesSinceVideo = 0;
+
+    await sleep(IMAGE_HOLD_MS);
+
+    while (true) {
+      if (imagesSinceVideo >= 3 && steamMovies.length > 0) {
+        await showVideo(steamMovies[movieIndex % steamMovies.length]);
+        movieIndex += 1;
+        imagesSinceVideo = 0;
+        await showImage(steamScreenshots[screenshotIndex % steamScreenshots.length]);
+        screenshotIndex += 1;
+        imagesSinceVideo += 1;
+        continue;
+      }
+
+      await showImage(steamScreenshots[screenshotIndex % steamScreenshots.length]);
+      screenshotIndex += 1;
+      imagesSinceVideo += 1;
+    }
+  }
+
+  runMediaRotation();
+</script>
+
+<style>
+  .knox-hero {
+    position: relative;
+    min-height: min(72vh, 720px);
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    border-bottom: 1px solid #1f2937;
+    background: #0a0a0a;
+  }
+
+  .knox-steam-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: #0a0a0a;
+  }
+
+  .knox-bg-media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(1.015);
+    transition: opacity 1.8s ease;
+  }
+
+  .knox-bg-active {
+    opacity: 1;
+  }
+
+  .knox-bg-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.62);
+  }
+
+  @media (max-width: 640px) {
+    .knox-hero {
+      min-height: 560px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .knox-bg-media {
+      transition: none;
+      transform: none;
+    }
+  }
+</style>
