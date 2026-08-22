@@ -1,177 +1,95 @@
 {
-  "status": [
-    {
-      "label": "Project",
-      "value": "Active Development",
-      "detail": "The public build remains supported while the next generation systems are developed."
-    },
-    {
-      "label": "Platform",
-      "value": "Fallout 4 - Steam",
-      "detail": "Steam Fallout 4 is the supported game platform."
-    },
-    {
-      "label": "Installation",
-      "value": "Wabbajack",
-      "detail": "Automated installation keeps a 600+ mod setup reproducible."
-    },
-    {
-      "label": "Focus",
-      "value": "Hardcore Survival",
-      "detail": "Combat, injuries, radiation, scarcity, crafting, and exploration are built around consequence."
-    }
-  ],
   "coreSystems": [
     {
       "title": "Combat & Ballistics",
-      "description": "Lethal caliber-driven combat, physical projectiles, penetration, locational damage, and enemies that do not scale like bullet sponges.",
       "href": "/docs/gameplay/combat"
     },
     {
       "title": "Survival & Medical",
-      "description": "Hunger, thirst, injuries, treatment, sleep, disease, carry limits, and recovery all matter outside combat.",
       "href": "/docs/gameplay/survival"
     },
     {
       "title": "Radiation & Weather",
-      "description": "Radiation is an environmental threat with persistent consequences, dangerous storms, and weather that changes how you travel.",
       "href": "/docs/gameplay/survival"
     },
     {
       "title": "Crafting & Progression",
-      "description": "Unified crafting, specialized workbenches, research, ammunition production, and progression that rewards preparation instead of menu clutter.",
       "href": "/docs/gameplay/index"
     },
     {
       "title": "Settlements & Building",
-      "description": "Settlement building is being modernized around faster placement, better navigation, free camera control, and compatibility with mod-added objects.",
       "href": "/docs/gameplay/index"
     },
     {
-      "title": "Interface & Controls",
-      "description": "A modern HUD, faster configuration tools, cleaner controls, and custom interfaces replace many of Fallout 4's slow menu workflows.",
+      "title": "HUD & Controls",
       "href": "/docs/gameplay/controls"
-    }
-  ],
-  "development": [
-    {
-      "title": "Prisma HUD",
-      "state": "In development",
-      "description": "A new in-game HUD built specifically for Fallen World instead of stacking more changes on the old interface."
-    },
-    {
-      "title": "PrismaMCM",
-      "state": "In development",
-      "description": "A faster configuration interface designed to remove the lag and friction of the traditional MCM workflow."
-    },
-    {
-      "title": "Settlement Menu Overhaul",
-      "state": "In development",
-      "description": "Search, faster browsing, place-in-red support, free camera placement, and compatibility with mod-added workshop categories."
-    },
-    {
-      "title": "Core System Pass",
-      "state": "In development",
-      "description": "Combat, radiation, weather, stability, startup time, and long-term progression are being tightened together instead of treated as isolated mods."
     }
   ],
   "features": [
     {
       "title": "Physical Ballistics",
       "category": "Combat",
-      "state": "Live",
-      "description": "Projectile travel, drop, penetration, and destructible interactions replace purely hitscan gunplay.",
+      "description": "Projectile travel, drop, penetration and destructible interactions.",
       "href": "/docs/gameplay/combat"
     },
     {
       "title": "Caliber-Based Damage",
       "category": "Combat",
-      "state": "Live",
-      "description": "Weapon lethality is driven by ammunition and target protection rather than artificial weapon levels.",
+      "description": "Damage is based on ammunition and protection instead of weapon level.",
       "href": "/docs/gameplay/combat"
     },
     {
       "title": "Injury & Medical Systems",
       "category": "Survival",
-      "state": "Live",
-      "description": "Damage can create injuries that require treatment and affect the player beyond a simple health bar.",
+      "description": "Wounds need treatment and can affect you after the fight ends.",
       "href": "/docs/gameplay/survival"
     },
     {
       "title": "Radiation Overhaul",
       "category": "Survival",
-      "state": "Live",
-      "description": "Radiation exposure and environmental hazards create persistent pressure during exploration.",
+      "description": "Radiation and environmental exposure have lasting consequences.",
       "href": "/docs/gameplay/survival"
     },
     {
-      "title": "Dynamic Weather Threats",
+      "title": "Dangerous Weather",
       "category": "World",
-      "state": "Live",
-      "description": "Dangerous storms and atmospheric conditions can change travel plans and force preparation.",
+      "description": "Storms and weather can force you to change how and when you travel.",
       "href": "/docs/gameplay/survival"
     },
     {
-      "title": "Expanded World Content",
+      "title": "Expanded Quests & Locations",
       "category": "World",
-      "state": "Live",
-      "description": "New quests, locations, enemies, companions, and worldspaces extend the Commonwealth without turning it into a different game.",
+      "description": "New quests, enemies, companions, locations and worldspaces.",
       "href": "/docs/intro"
     },
     {
       "title": "Unified Crafting",
       "category": "Progression",
-      "state": "Live",
-      "description": "Crafting is reorganized around purpose-built benches and consistent recipes instead of duplicated mod menus.",
+      "description": "Crafting is organized around dedicated benches and consistent recipes.",
       "href": "/docs/gameplay/index"
     },
     {
       "title": "Ammunition Production",
       "category": "Progression",
-      "state": "Live",
-      "description": "Break down ammunition, recover materials, and manufacture the rounds needed for a scarce-resource playthrough.",
+      "description": "Break down ammunition and manufacture the rounds you need.",
       "href": "/docs/gameplay/index"
     },
     {
       "title": "Pip-Boy Power",
-      "category": "Interface",
-      "state": "Live",
-      "description": "Pip-Boy use has its own power, heat, and wear considerations instead of being a consequence-free pause screen.",
+      "category": "Survival",
+      "description": "Pip-Boy use has battery, heat and wear systems.",
       "href": "/docs/gameplay/controls"
     },
     {
-      "title": "Prisma HUD",
-      "category": "Interface",
-      "state": "In development",
-      "description": "A purpose-built HUD focused on readable survival information and lower UI friction.",
-      "href": "/features"
-    },
-    {
-      "title": "PrismaMCM",
-      "category": "Interface",
-      "state": "In development",
-      "description": "A modern configuration system designed for instant navigation and faster mod settings.",
-      "href": "/features"
-    },
-    {
-      "title": "Settlement Menu Overhaul",
-      "category": "World",
-      "state": "In development",
-      "description": "Search, place-in-red, free camera building, and faster access to large workshop catalogs.",
-      "href": "/features"
-    },
-    {
-      "title": "Performance & Stability Pass",
+      "title": "Performance & Stability",
       "category": "Technical",
-      "state": "Live",
-      "description": "Precombine fixes, crash work, load-time tuning, and curated configuration keep the list playable despite its scale.",
+      "description": "Crash fixes, load-time work and curated performance settings.",
       "href": "/docs/requirements"
     },
     {
       "title": "Automated Installation",
       "category": "Technical",
-      "state": "Live",
-      "description": "Wabbajack reproduces the supported configuration instead of asking players to assemble hundreds of mods by hand.",
+      "description": "The supported setup is installed through Wabbajack.",
       "href": "/docs/setup"
     }
   ]
