@@ -3,68 +3,93 @@ import Layout from '../layouts/Layout.astro';
 
 const now = [
   {
+    status: 'IN DEVELOPMENT',
     title: 'Build 42.20 stability',
     text: 'Keep the current 78-mod stack stable in multiplayer, remove conflicts, and verify updates before they reach the live server.',
   },
   {
+    status: 'IN DEVELOPMENT',
     title: 'Survival balance',
     text: 'Tune the zombie curve, scarcity, firearms, medicine, fuel, power, water, and long-term progression around a persistent world with no loot or zombie respawn.',
   },
   {
-    title: 'Server identity',
-    text: 'Finish the Knox Aftermath website presentation, connection flow, rules, mod list, media, and onboarding so new players know what the server is before joining.',
+    status: 'LIVE',
+    title: 'Server identity and onboarding',
+    text: 'Overview, connection flow, Quick Start, rules, world progression, Workshop manifest, media, FAQ, roadmap, and changelog are now part of the Knox section of the website.',
+  },
+  {
+    status: 'IN DEVELOPMENT',
+    title: 'Live server status',
+    text: 'Steam registration status and direct connect are live. Rich player-count and ping telemetry still need a safe query proxy instead of faking data in the browser.',
+  },
+  {
+    status: 'LIVE',
+    title: 'Changelog and notices',
+    text: 'A dedicated changelog now records server-facing changes, wipe notices, rules changes, mod changes, and major updates in one place.',
   },
 ];
 
 const next = [
   {
-    title: 'Live server status',
-    text: 'Show online/offline state, player count, current build, and connection information directly on the website.',
-  },
-  {
+    status: 'PLANNED',
     title: 'Workshop collection',
-    text: 'Maintain a single curated Steam Workshop collection so players can see and subscribe to the exact live mod set.',
+    text: 'Maintain a single curated Steam Workshop collection so players can subscribe to the exact live mod set in one place in addition to the published 78-mod manifest.',
   },
   {
+    status: 'PLANNED',
     title: 'Events and world pressure',
-    text: 'Expand airdrops, bandit encounters, migration pressure, and other server events that create reasons to leave safe territory and compete for resources.',
+    text: 'Expand airdrops, bandit encounters, migration pressure, military locations, and server events that create reasons to leave safe territory and compete for resources.',
   },
   {
+    status: 'PLANNED',
     title: 'Progression pass',
     text: 'Review RPG skills, occupations, traits, long-term injuries, vehicles, crafting, and preservation so progression stays useful without making survival trivial.',
   },
   {
+    status: 'PLANNED',
     title: 'Trading and player economy',
     text: 'Give scavenged resources more value through player trade, scarcity-driven exchange, and reasons to specialize rather than hoard everything.',
   },
   {
-    title: 'Changelog and server notices',
-    text: 'Publish clear mod changes, balance changes, restarts, wipes when unavoidable, and major server updates in one place.',
+    status: 'PLANNED',
+    title: 'Community gallery',
+    text: 'Replace generic promotional media with a growing gallery of real screenshots and clips captured on Knox Aftermath by the people playing it.',
   },
 ];
 
 const later = [
   {
+    status: 'PLANNED',
     title: 'Factions and territory',
     text: 'Support longer-lived groups, contested territory, alliances, rivalries, and player-created safe areas without turning the server into a conventional faction game.',
   },
   {
+    status: 'PLANNED',
     title: 'Persistent trade hubs',
     text: 'Explore survivor-run markets and community locations that emerge from the world instead of replacing the survival loop.',
   },
   {
+    status: 'PLANNED',
     title: 'Seasonal world changes',
     text: 'Use weather, seasons, resource pressure, and event changes to make the same map play differently as the world ages.',
   },
   {
+    status: 'PLANNED',
     title: 'Custom Knox Aftermath content',
     text: 'Add server-specific encounters, rules, progression hooks, and lightweight lore where existing Workshop mods cannot deliver the experience cleanly.',
   },
   {
+    status: 'PLANNED',
     title: 'Map expansion',
     text: 'Consider additional locations only after the core Muldraugh world, performance, and multiplayer stability are where they need to be.',
   },
 ];
+
+const statusClass = (status: string) => status === 'LIVE'
+  ? 'text-emerald-400'
+  : status === 'IN DEVELOPMENT'
+    ? 'text-gray-300'
+    : 'text-gray-600';
 ---
 
 <Layout
@@ -81,22 +106,6 @@ const later = [
       <p class="mt-4 text-sm leading-6 text-gray-500">
         This is a direction of travel, not a release calendar. Build 42 updates, multiplayer stability, and testing can change the order.
       </p>
-      <div class="mt-7 flex flex-wrap gap-3">
-        <a
-          href="/knox-aftermath"
-          class="rounded-md bg-[#0d9488] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#0f766e]"
-        >
-          Server Overview
-        </a>
-        <a
-          href="https://discord.gg/Q5DmJDZFVR"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="rounded-md border border-gray-700 px-5 py-2.5 text-sm font-semibold text-gray-200 transition-colors hover:border-emerald-600 hover:text-white"
-        >
-          Discord
-        </a>
-      </div>
     </header>
 
     <section class="mt-16 border-t border-gray-800 pt-10">
@@ -104,7 +113,8 @@ const later = [
       <h2 class="text-2xl font-bold text-white">Foundation</h2>
       <div class="mt-7 divide-y divide-gray-800 border-y border-gray-800">
         {now.map((item) => (
-          <article class="grid gap-2 py-6 md:grid-cols-[220px_1fr] md:gap-8">
+          <article class="grid gap-2 py-6 md:grid-cols-[150px_220px_1fr] md:gap-8">
+            <div class={`text-xs font-semibold uppercase tracking-wider ${statusClass(item.status)}`}>{item.status}</div>
             <h3 class="font-semibold text-gray-100">{item.title}</h3>
             <p class="text-sm leading-6 text-gray-400">{item.text}</p>
           </article>
@@ -114,10 +124,11 @@ const later = [
 
     <section class="mt-14 border-t border-gray-800 pt-10">
       <div class="mb-2 text-xs font-semibold uppercase tracking-widest text-emerald-500">Next</div>
-      <h2 class="text-2xl font-bold text-white">Make the server deeper and easier to join</h2>
+      <h2 class="text-2xl font-bold text-white">Make the server deeper</h2>
       <div class="mt-7 divide-y divide-gray-800 border-y border-gray-800">
         {next.map((item) => (
-          <article class="grid gap-2 py-6 md:grid-cols-[220px_1fr] md:gap-8">
+          <article class="grid gap-2 py-6 md:grid-cols-[150px_220px_1fr] md:gap-8">
+            <div class={`text-xs font-semibold uppercase tracking-wider ${statusClass(item.status)}`}>{item.status}</div>
             <h3 class="font-semibold text-gray-100">{item.title}</h3>
             <p class="text-sm leading-6 text-gray-400">{item.text}</p>
           </article>
@@ -130,7 +141,8 @@ const later = [
       <h2 class="text-2xl font-bold text-white">Long-term world systems</h2>
       <div class="mt-7 divide-y divide-gray-800 border-y border-gray-800">
         {later.map((item) => (
-          <article class="grid gap-2 py-6 md:grid-cols-[220px_1fr] md:gap-8">
+          <article class="grid gap-2 py-6 md:grid-cols-[150px_220px_1fr] md:gap-8">
+            <div class={`text-xs font-semibold uppercase tracking-wider ${statusClass(item.status)}`}>{item.status}</div>
             <h3 class="font-semibold text-gray-100">{item.title}</h3>
             <p class="text-sm leading-6 text-gray-400">{item.text}</p>
           </article>
