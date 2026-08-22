@@ -1,0 +1,150 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const serverImage = 'https://media.discordapp.net/attachments/1534729638494863433/1536367098539016313/content.png?ex=6a8af6dc&is=6a89a55c&hm=00b0b5f83ab56cca02e0ac790f4c1f4423bea422a2dc5cb1fb9c878fd4b3eaf1&=&format=webp&quality=lossless';
+
+const pillars = [
+  ['Persistent world', 'The map does not refill itself around players. What gets consumed, looted, damaged, or abandoned becomes part of the server history.'],
+  ['No loot respawn', 'Food, medicine, ammunition, tools, and materials become more valuable as populated areas are stripped.'],
+  ['No zombie respawn', 'Clearing matters, but migration means the dead can still move back into territory instead of appearing from nowhere.'],
+  ['Escalating infected', 'Fast Shamblers define the early threat while sprinters gradually become part of the world as time passes.'],
+  ['Harder zombies', 'High population, superhuman strength, and tough infected make even familiar streets dangerous.'],
+  ['PvP survival', 'Players can trade, cooperate, rob, fight, or compete for locations and resources.'],
+  ['RPG progression', 'Skills, occupations, traits, infirmities, crafting, vehicles, and long-term systems give characters reasons to specialize.'],
+  ['Bandit pressure', 'NPC bandits and world events add threats that are not tied only to zombies or other players.'],
+];
+
+const progression = [
+  {
+    phase: 'Opening days',
+    title: 'Grab what still exists',
+    text: 'Utilities are still likely online, the map has the most untouched locations it will ever have, and most infected are Fast Shamblers. Early decisions determine who gets vehicles, tools, fuel, medicine, and defensible locations first.',
+  },
+  {
+    phase: 'Week one',
+    title: 'The easy supplies disappear',
+    text: 'Common routes get picked over, travel pushes farther from safe territory, and player knowledge of occupied areas starts to matter as much as map knowledge.',
+  },
+  {
+    phase: 'Weeks two to four',
+    title: 'Infrastructure fails',
+    text: 'Water and power are expected to fail somewhere in the 14–30 day window. Fuel, preservation, generators, maintenance, and trade become much more important.',
+  },
+  {
+    phase: 'Day 28 and beyond',
+    title: 'Peak pressure',
+    text: 'Zombie population reaches its planned peak, sprinters have become a larger part of the threat, and untouched resources are increasingly found only by taking risks.',
+  },
+  {
+    phase: 'Late world',
+    title: 'Survival becomes logistics',
+    text: 'Long-term groups live or die on repair parts, food preservation, fuel, medical supply, transport, information, trade, and the ability to survive encounters away from home.',
+  },
+];
+
+const events = [
+  ['Airdrops', 'Random drops can put valuable supplies in exposed locations and create reasons for multiple survivors to move toward the same objective.'],
+  ['Bandit encounters', 'Bandit NPCs introduce unpredictable armed opposition outside normal player conflict.'],
+  ['Migration pressure', 'Zombie movement can repopulate travel corridors and previously cleared areas without using normal zombie respawn.'],
+  ['Military zones', 'Military vehicle zones and related equipment provide high-value locations worth searching and contesting.'],
+  ['Weather and seasons', 'Project Seasons, realistic temperature, and unseasonal weather make clothing, shelter, and preparation matter across longer runs.'],
+  ['Community events', 'Future server events are planned around scarce rewards, contested objectives, trade, and reasons to leave established bases.'],
+];
+
+const faq = [
+  ['Is there a password?', 'No. Knox Aftermath is a public server.'],
+  ['Is PvP always enabled?', 'PvP is enabled as part of the normal server ruleset. Check the Rules page for conduct limits and event exceptions.'],
+  ['Does loot respawn?', 'No. Once an area has been picked clean, it stays picked clean unless players move items back into it.'],
+  ['Do zombies respawn?', 'No normal zombie respawn. Migration remains enabled, so cleared territory is not guaranteed to stay empty.'],
+  ['Are sprinters enabled?', 'Yes, but the intent is progression rather than an immediate all-sprinter world. Sprinters gradually become more common over time.'],
+  ['Do I install mods manually?', 'The server uses Workshop content. Project Zomboid will prompt for required Workshop items when joining; the full current list is published on the Overview page.'],
+  ['Are there scheduled wipes?', 'The server is intended to be persistent. Wipes are reserved for cases where Build 42 changes, mod incompatibility, corruption, or major technical changes make the current world unsafe to continue.'],
+  ['Can I play without a group?', 'Yes, but scarcity, PvP, and the aging world make solo survival harder. Trading or temporary cooperation can be as important as permanent factions.'],
+];
+---
+
+<Layout
+  title="Knox Aftermath World"
+  description="How the Fallen World: Knox Aftermath server evolves over time, including scarcity, infected progression, events, RPG systems, and FAQ."
+>
+  <div class="mx-auto max-w-6xl px-6 py-16 sm:py-20">
+    <header class="max-w-3xl">
+      <div class="mb-3 text-xs font-semibold uppercase tracking-widest text-emerald-500">Fallen World: Knox Aftermath</div>
+      <h1 class="text-4xl font-extrabold uppercase tracking-tight text-white sm:text-5xl">The World</h1>
+      <p class="mt-5 text-lg leading-8 text-gray-400">
+        The point is not simply harder sandbox settings. Knox Aftermath is built around a world that ages, empties out, and becomes more dangerous the longer players survive in it.
+      </p>
+    </header>
+
+    <section class="mt-14 border-t border-gray-800 pt-10">
+      <div class="mb-3 text-xs font-semibold uppercase tracking-widest text-emerald-500">Why Knox Aftermath</div>
+      <h2 class="text-2xl font-bold text-white">What makes the server different</h2>
+      <div class="mt-7 grid gap-x-10 gap-y-7 md:grid-cols-2">
+        {pillars.map(([title, text]) => (
+          <article class="border-l border-gray-700 pl-4">
+            <h3 class="font-semibold text-white">{title}</h3>
+            <p class="mt-2 text-sm leading-6 text-gray-400">{text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="mt-16 border-t border-gray-800 pt-10">
+      <div class="mb-3 text-xs font-semibold uppercase tracking-widest text-emerald-500">World progression</div>
+      <h2 class="text-2xl font-bold text-white">The server gets worse with time</h2>
+      <div class="mt-7 divide-y divide-gray-800 border-y border-gray-800">
+        {progression.map((item) => (
+          <article class="grid gap-2 py-6 lg:grid-cols-[150px_240px_1fr] lg:gap-8">
+            <div class="text-xs font-semibold uppercase tracking-wider text-emerald-500">{item.phase}</div>
+            <h3 class="font-semibold text-white">{item.title}</h3>
+            <p class="text-sm leading-6 text-gray-400">{item.text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="mt-16 border-t border-gray-800 pt-10">
+      <div class="mb-3 text-xs font-semibold uppercase tracking-widest text-emerald-500">Events and pressure</div>
+      <h2 class="text-2xl font-bold text-white">Reasons to leave the safehouse</h2>
+      <div class="mt-7 grid gap-x-10 gap-y-7 md:grid-cols-2 lg:grid-cols-3">
+        {events.map(([title, text]) => (
+          <article>
+            <h3 class="font-semibold text-white">{title}</h3>
+            <p class="mt-2 text-sm leading-6 text-gray-400">{text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="mt-16 border-t border-gray-800 pt-10">
+      <div class="mb-3 text-xs font-semibold uppercase tracking-widest text-emerald-500">Community media</div>
+      <h2 class="text-2xl font-bold text-white">Actual Knox Aftermath captures</h2>
+      <p class="mt-3 max-w-3xl text-sm leading-6 text-gray-400">
+        Official Project Zomboid media rotates behind the overview hero. This section is reserved for screenshots and clips taken on the actual server so the site can show the world players are really building and destroying.
+      </p>
+      <div class="mt-7 overflow-hidden rounded-md border border-gray-700 bg-[#111]">
+        <img src={serverImage} alt="Fallen World: Knox Aftermath community server artwork" class="block h-auto w-full" referrerpolicy="no-referrer" loading="lazy" />
+      </div>
+      <p class="mt-3 text-sm text-gray-500">Share strong server screenshots and clips in the Fallen World Discord for future gallery additions.</p>
+    </section>
+
+    <section class="mt-16 border-t border-gray-800 pt-10">
+      <div class="mb-3 text-xs font-semibold uppercase tracking-widest text-emerald-500">FAQ</div>
+      <h2 class="text-2xl font-bold text-white">Before you join</h2>
+      <div class="mt-7 divide-y divide-gray-800 border-y border-gray-800">
+        {faq.map(([question, answer]) => (
+          <details class="py-1">
+            <summary class="cursor-pointer list-none py-4 font-semibold text-gray-100">{question}</summary>
+            <p class="max-w-3xl pb-5 text-sm leading-6 text-gray-400">{answer}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <section class="mt-14 flex flex-wrap gap-3 border-t border-gray-800 pt-10">
+      <a href="/knox-start" class="rounded-md bg-[#0d9488] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#0f766e]">Quick Start</a>
+      <a href="/knox-rules" class="rounded-md border border-gray-700 px-5 py-2.5 text-sm font-semibold text-gray-300 transition-colors hover:border-gray-500 hover:text-white">Read Rules</a>
+      <a href="/knox-aftermath" class="rounded-md border border-gray-700 px-5 py-2.5 text-sm font-semibold text-gray-300 transition-colors hover:border-gray-500 hover:text-white">Browse Workshop Mods</a>
+    </section>
+  </div>
+</Layout>
