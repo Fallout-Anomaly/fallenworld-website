@@ -1,0 +1,102 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const roadmap = [
+  {
+    feature: 'New HUD',
+    status: 'In progress',
+    change: 'Cleaner survival information and less menu clutter.',
+    notes: 'Replacing the current HUD setup.'
+  },
+  {
+    feature: 'New Settings Menu',
+    status: 'In progress',
+    change: 'Faster mod settings with instant navigation.',
+    notes: 'Replacing the old MCM workflow.'
+  },
+  {
+    feature: 'Settlement Menu Overhaul',
+    status: 'In progress',
+    change: 'Search, place-in-red, free camera building and better mod support.',
+    notes: 'Core feature set is already working.'
+  },
+  {
+    feature: 'Combat Pass',
+    status: 'In progress',
+    change: 'Final balance and compatibility work across combat systems.',
+    notes: 'Focused on consistency and edge cases.'
+  },
+  {
+    feature: 'Radiation Overhaul',
+    status: 'Ongoing',
+    change: 'Better radiation pacing, storms and long-term exposure.',
+    notes: 'Already live and still being tuned.'
+  },
+  {
+    feature: 'Weather Overhaul',
+    status: 'In progress',
+    change: 'More consistent weather, lighting and hazardous conditions.',
+    notes: 'Built around the current survival systems.'
+  },
+  {
+    feature: 'Workbench Progression',
+    status: 'Planned',
+    change: 'Bench upgrades will replace the old schematic progression.',
+    notes: 'More details will be published when the system is locked in.'
+  },
+  {
+    feature: 'Performance & Load Times',
+    status: 'Ongoing',
+    change: 'Faster startup, fewer stalls and lower overhead.',
+    notes: 'Continuous work as the list changes.'
+  },
+  {
+    feature: 'Stability',
+    status: 'Ongoing',
+    change: 'Crash fixes, compatibility fixes and safer defaults.',
+    notes: 'Continuous work.'
+  }
+];
+
+const statusClass = (status: string) => {
+  if (status === 'In progress') return 'text-amber-300';
+  if (status === 'Planned') return 'text-gray-400';
+  return 'text-emerald-400';
+};
+---
+
+<Layout
+  title="Fallen World Roadmap"
+  description="Current development roadmap for Fallen World."
+>
+  <div class="mx-auto max-w-6xl px-6 py-16 sm:py-20">
+    <header>
+      <div class="text-xs font-semibold uppercase tracking-widest text-emerald-500">Fallen World</div>
+      <h1 class="mt-2 text-4xl font-extrabold uppercase tracking-tight text-white sm:text-5xl">Roadmap</h1>
+      <p class="mt-4 text-sm text-gray-500">No dates until a feature is ready enough to ship.</p>
+    </header>
+
+    <div class="mt-10 overflow-x-auto border-y border-gray-800">
+      <table class="w-full min-w-[820px] border-collapse text-left text-sm">
+        <thead class="bg-[#111] text-xs uppercase tracking-wider text-gray-500">
+          <tr>
+            <th class="px-4 py-3 font-semibold">Feature</th>
+            <th class="px-4 py-3 font-semibold">Status</th>
+            <th class="px-4 py-3 font-semibold">What changes</th>
+            <th class="px-4 py-3 font-semibold">Notes</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-800">
+          {roadmap.map((item) => (
+            <tr class="align-top">
+              <td class="px-4 py-4 font-semibold text-gray-100">{item.feature}</td>
+              <td class={`px-4 py-4 font-semibold ${statusClass(item.status)}`}>{item.status}</td>
+              <td class="px-4 py-4 leading-6 text-gray-300">{item.change}</td>
+              <td class="px-4 py-4 leading-6 text-gray-500">{item.notes}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</Layout>
