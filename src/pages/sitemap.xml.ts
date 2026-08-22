@@ -20,6 +20,7 @@ export const GET: APIRoute = async () => {
     '/apply',
     '/community',
     '/features',
+    '/roadmap',
     '/knox-aftermath',
     '/knox-start',
     '/knox-rules',

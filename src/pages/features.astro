@@ -1,6 +1,5 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import InstallReadiness from '../components/InstallReadiness.astro';
 import homeData from '../data/fallenworld-home.json';
 
 const categories = ['All', ...new Set(homeData.features.map((feature) => feature.category))];
@@ -8,36 +7,29 @@ const categories = ['All', ...new Set(homeData.features.map((feature) => feature
 
 <Layout
   title="Fallen World Features"
-  description="Explore the combat, survival, world, progression, interface, and technical systems that make up Fallen World for Fallout 4."
+  description="Gameplay systems included in Fallen World for Fallout 4."
 >
   <div class="mx-auto max-w-6xl px-6 py-16 sm:py-20">
-    <header class="max-w-3xl">
-      <div class="mb-3 text-xs font-semibold uppercase tracking-widest text-emerald-500">Fallen World</div>
-      <h1 class="text-4xl font-extrabold uppercase tracking-tight text-white sm:text-5xl">Feature Index</h1>
-      <p class="mt-5 text-lg leading-8 text-gray-400">
-        Browse the systems that change Fallout 4, see what is already live, and track the major replacements currently being built.
-      </p>
+    <header>
+      <div class="text-xs font-semibold uppercase tracking-widest text-emerald-500">Fallen World</div>
+      <h1 class="mt-2 text-4xl font-extrabold uppercase tracking-tight text-white sm:text-5xl">Features</h1>
     </header>
 
-    <section class="mt-12">
-      <InstallReadiness />
-    </section>
-
-    <section class="mt-14 border-y border-gray-800 py-8" aria-label="Feature filters">
-      <label for="feature-search" class="text-xs font-semibold uppercase tracking-widest text-gray-500">Search systems</label>
+    <section class="mt-10 border-y border-gray-800 py-6" aria-label="Feature filters">
       <input
         id="feature-search"
         type="search"
-        placeholder="Search combat, radiation, crafting, HUD..."
+        placeholder="Search features"
         autocomplete="off"
-        class="mt-3 w-full rounded-md border border-gray-700 bg-[#111] px-4 py-3 text-base text-gray-100 outline-none transition-colors placeholder:text-gray-600 focus:border-emerald-600"
+        aria-label="Search features"
+        class="w-full rounded-md border border-gray-700 bg-[#111] px-4 py-3 text-base text-gray-100 outline-none placeholder:text-gray-600 focus:border-emerald-600"
       />
 
-      <div class="mt-5 flex flex-wrap gap-2" role="group" aria-label="Filter by category">
+      <div class="mt-4 flex flex-wrap gap-2" role="group" aria-label="Filter by category">
         {categories.map((category, index) => (
           <button
             type="button"
-            class={`feature-filter rounded-md border px-3 py-2 text-sm font-medium transition-colors ${index === 0 ? 'border-emerald-600 bg-emerald-950/30 text-emerald-300' : 'border-gray-700 text-gray-400 hover:border-gray-600 hover:text-gray-200'}`}
+            class={`feature-filter rounded-md border px-3 py-2 text-sm font-medium ${index === 0 ? 'border-emerald-600 text-emerald-300' : 'border-gray-700 text-gray-400 hover:text-gray-200'}`}
             data-category={category}
             aria-pressed={index === 0 ? 'true' : 'false'}
           >
@@ -47,38 +39,27 @@ const categories = ['All', ...new Set(homeData.features.map((feature) => feature
       </div>
     </section>
 
-    <div class="mt-8 flex items-center justify-between gap-4">
-      <p id="feature-count" class="text-sm text-gray-500">{homeData.features.length} systems</p>
-      <a href="/docs/intro" class="text-sm font-semibold text-emerald-400 hover:text-emerald-300">Open gameplay guide</a>
+    <div class="mt-6 flex items-center justify-between gap-4">
+      <p id="feature-count" class="text-sm text-gray-500">{homeData.features.length} features</p>
+      <a href="/roadmap" class="text-sm font-semibold text-emerald-400 hover:text-emerald-300">Roadmap</a>
     </div>
 
-    <section id="feature-grid" class="mt-6 grid gap-px overflow-hidden rounded-md border border-gray-800 bg-gray-800 md:grid-cols-2">
+    <div id="feature-list" class="mt-4 divide-y divide-gray-800 border-y border-gray-800">
       {homeData.features.map((feature) => (
-        <article
-          class="feature-item bg-[#0d0d0d] p-6"
+        <a
+          href={feature.href}
+          class="feature-item grid gap-2 py-5 sm:grid-cols-[170px_220px_1fr] sm:gap-6"
           data-category={feature.category}
-          data-search={`${feature.title} ${feature.category} ${feature.description} ${feature.state}`.toLowerCase()}
+          data-search={`${feature.title} ${feature.category} ${feature.description}`.toLowerCase()}
         >
-          <div class="flex items-start justify-between gap-5">
-            <div>
-              <div class="text-xs font-semibold uppercase tracking-widest text-gray-500">{feature.category}</div>
-              <h2 class="mt-2 text-xl font-bold text-white">{feature.title}</h2>
-            </div>
-            <span class={`shrink-0 text-xs font-semibold uppercase tracking-wider ${feature.state === 'Live' ? 'text-emerald-400' : 'text-amber-300'}`}>
-              {feature.state}
-            </span>
-          </div>
-          <p class="mt-4 text-sm leading-6 text-gray-400">{feature.description}</p>
-          <a href={feature.href} class="mt-5 inline-block text-sm font-semibold text-emerald-400 hover:text-emerald-300">
-            Learn more
-          </a>
-        </article>
+          <span class="text-xs font-semibold uppercase tracking-widest text-gray-500">{feature.category}</span>
+          <span class="font-semibold text-gray-100">{feature.title}</span>
+          <span class="text-sm leading-6 text-gray-400">{feature.description}</span>
+        </a>
       ))}
-    </section>
+    </div>
 
-    <p id="feature-empty" class="mt-10 hidden border-l-4 border-gray-700 bg-[#111] px-5 py-4 text-sm text-gray-400">
-      No systems match that search.
-    </p>
+    <p id="feature-empty" class="mt-8 hidden text-sm text-gray-500">No matching features.</p>
   </div>
 </Layout>
 
@@ -97,14 +78,12 @@ const categories = ['All', ...new Set(homeData.features.map((feature) => feature
     for (const item of items) {
       const category = item.getAttribute('data-category') || '';
       const search = item.getAttribute('data-search') || '';
-      const categoryMatch = activeCategory === 'All' || category === activeCategory;
-      const searchMatch = !query || search.includes(query);
-      const show = categoryMatch && searchMatch;
+      const show = (activeCategory === 'All' || category === activeCategory) && (!query || search.includes(query));
       item.classList.toggle('hidden', !show);
       if (show) visible += 1;
     }
 
-    if (count) count.textContent = `${visible} ${visible === 1 ? 'system' : 'systems'}`;
+    if (count) count.textContent = `${visible} ${visible === 1 ? 'feature' : 'features'}`;
     empty?.classList.toggle('hidden', visible !== 0);
   }
 
@@ -113,17 +92,14 @@ const categories = ['All', ...new Set(homeData.features.map((feature) => feature
   for (const button of filterButtons) {
     button.addEventListener('click', () => {
       activeCategory = button.getAttribute('data-category') || 'All';
-
       for (const other of filterButtons) {
         const active = other === button;
         other.setAttribute('aria-pressed', active ? 'true' : 'false');
         other.classList.toggle('border-emerald-600', active);
-        other.classList.toggle('bg-emerald-950/30', active);
         other.classList.toggle('text-emerald-300', active);
         other.classList.toggle('border-gray-700', !active);
         other.classList.toggle('text-gray-400', !active);
       }
-
       renderFeatures();
     });
   }
