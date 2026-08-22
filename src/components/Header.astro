@@ -4,8 +4,7 @@ const navLinks = [
   { href: '/docs/intro', label: 'Guide' },
   { href: '/apply', label: 'Apply' },
   { href: '/community', label: 'Community' },
-  { href: '/knox-aftermath', label: 'Knox Aftermath' },
-  { href: '/knox-roadmap', label: 'Knox Roadmap' },
+  { href: '/knox-aftermath', label: 'Knox Aftermath - Project Zomboid Server' },
 ];
 
 const discordUrl = 'https://discord.gg/Q5DmJDZFVR';
@@ -48,7 +47,7 @@ const linkClass = (href: string) => `transition-colors hover:text-emerald-400 ${
       <summary class="cursor-pointer list-none rounded-md border border-white/15 px-3 py-1.5 text-sm font-semibold text-gray-200 transition-colors hover:border-emerald-500/50 hover:text-white">
         Menu
       </summary>
-      <div class="absolute right-0 mt-2 w-56 rounded-md border border-white/10 bg-[#111] p-2 shadow-xl">
+      <div class="absolute right-0 mt-2 w-72 rounded-md border border-white/10 bg-[#111] p-2 shadow-xl">
         <ul class="space-y-1 text-sm font-medium">
           {navLinks.map(({ href, label }) => (
             <li>
