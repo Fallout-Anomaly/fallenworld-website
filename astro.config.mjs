@@ -9,7 +9,6 @@ export default defineConfig({
   redirects: {
     '/prismaui-f4': PRISMA_DOCS,
     '/prismaui-f4/getting-started': PRISMA_DOCS,
-    '/roadmap': '/',
     '/wiki': '/docs/intro',
   },
   integrations: [mdx()],
