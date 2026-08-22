@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Header from '../components/Header.astro';
+import KnoxSubnav from '../components/KnoxSubnav.astro';
 
 interface Props {
   title?: string;
@@ -20,6 +21,7 @@ const pageTitle = title === siteName
     : `${title} | ${siteName}`;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
 const socialImage = new URL('/img/HomeImage.webp', Astro.site ?? Astro.url.origin);
+const isKnoxPage = Astro.url.pathname === '/knox-aftermath' || Astro.url.pathname.startsWith('/knox-');
 ---
 
 <!doctype html>
@@ -53,6 +55,7 @@ const socialImage = new URL('/img/HomeImage.webp', Astro.site ?? Astro.url.origi
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <Header />
+    {isKnoxPage && <KnoxSubnav />}
     <main id="main-content" tabindex="-1">
       <slot />
     </main>

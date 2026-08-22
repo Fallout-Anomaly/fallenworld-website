@@ -1,0 +1,96 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const steps = [
+  {
+    title: 'Use Project Zomboid Build 42.20',
+    text: 'Knox Aftermath currently runs Build 42.20. Update the game before joining so the client and server match.',
+  },
+  {
+    title: 'Find the public server',
+    text: 'Open Join > Public Servers and search for “Fallen World: Knox Aftermath”. No password is required.',
+  },
+  {
+    title: 'Let Workshop content install',
+    text: 'The server uses the live Workshop mod set shown on the overview page. Project Zomboid will prompt for required Workshop content when you connect.',
+  },
+  {
+    title: 'Expect a persistent world',
+    text: 'Loot does not respawn, zombies do not respawn, utilities fail over time, and other players can affect the same world you are entering.',
+  },
+];
+
+const firstHour = [
+  'Do not assume nearby houses still contain food, medicine, or tools. Other survivors may already have stripped them.',
+  'Treat gunfire as both an opportunity and a warning. PvP is enabled and sound attracts infected.',
+  'Secure water, a container, basic medical supplies, and a fallback route before committing to a base.',
+  'Vehicles are valuable long-term assets. Fuel is limited and mechanical condition matters.',
+  'Sprinters become more common as the world ages. A route that feels safe early can become dangerous later.',
+  'Use proximity voice chat carefully. People can hear you, and so can threats around you.',
+];
+---
+
+<Layout
+  title="Knox Aftermath Quick Start"
+  description="How to join Fallen World: Knox Aftermath and what new players should expect from the persistent hardcore Project Zomboid server."
+>
+  <div class="mx-auto max-w-5xl px-6 py-16 sm:py-20">
+    <header class="max-w-3xl">
+      <div class="mb-3 text-xs font-semibold uppercase tracking-widest text-emerald-500">Fallen World: Knox Aftermath</div>
+      <h1 class="text-4xl font-extrabold uppercase tracking-tight text-white sm:text-5xl">Quick Start</h1>
+      <p class="mt-5 text-lg leading-8 text-gray-400">
+        Get into the server without digging through settings pages first.
+      </p>
+    </header>
+
+    <section class="mt-12 border-l-4 border-teal-600 bg-[#111] px-5 py-5">
+      <div class="text-xs font-semibold uppercase tracking-widest text-emerald-500">Direct connect</div>
+      <div class="mt-3 flex flex-wrap items-center gap-3">
+        <code class="text-lg font-semibold text-white">157.250.203.86:25593</code>
+        <span class="text-sm text-gray-500">No password</span>
+      </div>
+      <div class="mt-5 flex flex-wrap gap-3">
+        <a href="steam://connect/157.250.203.86:25593" class="rounded-md bg-[#0d9488] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#0f766e]">Join server</a>
+        <a href="/knox-aftermath" class="rounded-md border border-gray-700 px-5 py-2.5 text-sm font-semibold text-gray-300 transition-colors hover:border-gray-500 hover:text-white">Server overview</a>
+      </div>
+    </section>
+
+    <section class="mt-14 border-t border-gray-800 pt-10">
+      <div class="mb-7 text-xs font-semibold uppercase tracking-widest text-emerald-500">Joining</div>
+      <div class="divide-y divide-gray-800 border-y border-gray-800">
+        {steps.map((step, index) => (
+          <article class="grid gap-2 py-6 md:grid-cols-[80px_220px_1fr] md:gap-8">
+            <div class="font-mono text-sm text-gray-600">0{index + 1}</div>
+            <h2 class="font-semibold text-white">{step.title}</h2>
+            <p class="text-sm leading-6 text-gray-400">{step.text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="mt-14 border-t border-gray-800 pt-10">
+      <div class="mb-3 text-xs font-semibold uppercase tracking-widest text-emerald-500">First hour</div>
+      <h2 class="text-2xl font-bold text-white">What catches new players</h2>
+      <ul class="mt-6 grid gap-x-10 gap-y-4 text-sm leading-6 text-gray-400 md:grid-cols-2">
+        {firstHour.map((item) => (
+          <li class="border-l border-gray-700 pl-4">{item}</li>
+        ))}
+      </ul>
+    </section>
+
+    <section class="mt-14 border-t border-gray-800 pt-10">
+      <div class="mb-3 text-xs font-semibold uppercase tracking-widest text-emerald-500">Workshop</div>
+      <h2 class="text-2xl font-bold text-white">Live mod set</h2>
+      <p class="mt-3 max-w-3xl text-sm leading-6 text-gray-400">
+        The overview page lists every active Workshop item individually so you can see exactly what the server is running before connecting.
+      </p>
+      <a href="/knox-aftermath" class="mt-5 inline-flex text-sm font-semibold text-emerald-400 transition-colors hover:text-emerald-300">Browse the 78-mod list →</a>
+    </section>
+
+    <section class="mt-14 border-t border-gray-800 pt-10">
+      <h2 class="text-xl font-semibold text-white">Need help joining?</h2>
+      <p class="mt-2 text-sm leading-6 text-gray-400">Use the Fallen World Discord for connection problems, mod download issues, or server questions.</p>
+      <a href="https://discord.gg/Q5DmJDZFVR" target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex rounded-md bg-[#5865F2] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#4752c4]">Open Discord</a>
+    </section>
+  </div>
+</Layout>

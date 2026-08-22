@@ -1,0 +1,105 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const rules = [
+  {
+    title: 'PvP is part of the server',
+    text: 'PvP is enabled. Do not join expecting a protected PvE world. Ambushes, fights over resources, and player conflict are part of Knox Aftermath unless an announced event says otherwise.',
+  },
+  {
+    title: 'No cheats, dupes, or exploit abuse',
+    text: 'Do not use trainers, scripts, item duplication, packet manipulation, map exploits, or bugs to create an advantage that normal gameplay cannot provide.',
+  },
+  {
+    title: 'No combat logging',
+    text: 'Disconnecting specifically to avoid an active fight, death, capture, or other immediate player consequence is not acceptable.',
+  },
+  {
+    title: 'Do not make the server unplayable',
+    text: 'Raiding and destructive gameplay are allowed when they serve survival or conflict. Deliberately destroying critical spawn areas or server infrastructure only to stop others from playing is not.',
+  },
+  {
+    title: 'Keep player conflict in the game',
+    text: 'Harassment, threats outside the game, hate speech, doxxing, or targeted abuse are not part of PvP. Use Discord reports for problems that need staff attention.',
+  },
+  {
+    title: 'Do not impersonate staff',
+    text: 'Do not claim admin authority, fabricate server notices, or mislead players into thinking a staff decision has been made when it has not.',
+  },
+];
+
+const deathPolicy = [
+  'Project Zomboid character death is permanent for that character.',
+  'Staff do not restore characters or replace gear lost through normal death, PvP, infection, or bad decisions.',
+  'The shared world keeps moving after a death. Looted locations stay looted and cleared areas do not refill with fresh resources.',
+  'A new character is entering the same persistent world, not a personal reset of it.',
+];
+
+const wipePolicy = [
+  'Knox Aftermath is intended to be persistent. There is no routine wipe schedule built around refreshing loot.',
+  'A server-wide wipe is considered only when a Build 42 change, incompatible mod update, corruption, or major technical change makes the existing world unsafe to continue.',
+  'When a wipe is unavoidable, it will be announced through Fallen World channels before the reset whenever circumstances allow.',
+  'Normal balance changes, restarts, and mod maintenance do not automatically mean a wipe.',
+];
+---
+
+<Layout
+  title="Knox Aftermath Rules"
+  description="Rules, death policy, PvP expectations, and wipe policy for Fallen World: Knox Aftermath."
+>
+  <div class="mx-auto max-w-5xl px-6 py-16 sm:py-20">
+    <header class="max-w-3xl">
+      <div class="mb-3 text-xs font-semibold uppercase tracking-widest text-emerald-500">Fallen World: Knox Aftermath</div>
+      <h1 class="text-4xl font-extrabold uppercase tracking-tight text-white sm:text-5xl">Rules</h1>
+      <p class="mt-5 text-lg leading-8 text-gray-400">
+        The short version: PvP is allowed. Exploits and out-of-game abuse are not.
+      </p>
+    </header>
+
+    <section class="mt-12 border-l-4 border-teal-600 bg-[#111] px-5 py-5">
+      <div class="text-xs font-semibold uppercase tracking-widest text-emerald-500">Server baseline</div>
+      <p class="mt-3 text-sm leading-6 text-gray-300">
+        Public server · PvP enabled · Steam secure · no password · proximity voice chat · persistent no-respawn world
+      </p>
+    </section>
+
+    <section class="mt-14 border-t border-gray-800 pt-10">
+      <div class="mb-7 text-xs font-semibold uppercase tracking-widest text-emerald-500">Conduct</div>
+      <div class="divide-y divide-gray-800 border-y border-gray-800">
+        {rules.map((rule, index) => (
+          <article class="grid gap-2 py-6 md:grid-cols-[70px_240px_1fr] md:gap-8">
+            <div class="font-mono text-sm text-gray-600">0{index + 1}</div>
+            <h2 class="font-semibold text-white">{rule.title}</h2>
+            <p class="text-sm leading-6 text-gray-400">{rule.text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="mt-14 grid gap-12 border-t border-gray-800 pt-10 lg:grid-cols-2">
+      <div>
+        <div class="mb-3 text-xs font-semibold uppercase tracking-widest text-emerald-500">Death</div>
+        <h2 class="text-2xl font-bold text-white">No personal rollback</h2>
+        <ul class="mt-5 space-y-3 text-sm leading-6 text-gray-400">
+          {deathPolicy.map((item) => <li class="border-l border-gray-700 pl-4">{item}</li>)}
+        </ul>
+      </div>
+
+      <div>
+        <div class="mb-3 text-xs font-semibold uppercase tracking-widest text-emerald-500">World wipes</div>
+        <h2 class="text-2xl font-bold text-white">Persistent unless forced</h2>
+        <ul class="mt-5 space-y-3 text-sm leading-6 text-gray-400">
+          {wipePolicy.map((item) => <li class="border-l border-gray-700 pl-4">{item}</li>)}
+        </ul>
+      </div>
+    </section>
+
+    <section class="mt-14 border-t border-gray-800 pt-10">
+      <h2 class="text-xl font-semibold text-white">Reports and appeals</h2>
+      <p class="mt-2 max-w-3xl text-sm leading-6 text-gray-400">
+        Bring exploit reports, harassment reports, and disputed staff actions to the Fallen World Discord with whatever evidence you have. Do not turn reports into public callout campaigns.
+      </p>
+      <a href="https://discord.gg/Q5DmJDZFVR" target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex rounded-md bg-[#5865F2] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#4752c4]">Open Discord</a>
+    </section>
+  </div>
+</Layout>
