@@ -19,6 +19,7 @@ export const GET: APIRoute = async () => {
     '/',
     '/apply',
     '/community',
+    '/knox-aftermath',
     '/privacy',
     ...docs.map((entry) => `/docs/${entry.id.replace(/\.(md|mdx)$/, '')}`),
   ];
