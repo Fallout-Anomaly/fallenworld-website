@@ -8,18 +8,18 @@ import homeData from '../data/fallenworld-home.json';
   title="Fallen World | Hardcore Survival for Fallout 4"
   description="Fallen World is a hardcore Fallout 4 survival modlist with lethal combat, deep survival systems, expanded content, and automated installation."
 >
-  <section style="position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+  <section class="hero-shell">
     <div id="hero-bg" class="hero-bg">
       <iframe
         id="hero-player"
         class="hero-video"
-        data-src="https://www.youtube-nocookie.com/embed/GEV6T70Wgzk?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1"
+        data-src="https://www.youtube-nocookie.com/embed/GEV6T70Wgzk?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1&start=8"
         title="Fallen World background video"
         frameborder="0"
         allow="autoplay"
         aria-hidden="true"
       ></iframe>
-      <img id="bg-img-a" class="hero-img" src="" alt="" aria-hidden="true" />
+      <img id="bg-img-a" class="hero-img hero-img-active" src="/img/HomeImage.webp" alt="" aria-hidden="true" />
       <img id="bg-img-b" class="hero-img" src="" alt="" aria-hidden="true" />
       <div class="hero-scrim"></div>
     </div>
@@ -31,172 +31,68 @@ import homeData from '../data/fallenworld-home.json';
       Enable Sound
     </button>
 
-    <div style="position: relative; z-index: 2; text-align: center; max-width: 700px; padding: 2rem; display: flex; flex-direction: column; align-items: center;">
-      <div style="margin-bottom: 1rem;">
-        <img
-          src="/img/radiation.svg"
-          alt=""
-          aria-hidden="true"
-          style="max-width: 120px; width: 100%; height: auto; filter: drop-shadow(0 0 12px rgba(13,148,136,0.4)); animation: spin 8s linear infinite;"
-        />
+    <div class="hero-copy">
+      <img src="/img/radiation.svg" alt="" aria-hidden="true" class="hero-mark" />
+      <h1>Fallen World</h1>
+      <p>The #1 hardcore survival experience for Fallout 4</p>
+      <div class="hero-actions">
+        <a href="https://www.wabbajack.org/" target="_blank" rel="noopener noreferrer" class="primary-action">Install with Wabbajack</a>
+        <a href="/docs/intro" class="secondary-action">Guide</a>
       </div>
-      <h1 style="margin: 0 0 0.5rem; font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 800; color: #f5f5f5; letter-spacing: 0.15em; text-transform: uppercase; text-shadow: 0 0 30px rgba(13,148,136,0.3); line-height: 1.1;">
-        Fallen World
-      </h1>
-      <p style="margin: 0 0 1.5rem; font-size: 1.15rem; color: #9ca3af;">
-        The #1 hardcore survival experience for Fallout 4
-      </p>
-      <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
-        <a
-          href="https://www.wabbajack.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          style="display: inline-block; padding: 0.75rem 1.75rem; background: #0d9488; color: #fff; font-weight: 700; border-radius: 6px; text-decoration: none; letter-spacing: 0.05em; text-transform: uppercase; font-size: 0.9rem;"
-        >
-          Install with Wabbajack
-        </a>
-        <a
-          href="/features"
-          style="display: inline-block; padding: 0.75rem 1.75rem; border: 2px solid rgba(255,255,255,0.2); color: #e5e7eb; font-weight: 600; border-radius: 6px; text-decoration: none; font-size: 0.9rem;"
-        >
-          Explore Features
-        </a>
-      </div>
-
-      <div style="display: flex; justify-content: center; gap: 2.5rem; margin-top: 2.5rem; flex-wrap: wrap;">
-        {[
-          { value: '100K+', label: 'Downloads' },
-          { value: '600+', label: 'Mods Included' },
-          { value: 'Active', label: 'Development' },
-        ].map(({ value, label }) => (
-          <div style="text-align: center;">
-            <div style="font-size: 1.5rem; font-weight: 800; color: #0d9488;">{value}</div>
-            <div style="font-size: 0.8rem; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.08em;">{label}</div>
-          </div>
-        ))}
+      <div class="hero-stats">
+        <span><strong>100K+</strong> Downloads</span>
+        <span><strong>600+</strong> Mods</span>
       </div>
     </div>
   </section>
 
-  <section class="border-y border-gray-800 bg-[#0d0d0d] px-6 py-8">
-    <div class="mx-auto grid max-w-6xl gap-8 sm:grid-cols-2 lg:grid-cols-4">
-      {homeData.status.map((item) => (
-        <div>
-          <div class="text-xs font-semibold uppercase tracking-widest text-gray-500">{item.label}</div>
-          <div class="mt-2 text-base font-bold text-gray-100">{item.value}</div>
-          <p class="mt-2 text-sm leading-6 text-gray-500">{item.detail}</p>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <section class="bg-[#0a0a0a] px-6 py-20">
-    <div class="mx-auto max-w-6xl">
-      <div class="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14">
-        <header>
-          <div class="text-xs font-semibold uppercase tracking-widest text-emerald-500">The Experience</div>
-          <h2 class="mt-3 text-3xl font-extrabold uppercase tracking-tight text-white sm:text-4xl">What Fallen World Changes</h2>
-          <p class="mt-5 text-base leading-7 text-gray-400">
-            Fallen World is not a pile of independent mods. Its systems are selected and rebuilt around one goal: make the Commonwealth dangerous, coherent, and worth learning again.
-          </p>
-          <a href="/features" class="mt-6 inline-block text-sm font-semibold text-emerald-400 hover:text-emerald-300">Browse the full feature index</a>
-        </header>
-
-        <div class="border-y border-gray-800">
-          {homeData.coreSystems.map((system) => (
-            <a href={system.href} class="group grid gap-2 border-b border-gray-800 py-5 last:border-b-0 sm:grid-cols-[190px_1fr] sm:gap-8">
-              <h3 class="font-semibold text-gray-100 transition-colors group-hover:text-emerald-400">{system.title}</h3>
-              <p class="text-sm leading-6 text-gray-400">{system.description}</p>
-            </a>
-          ))}
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="border-y border-gray-800 bg-[#0d0d0d] px-6 py-20">
-    <div class="mx-auto max-w-6xl">
-      <div class="grid gap-14 lg:grid-cols-2">
-        <div>
-          <div class="text-xs font-semibold uppercase tracking-widest text-emerald-500">Start Here</div>
-          <h2 class="mt-3 text-3xl font-extrabold uppercase tracking-tight text-white">From Vanilla to Fallen World</h2>
-          <p class="mt-5 max-w-xl text-base leading-7 text-gray-400">
-            The supported path is documented from requirements through first launch. Use the guide instead of improvising a manual install.
-          </p>
-
-          <ol class="mt-8 border-y border-gray-800">
-            {[
-              { n: '01', title: 'Check Requirements', text: 'Verify the supported Fallout 4 version, storage, and system requirements.', href: '/docs/requirements' },
-              { n: '02', title: 'Install the List', text: 'Use the supported Wabbajack setup and follow the documented install path.', href: '/docs/setup' },
-              { n: '03', title: 'Launch Correctly', text: 'Use the included launcher and supported startup workflow.', href: '/docs/launching' },
-              { n: '04', title: 'Learn the Systems', text: 'Read the gameplay guide before treating Fallen World like vanilla Fallout 4.', href: '/docs/gameplay/index' },
-            ].map((step) => (
-              <li class="border-b border-gray-800 last:border-b-0">
-                <a href={step.href} class="group grid gap-2 py-5 sm:grid-cols-[44px_150px_1fr] sm:gap-5">
-                  <span class="text-sm font-bold text-emerald-500">{step.n}</span>
-                  <span class="font-semibold text-gray-100 transition-colors group-hover:text-emerald-400">{step.title}</span>
-                  <span class="text-sm leading-6 text-gray-500">{step.text}</span>
-                </a>
-              </li>
-            ))}
-          </ol>
-        </div>
-
-        <div>
-          <div class="text-xs font-semibold uppercase tracking-widest text-emerald-500">Development</div>
-          <h2 class="mt-3 text-3xl font-extrabold uppercase tracking-tight text-white">What Is Being Rebuilt</h2>
-          <p class="mt-5 max-w-xl text-base leading-7 text-gray-400">
-            The next phase is focused on replacing old Fallout 4 workflows with systems built specifically for Fallen World.
-          </p>
-
-          <div class="mt-8 border-y border-gray-800">
-            {homeData.development.map((item) => (
-              <article class="grid gap-2 border-b border-gray-800 py-5 last:border-b-0 sm:grid-cols-[175px_1fr] sm:gap-7">
-                <div>
-                  <h3 class="font-semibold text-gray-100">{item.title}</h3>
-                  <div class="mt-1 text-xs font-semibold uppercase tracking-wider text-amber-300">{item.state}</div>
-                </div>
-                <p class="text-sm leading-6 text-gray-400">{item.description}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </div>
+  <section class="border-y border-gray-800 bg-[#0d0d0d] px-6 py-5">
+    <div class="mx-auto grid max-w-6xl grid-cols-2 gap-px overflow-hidden border border-gray-800 bg-gray-800 sm:grid-cols-4">
+      <a href="/docs/requirements" class="bg-[#0d0d0d] px-5 py-4 text-sm font-semibold text-gray-200 hover:text-emerald-400">Requirements</a>
+      <a href="/docs/setup" class="bg-[#0d0d0d] px-5 py-4 text-sm font-semibold text-gray-200 hover:text-emerald-400">Install</a>
+      <a href="/features" class="bg-[#0d0d0d] px-5 py-4 text-sm font-semibold text-gray-200 hover:text-emerald-400">Features</a>
+      <a href="/roadmap" class="bg-[#0d0d0d] px-5 py-4 text-sm font-semibold text-gray-200 hover:text-emerald-400">Roadmap</a>
     </div>
   </section>
 
   <section class="bg-[#0a0a0a] px-6 py-16">
-    <div class="mx-auto flex max-w-6xl flex-col gap-6 border-l-4 border-teal-600 bg-[#111] px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
-      <div>
-        <div class="text-xs font-semibold uppercase tracking-widest text-emerald-500">Need a specific system?</div>
-        <h2 class="mt-2 text-xl font-bold text-white">Search the Fallen World feature index</h2>
-        <p class="mt-2 text-sm leading-6 text-gray-400">Filter by combat, survival, world, progression, interface, or technical systems.</p>
+    <div class="mx-auto max-w-6xl">
+      <div class="mb-6 flex items-end justify-between gap-4">
+        <div>
+          <div class="text-xs font-semibold uppercase tracking-widest text-emerald-500">Gameplay</div>
+          <h2 class="mt-2 text-2xl font-bold text-white">Core Systems</h2>
+        </div>
+        <a href="/features" class="text-sm font-semibold text-emerald-400 hover:text-emerald-300">All features</a>
       </div>
-      <a href="/features" class="shrink-0 rounded-md bg-[#0d9488] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#0f766e]">Open Feature Index</a>
+
+      <div class="grid gap-px overflow-hidden border border-gray-800 bg-gray-800 sm:grid-cols-2 lg:grid-cols-3">
+        {homeData.coreSystems.map((system) => (
+          <a href={system.href} class="bg-[#0d0d0d] px-5 py-5 font-semibold text-gray-100 hover:text-emerald-400">
+            {system.title}
+          </a>
+        ))}
+      </div>
     </div>
   </section>
 
-  <section style="background: #0a0a0a; padding: 5rem 1.5rem; border-top: 1px solid #1f2937;">
-    <div style="max-width: 1200px; margin: 0 auto;">
-      <div style="text-align: center; margin-bottom: 3rem;">
-        <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #0d9488; margin-bottom: 0.5rem;">Gallery</div>
-        <h2 style="font-size: 2rem; font-weight: 800; color: #f5f5f5; text-transform: uppercase; letter-spacing: 0.1em;">The Wasteland Awaits</h2>
+  <section class="border-t border-gray-800 bg-[#0a0a0a] px-6 py-16">
+    <div class="mx-auto max-w-6xl">
+      <div class="mb-8 flex items-end justify-between gap-4">
+        <div>
+          <div class="text-xs font-semibold uppercase tracking-widest text-emerald-500">Gallery</div>
+          <h2 class="mt-2 text-2xl font-bold text-white">Fallen World In Game</h2>
+        </div>
       </div>
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); gap: 1rem; margin-bottom: 3rem;">
+      <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {galleryData.images.map((src, index) => (
-          <div style="aspect-ratio: 16/9; overflow: hidden; border-radius: 6px; border: 1px solid #374151;">
-            <img
-              src={src}
-              alt={`Fallen World gameplay screenshot ${index + 1}`}
-              loading="lazy"
-              style="width: 100%; height: 100%; object-fit: cover;"
-            />
+          <div class="aspect-video overflow-hidden rounded-md border border-gray-800 bg-[#111]">
+            <img src={src} alt={`Fallen World gameplay screenshot ${index + 1}`} loading="lazy" class="h-full w-full object-cover" />
           </div>
         ))}
       </div>
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); gap: 1.5rem;">
+      <div class="mt-8 grid gap-4 lg:grid-cols-2">
         {galleryData.videos.map((video) => (
           <div class="video-wrap">
             <button
@@ -215,24 +111,22 @@ import homeData from '../data/fallenworld-home.json';
     </div>
   </section>
 
-  <footer style="background: #0a0a0a; border-top: 1px solid #1f2937; padding: 2rem 1.5rem; text-align: center;">
-    <p style="font-size: 0.8rem; color: #9ca3af; margin: 0;">
-      Fallen World is an unofficial fan project. Not affiliated with Bethesda Game Studios.
-      <span style="margin: 0 0.5rem;">·</span>
-      <a href="https://discord.gg/Q5DmJDZFVR" target="_blank" rel="noopener noreferrer" style="color: #2dd4bf; text-decoration: none;">Discord</a>
-      <span style="margin: 0 0.5rem;">·</span>
-      <a href="https://loadorderlibrary.com/lists/fallout-anomaly-0-5" target="_blank" rel="noopener noreferrer" style="color: #2dd4bf; text-decoration: none;">Modlist</a>
-      <span style="margin: 0 0.5rem;">·</span>
-      <a href="/privacy" style="color: #2dd4bf; text-decoration: none;">Privacy</a>
-    </p>
+  <footer class="border-t border-gray-800 bg-[#0a0a0a] px-6 py-8 text-center text-xs text-gray-500">
+    Fallen World is an unofficial fan project. Not affiliated with Bethesda Game Studios.
+    <span class="mx-2">·</span>
+    <a href="https://discord.gg/Q5DmJDZFVR" target="_blank" rel="noopener noreferrer" class="text-teal-400">Discord</a>
+    <span class="mx-2">·</span>
+    <a href="https://loadorderlibrary.com/lists/fallout-anomaly-0-5" target="_blank" rel="noopener noreferrer" class="text-teal-400">Modlist</a>
+    <span class="mx-2">·</span>
+    <a href="/privacy" class="text-teal-400">Privacy</a>
   </footer>
 </Layout>
 
 <script define:vars={{ images: galleryData.images }}>
-  const FADE_MS = 2500;
+  const FADE_MS = 1800;
   const IMAGE_HOLD_MS = 7000;
+  const HERO_VIDEO_START = 8;
 
-  const heroBg = document.getElementById('hero-bg');
   const videoEl = document.getElementById('hero-player');
   const imgA = document.getElementById('bg-img-a');
   const imgB = document.getElementById('bg-img-b');
@@ -243,50 +137,43 @@ import homeData from '../data/fallenworld-home.json';
   let inactive = imgB;
   let ytPlayer = null;
 
-  function sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   function crossfadeTo(src) {
     if (!active || !inactive) return;
     inactive.src = src;
-    inactive.style.opacity = '1';
-    active.style.opacity = '0';
-    const tmp = active;
+    inactive.classList.add('hero-img-active');
+    active.classList.remove('hero-img-active');
+    const previous = active;
     active = inactive;
-    inactive = tmp;
+    inactive = previous;
   }
 
   async function runSlideshow() {
     if (reduceMotion || !videoEl || !active) return;
-    videoEl.style.opacity = '0';
+    videoEl.classList.remove('hero-video-active');
     await sleep(FADE_MS);
 
-    for (let i = 0; i < images.length; i++) {
-      crossfadeTo(images[i]);
+    for (const src of images) {
+      crossfadeTo(src);
       await sleep(IMAGE_HOLD_MS);
     }
 
-    active.style.opacity = '0';
-    videoEl.style.opacity = '1';
-    await sleep(FADE_MS);
-
-    if (ytPlayer) {
-      ytPlayer.seekTo(0);
-      ytPlayer.playVideo();
-    }
+    if (ytPlayer) ytPlayer.seekTo(HERO_VIDEO_START, true);
+    active.classList.remove('hero-img-active');
+    videoEl.classList.add('hero-video-active');
+    ytPlayer?.playVideo();
   }
 
   function enableSound() {
     if (!ytPlayer || !soundBtn) return;
     ytPlayer.unMute();
     ytPlayer.setVolume(18);
-    soundBtn.style.opacity = '0';
-    setTimeout(() => { soundBtn.style.display = 'none'; }, 600);
+    soundBtn.style.display = 'none';
   }
 
   if (reduceMotion) {
-    heroBg?.classList.add('reduced-motion');
+    if (videoEl) videoEl.style.display = 'none';
     if (soundBtn) soundBtn.style.display = 'none';
   } else if (videoEl) {
     videoEl.src = videoEl.dataset.src || '';
@@ -295,7 +182,11 @@ import homeData from '../data/fallenworld-home.json';
     window.onYouTubeIframeAPIReady = function () {
       ytPlayer = new window.YT.Player('hero-player', {
         events: {
-          onReady: function() {},
+          onReady: function(event) {
+            event.target.seekTo(HERO_VIDEO_START, true);
+            event.target.playVideo();
+            setTimeout(() => videoEl.classList.add('hero-video-active'), 450);
+          },
           onStateChange: function(event) {
             if (event.data === 0) runSlideshow();
           },
@@ -312,7 +203,6 @@ import homeData from '../data/fallenworld-home.json';
     button.addEventListener('click', () => {
       const videoId = button.dataset.videoId;
       if (!videoId) return;
-
       const iframe = document.createElement('iframe');
       iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0`;
       iframe.title = button.dataset.videoTitle || 'Fallen World video';
@@ -327,6 +217,15 @@ import homeData from '../data/fallenworld-home.json';
 </script>
 
 <style>
+  .hero-shell {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
   .hero-bg {
     position: absolute;
     inset: 0;
@@ -334,17 +233,17 @@ import homeData from '../data/fallenworld-home.json';
     background: #0a0a0a;
   }
 
-  .hero-bg.reduced-motion {
-    background: #0a0a0a url('/img/HomeImage.webp') center / cover no-repeat;
-  }
-
-  .hero-bg.reduced-motion .hero-video,
-  .hero-bg.reduced-motion .hero-img {
-    display: none;
+  .hero-video,
+  .hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.8s ease;
   }
 
   .hero-video {
-    position: absolute;
     top: 50%;
     left: 50%;
     width: 177.78vh;
@@ -353,55 +252,123 @@ import homeData from '../data/fallenworld-home.json';
     min-height: 56.25vw;
     transform: translate(-50%, -50%);
     pointer-events: none;
-    transition: opacity 2.5s ease-in-out;
+  }
+
+  .hero-video-active,
+  .hero-img-active {
+    opacity: 1;
   }
 
   .hero-img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
     object-fit: cover;
-    opacity: 0;
-    transition: opacity 2.5s ease-in-out;
   }
 
   .hero-scrim {
     position: absolute;
     inset: 0;
-    background: rgba(10, 10, 10, 0.5);
     z-index: 2;
+    background: rgba(10, 10, 10, 0.5);
+  }
+
+  .hero-copy {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    max-width: 720px;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .hero-mark {
+    width: 96px;
+    filter: drop-shadow(0 0 12px rgba(13,148,136,0.4));
+    animation: spin 8s linear infinite;
+  }
+
+  .hero-copy h1 {
+    margin: 1rem 0 0.35rem;
+    color: #f5f5f5;
+    font-size: clamp(2.1rem, 5vw, 3.4rem);
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .hero-copy p {
+    margin: 0;
+    color: #9ca3af;
+    font-size: 1.05rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .primary-action,
+  .secondary-action {
+    border-radius: 6px;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .primary-action {
+    background: #0d9488;
+    color: white;
+    text-transform: uppercase;
+  }
+
+  .secondary-action {
+    border: 1px solid #4b5563;
+    color: #e5e7eb;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+    color: #9ca3af;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .hero-stats strong {
+    color: #14b8a6;
+    font-size: 1.15rem;
+    margin-right: 0.3rem;
   }
 
   #sound-btn {
     position: absolute;
-    bottom: 1.5rem;
     right: 1.5rem;
+    bottom: 1.5rem;
     z-index: 10;
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    background: rgba(0,0,0,0.65);
     border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 999px;
+    background: rgba(0,0,0,0.65);
     color: #f3f4f6;
+    padding: 0.5rem 0.8rem;
     font-size: 0.75rem;
     font-weight: 600;
-    padding: 0.5rem 0.8rem;
-    border-radius: 99px;
     cursor: pointer;
-    transition: opacity 0.6s ease, background 0.2s;
-    backdrop-filter: blur(4px);
-  }
-
-  #sound-btn:hover {
-    background: rgba(13,148,136,0.5);
-    border-color: #2dd4bf;
   }
 
   .video-wrap {
     aspect-ratio: 16 / 9;
     overflow: hidden;
-    border-radius: 8px;
+    border-radius: 6px;
     border: 1px solid #374151;
     background: #111;
   }
@@ -421,14 +388,6 @@ import homeData from '../data/fallenworld-home.json';
     height: 100%;
     object-fit: cover;
     display: block;
-    opacity: 0.82;
-    transition: opacity 0.2s ease, transform 0.2s ease;
-  }
-
-  .video-facade:hover img,
-  .video-facade:focus-visible img {
-    opacity: 1;
-    transform: scale(1.02);
   }
 
   .video-play {
@@ -436,10 +395,10 @@ import homeData from '../data/fallenworld-home.json';
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    border: 1px solid rgba(255,255,255,0.3);
     border-radius: 999px;
-    background: rgba(0, 0, 0, 0.78);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: #fff;
+    background: rgba(0,0,0,0.78);
+    color: white;
     padding: 0.65rem 1rem;
     font-size: 0.85rem;
     font-weight: 700;
