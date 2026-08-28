@@ -10,12 +10,12 @@ const { Content } = await render(entry);
   title="Knox Aftermath Changelog"
   description="Server and website changelog for Fallen World: Knox Aftermath."
 >
-  <main class="knox-changelog w-full px-5 py-14 sm:px-8 sm:py-20 lg:px-12 xl:px-16 2xl:px-20">
+  <main class="knox-changelog w-full px-4 py-14 sm:px-6 sm:py-20 lg:px-10 xl:px-14 2xl:px-16">
     <header class="changelog-hero">
       <div class="changelog-kicker">Knox Aftermath</div>
       <h1>Changelog</h1>
       <p>
-        Browse updates by date. Open a date to see every update published that day, then expand an update or category for the full details.
+        Browse updates by date. Open a date to see every change from that release, then expand a category for the full details and linked Workshop items.
       </p>
     </header>
 
@@ -114,41 +114,32 @@ const { Content } = await render(entry);
         time.textContent = date;
         dateWrap.append(time);
 
-        const count = document.createElement('span');
-        count.className = 'changelog-date__count';
-        count.textContent = `${entries.length} ${entries.length === 1 ? 'update' : 'updates'}`;
+        const label = document.createElement('span');
+        label.className = 'changelog-date__label';
+        label.textContent = 'Release changes';
 
         const hint = document.createElement('span');
         hint.className = 'changelog-date__hint';
-        hint.textContent = 'View date';
+        hint.textContent = 'View changes';
 
-        dateSummary.append(dateWrap, count, hint);
+        dateSummary.append(dateWrap, label, hint);
 
         const dateBody = document.createElement('div');
         dateBody.className = 'changelog-date__body';
 
-        entries.forEach((release, releaseIndex) => {
-          const update = document.createElement('details');
-          update.className = 'changelog-update';
-          if (dateIndex === 0 && releaseIndex === 0) update.open = true;
+        entries.forEach((release) => {
+          const releaseBody = document.createElement('section');
+          releaseBody.className = 'changelog-release';
 
-          const updateSummary = document.createElement('summary');
-          const updateTitle = document.createElement('span');
-          updateTitle.className = 'changelog-update__title';
-          updateTitle.textContent = release.title;
+          if (entries.length > 1) {
+            const title = document.createElement('h3');
+            title.className = 'changelog-release__title';
+            title.textContent = release.title;
+            releaseBody.append(title);
+          }
 
-          const updateHint = document.createElement('span');
-          updateHint.className = 'changelog-update__hint';
-          updateHint.textContent = 'Details';
-
-          updateSummary.append(updateTitle, updateHint);
-
-          const updateContent = document.createElement('div');
-          updateContent.className = 'changelog-update__content';
-          updateContent.append(...release.nodes);
-
-          update.append(updateSummary, updateContent);
-          dateBody.append(update);
+          releaseBody.append(...release.nodes);
+          dateBody.append(releaseBody);
         });
 
         dateSection.append(dateSummary, dateBody);
@@ -166,7 +157,6 @@ const { Content } = await render(entry);
       --knox-line: rgba(71, 85, 105, 0.58);
       --knox-panel: rgba(15, 15, 15, 0.96);
       --knox-panel-soft: rgba(22, 22, 22, 0.86);
-      --knox-panel-deep: rgba(10, 10, 10, 0.7);
       --knox-accent: #2dd4bf;
     }
 
@@ -195,7 +185,7 @@ const { Content } = await render(entry);
     }
 
     .knox-changelog .changelog-hero p {
-      max-width: 58rem;
+      max-width: 60rem;
       margin: 1rem 0 0;
       color: #aeb7c3;
       line-height: 1.7;
@@ -241,8 +231,7 @@ const { Content } = await render(entry);
     }
 
     .knox-changelog .changelog-date > summary::-webkit-details-marker,
-    .knox-changelog .changelog-update > summary::-webkit-details-marker,
-    .knox-changelog .changelog-update__content details > summary::-webkit-details-marker {
+    .knox-changelog .changelog-release details > summary::-webkit-details-marker {
       display: none;
     }
 
@@ -270,14 +259,13 @@ const { Content } = await render(entry);
       font-variant-numeric: tabular-nums;
     }
 
-    .knox-changelog .changelog-date__count {
+    .knox-changelog .changelog-date__label {
       color: #cbd5e1;
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       font-weight: 700;
     }
 
-    .knox-changelog .changelog-date__hint,
-    .knox-changelog .changelog-update__hint {
+    .knox-changelog .changelog-date__hint {
       color: #8793a2;
       font-size: 0.72rem;
       font-weight: 800;
@@ -286,8 +274,7 @@ const { Content } = await render(entry);
       white-space: nowrap;
     }
 
-    .knox-changelog .changelog-date__hint::after,
-    .knox-changelog .changelog-update__hint::after {
+    .knox-changelog .changelog-date__hint::after {
       content: '›';
       display: inline-block;
       margin-left: 0.45rem;
@@ -298,99 +285,69 @@ const { Content } = await render(entry);
       transition: transform 160ms ease;
     }
 
-    .knox-changelog .changelog-date[open] > summary .changelog-date__hint::after,
-    .knox-changelog .changelog-update[open] > summary .changelog-update__hint::after {
+    .knox-changelog .changelog-date[open] > summary .changelog-date__hint::after {
       transform: rotate(-90deg);
     }
 
     .knox-changelog .changelog-date__body {
       width: 100%;
-      padding: 1rem;
+      padding: 1.15rem 1.25rem 1.35rem;
     }
 
-    .knox-changelog .changelog-update {
+    .knox-changelog .changelog-release {
       width: 100%;
-      margin: 0 0 0.8rem;
-      overflow: hidden;
-      border: 1px solid rgba(71, 85, 105, 0.56);
-      border-radius: 9px;
-      background: var(--knox-panel-soft);
+      color: #c2cad3;
     }
 
-    .knox-changelog .changelog-update:last-child {
-      margin-bottom: 0;
+    .knox-changelog .changelog-release + .changelog-release {
+      margin-top: 1.5rem;
+      padding-top: 1.35rem;
+      border-top: 1px solid rgba(71, 85, 105, 0.38);
     }
 
-    .knox-changelog .changelog-update > summary {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 1rem;
-      align-items: center;
-      min-height: 3.75rem;
-      padding: 0.85rem 1rem;
-      margin: 0;
-      cursor: pointer;
-      list-style: none;
-      background: rgba(255, 255, 255, 0.018);
-    }
-
-    .knox-changelog .changelog-update > summary:hover {
-      background: rgba(255, 255, 255, 0.032);
-    }
-
-    .knox-changelog .changelog-update[open] > summary {
-      border-bottom: 1px solid rgba(71, 85, 105, 0.44);
-    }
-
-    .knox-changelog .changelog-update__title {
+    .knox-changelog .changelog-release__title {
+      margin: 0 0 1rem;
       color: #eef2f7;
-      font-size: 0.98rem;
-      font-weight: 750;
+      font-size: 1rem;
+      font-weight: 800;
       letter-spacing: -0.01em;
     }
 
-    .knox-changelog .changelog-update__content {
-      width: 100%;
-      padding: 1rem 1.15rem 1.2rem;
-      color: #c2cad3;
-      background: var(--knox-panel-deep);
-    }
-
-    .knox-changelog .changelog-update__content > :first-child {
+    .knox-changelog .changelog-release > :first-child:not(.changelog-release__title) {
       margin-top: 0;
     }
 
-    .knox-changelog .changelog-update__content > :last-child {
+    .knox-changelog .changelog-release > :last-child {
       margin-bottom: 0;
     }
 
-    .knox-changelog .changelog-update__content > p {
+    .knox-changelog .changelog-release > p {
       max-width: 110ch;
     }
 
-    .knox-changelog .changelog-update__content > details {
+    .knox-changelog .changelog-release > details {
       width: 100%;
       margin: 0.7rem 0;
       overflow: hidden;
-      border: 1px solid rgba(71, 85, 105, 0.48);
+      border: 1px solid rgba(71, 85, 105, 0.5);
       border-radius: 8px;
-      background: rgba(255, 255, 255, 0.018);
+      background: var(--knox-panel-soft);
     }
 
-    .knox-changelog .changelog-update__content > details > summary {
-      min-height: 3.2rem;
+    .knox-changelog .changelog-release > details > summary {
+      min-height: 3.25rem;
       display: flex;
       align-items: center;
-      padding: 0.75rem 0.9rem;
+      padding: 0.78rem 0.95rem;
       margin: 0;
       color: #e8edf3;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       font-weight: 700;
       list-style: none;
       cursor: pointer;
     }
 
-    .knox-changelog .changelog-update__content > details > summary::before {
+    .knox-changelog .changelog-release > details > summary::before {
       content: '+';
       display: inline-grid;
       place-items: center;
@@ -404,34 +361,34 @@ const { Content } = await render(entry);
       font-weight: 500;
     }
 
-    .knox-changelog .changelog-update__content > details[open] > summary::before {
+    .knox-changelog .changelog-release > details[open] > summary::before {
       content: '-';
     }
 
-    .knox-changelog .changelog-update__content > details[open] > summary {
+    .knox-changelog .changelog-release > details[open] > summary {
       color: #8ff5e7;
       border-bottom: 1px solid rgba(71, 85, 105, 0.4);
     }
 
-    .knox-changelog .changelog-update__content > details > :not(summary) {
+    .knox-changelog .changelog-release > details > :not(summary) {
       margin-left: 1rem;
       margin-right: 1rem;
     }
 
-    .knox-changelog .changelog-update__content ul,
-    .knox-changelog .changelog-update__content ol {
+    .knox-changelog .changelog-release ul,
+    .knox-changelog .changelog-release ol {
       padding-left: 1.35rem;
     }
 
-    .knox-changelog .changelog-update__content li {
+    .knox-changelog .changelog-release li {
       padding: 0.3rem 0;
     }
 
-    .knox-changelog .changelog-update__content li > p {
+    .knox-changelog .changelog-release li > p {
       margin: 0;
     }
 
-    .knox-changelog .changelog-update__content img {
+    .knox-changelog .changelog-release img {
       width: 72px;
       max-height: 72px;
       object-fit: cover;
@@ -441,16 +398,6 @@ const { Content } = await render(entry);
       border: 1px solid rgba(71, 85, 105, 0.55);
       border-radius: 8px;
       background: #0b0b0b;
-    }
-
-    @media (min-width: 1280px) {
-      .knox-changelog .changelog-date__body {
-        padding: 1.15rem 1.25rem 1.3rem;
-      }
-
-      .knox-changelog .changelog-update__content {
-        padding: 1.2rem 1.4rem 1.4rem;
-      }
     }
 
     @media (max-width: 720px) {
@@ -466,7 +413,7 @@ const { Content } = await render(entry);
       }
 
       .knox-changelog .changelog-date__date,
-      .knox-changelog .changelog-date__count {
+      .knox-changelog .changelog-date__label {
         grid-column: 1;
       }
 
@@ -482,19 +429,7 @@ const { Content } = await render(entry);
       }
 
       .knox-changelog .changelog-date__body {
-        padding: 0.75rem;
-      }
-
-      .knox-changelog .changelog-update__content {
-        padding: 0.85rem;
-      }
-
-      .knox-changelog .changelog-update__hint {
-        font-size: 0;
-      }
-
-      .knox-changelog .changelog-update__hint::after {
-        font-size: 1.25rem;
+        padding: 0.8rem;
       }
     }
   </style>
