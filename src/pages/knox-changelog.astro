@@ -32,11 +32,11 @@ const { Content } = await render(entry);
 
       root.querySelector(':scope > h1')?.remove();
 
-      const isDateText = (text) => /^\d{4}-\d{2}-\d{2}\s*[-–—]/.test(text.trim());
+      const isDateText = (text) => /^\d{4}-\d{2}-\d{2}\s*-/.test(text.trim());
 
       const decorateDateSummary = (summary) => {
         const raw = summary.textContent?.trim() ?? '';
-        const match = raw.match(/^(\d{4}-\d{2}-\d{2})\s*[-–—]\s*(.+)$/);
+        const match = raw.match(/^(\d{4}-\d{2}-\d{2})\s*-\s*(.+)$/);
         if (!match) return;
 
         const [, date, title] = match;
