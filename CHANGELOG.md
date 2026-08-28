@@ -5,25 +5,21 @@ description: "Player-facing server updates for Fallen World: Knox Aftermath."
 
 # Knox Aftermath Changelog
 
-## 2026-08-28 - Inventory system update
-
-- [![GridInventory](https://images.steamusercontent.com/ugc/10341232090830092368/7E8F296FF87ED03AAEEFD63D3EC1E9F0D65478D6/?imw=256&ima=fit)](https://steamcommunity.com/sharedfiles/filedetails/?id=3782313362) [GridInventory - Tarkov-Style Inventory System](https://steamcommunity.com/sharedfiles/filedetails/?id=3782313362) replaces [Inventory Tetris](https://steamcommunity.com/sharedfiles/filedetails/?id=3775513231) in the server configuration.
-- The new system uses a Tarkov-style grid where items occupy physical space and can be rotated, organized, and stored across containers and equipment.
-- Inventory Tetris and GridInventory must not be enabled together. Existing saves should be backed up before testing this core inventory change in multiplayer.
-
 ## 2026-08-28 - Server configuration update
 
 The current server configuration has been expanded with new quality-of-life,
-survival, faction, map, vehicle, and atmosphere content. The additions below
+survival, faction, map, vehicle, inventory, and atmosphere content. The additions below
 are linked directly to their Steam Workshop pages and use the current Steam
 preview image for each item.
 
 <details>
 <summary>Inventory, interaction, and building</summary>
 
+- [![GridInventory](https://images.steamusercontent.com/ugc/10341232090830092368/7E8F296FF87ED03AAEEFD63D3EC1E9F0D65478D6/?imw=256&ima=fit)](https://steamcommunity.com/sharedfiles/filedetails/?id=3782313362) [GridInventory - Tarkov-Style Inventory System](https://steamcommunity.com/sharedfiles/filedetails/?id=3782313362) replaces [Inventory Tetris](https://steamcommunity.com/sharedfiles/filedetails/?id=3775513231) in the server configuration.
+- The new inventory uses a Tarkov-style grid where items occupy physical space and can be rotated, organized, and stored across containers and equipment.
+- Inventory Tetris and GridInventory must not be enabled together. Existing saves should be backed up before testing this core inventory change in multiplayer.
 - [![Vehicle Enter/Exit Fix](https://images.steamusercontent.com/ugc/17800041436973725263/BB81BE6D92E11CBDA4E44034681F7EA6A5D46A36/?imw=256&ima=fit)](https://steamcommunity.com/sharedfiles/filedetails/?id=3785695033) [Vehicle Enter/Exit Fix](https://steamcommunity.com/sharedfiles/filedetails/?id=3785695033) - smoother vehicle entry and exit behavior.
 - [![Neat Lockpicking](https://images.steamusercontent.com/ugc/15618581820047089341/90DA54808C09E5DEC0430C89BB22B31867050A9C/?imw=256&ima=fit)](https://steamcommunity.com/sharedfiles/filedetails/?id=3783535220) [Neat Lockpicking](https://steamcommunity.com/sharedfiles/filedetails/?id=3783535220) - adds lockpicking gameplay and UI.
-- [![Inventory Tetris](https://images.steamusercontent.com/ugc/13051309261004088932/00826409AC8A5C1B732F728523A8DC1F74722CB8/?imw=256&ima=fit)](https://steamcommunity.com/sharedfiles/filedetails/?id=3775513231) [Inventory Tetris](https://steamcommunity.com/sharedfiles/filedetails/?id=3775513231) - grid-based inventory and equipment management.
 - [![Expanded Storage](https://images.steamusercontent.com/ugc/17653532147803200048/080691EF4AFDD1D715B5BAA7AE97802FBE649DF7/?imw=256&ima=fit)](https://steamcommunity.com/sharedfiles/filedetails/?id=3777973578) [Expanded Storage](https://steamcommunity.com/sharedfiles/filedetails/?id=3777973578) - more storage options for long-term bases.
 - [![Simple CodeLock](https://images.steamusercontent.com/ugc/16512562448016291533/361445580F9D3F9AE49637FEDE4FEE1E5DF6BDBB/?imw=256&ima=fit)](https://steamcommunity.com/sharedfiles/filedetails/?id=3785982335) [Simple CodeLock](https://steamcommunity.com/sharedfiles/filedetails/?id=3785982335) - code-based protection for player structures.
 - [![Better Sorting Reborn](https://images.steamusercontent.com/ugc/12523495886819768638/C36A77EE844ED745C02F02EA5C193287C6E999A6/?imw=256&ima=fit)](https://steamcommunity.com/sharedfiles/filedetails/?id=3774523641) [Better Sorting Reborn](https://steamcommunity.com/sharedfiles/filedetails/?id=3774523641) - improved item sorting and organization.
