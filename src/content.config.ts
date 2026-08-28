@@ -12,4 +12,12 @@ const docs = defineCollection({
   }),
 });
 
-export const collections = { docs };
+const knoxChangelog = defineCollection({
+  loader: glob({ pattern: 'CHANGELOG.md', base: './' }),
+  schema: z.object({
+    title: z.string().optional(),
+    description: z.string().optional(),
+  }),
+});
+
+export const collections = { docs, knoxChangelog };
