@@ -5,6 +5,12 @@ description: "Player-facing server updates for Fallen World: Knox Aftermath."
 
 # Knox Aftermath Changelog
 
+## 2026-08-28 - Inventory system update
+
+- [![GridInventory](https://images.steamusercontent.com/ugc/10341232090830092368/7E8F296FF87ED03AAEEFD63D3EC1E9F0D65478D6/?imw=256&ima=fit)](https://steamcommunity.com/sharedfiles/filedetails/?id=3782313362) [GridInventory - Tarkov-Style Inventory System](https://steamcommunity.com/sharedfiles/filedetails/?id=3782313362) replaces [Inventory Tetris](https://steamcommunity.com/sharedfiles/filedetails/?id=3775513231) in the server configuration.
+- The new system uses a Tarkov-style grid where items occupy physical space and can be rotated, organized, and stored across containers and equipment.
+- Inventory Tetris and GridInventory must not be enabled together. Existing saves should be backed up before testing this core inventory change in multiplayer.
+
 ## 2026-08-28 - Server configuration update
 
 The current server configuration has been expanded with new quality-of-life,
