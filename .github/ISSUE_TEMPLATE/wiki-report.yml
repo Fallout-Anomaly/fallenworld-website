@@ -1,0 +1,42 @@
+name: Wiki problem
+about: Report incorrect, outdated, broken, or missing wiki information.
+title: "Wiki: "
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for documentation problems. Include the exact wiki page and enough detail for a contributor to verify the issue.
+  - type: input
+    id: page
+    attributes:
+      label: Wiki page
+      description: Paste the full wiki page URL.
+      placeholder: https://fallenworld.nexus/wiki/...
+    validations:
+      required: true
+  - type: dropdown
+    id: problem
+    attributes:
+      label: Problem type
+      options:
+        - Outdated information
+        - Incorrect information
+        - Broken link or media
+        - Missing information
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Fallen World version
+      description: If this is version-specific, enter the version you are using.
+      placeholder: Current Alpha
+  - type: textarea
+    id: details
+    attributes:
+      label: What is wrong?
+      description: Explain what the page says, what should be different, and how you verified it.
+    validations:
+      required: true
