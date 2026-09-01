@@ -4,7 +4,6 @@ description: "A compact community checklist for the first few in-game days, focu
 category: "community-guides"
 type: "community"
 status: "current"
-fallenWorldVersion: "Current Alpha"
 updated: "2026-09-01"
 lastTested: "2026-09-01"
 difficulty: "beginner"
