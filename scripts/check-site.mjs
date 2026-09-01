@@ -43,6 +43,22 @@ const fileSet = new Set(allFiles.map((file) => toPosix(path.relative(distDir, fi
 const htmlFiles = allFiles.filter((file) => file.endsWith('.html'));
 const failures = [];
 
+const requiredPageMarkers = new Map([
+  ['wiki/index.html', 'id="wiki-search"'],
+  ['wiki/mods/index.html', 'id="mod-search"'],
+  ['wiki/troubleshooting/index.html', 'id="troubleshooting-search"'],
+]);
+
+for (const [rel, marker] of requiredPageMarkers) {
+  if (!fileSet.has(rel)) {
+    failures.push(`${rel}: required wiki route was not generated`);
+    continue;
+  }
+
+  const html = await readFile(path.join(distDir, rel), 'utf8');
+  if (!html.includes(marker)) failures.push(`${rel}: expected wiki page marker is missing`);
+}
+
 const bannedPatterns = [
   { pattern: /—/u, label: 'em dash' },
   { pattern: /forms\.fillout\.com\/t\/TODO/i, label: 'placeholder application URL' },
