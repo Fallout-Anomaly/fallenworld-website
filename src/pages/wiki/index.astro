@@ -160,6 +160,7 @@ const categoryHref = (slug: string) => {
     const input = document.querySelector('#wiki-search');
     const category = document.querySelector('#wiki-category');
     const items = [...document.querySelectorAll('.wiki-search-item')];
+    const resultItems = [...document.querySelectorAll('#wiki-results .wiki-search-item')];
     const count = document.querySelector('#wiki-search-count');
     const empty = document.querySelector('#wiki-empty');
 
@@ -170,16 +171,17 @@ const categoryHref = (slug: string) => {
     function filterWiki() {
       const query = input instanceof HTMLInputElement ? input.value.trim().toLowerCase() : '';
       const selectedCategory = category instanceof HTMLSelectElement ? category.value : '';
-      let visible = 0;
 
       for (const item of items) {
         if (!(item instanceof HTMLElement)) continue;
         const matchesQuery = !query || (item.dataset.search ?? '').includes(query);
         const matchesCategory = !selectedCategory || item.dataset.category === selectedCategory;
-        const show = matchesQuery && matchesCategory;
-        item.classList.toggle('hidden', !show);
-        if (show) visible += 1;
+        item.classList.toggle('hidden', !(matchesQuery && matchesCategory));
       }
+
+      const visible = resultItems.reduce((total, item) => (
+        item instanceof HTMLElement && !item.classList.contains('hidden') ? total + 1 : total
+      ), 0);
 
       if (count) count.textContent = `${visible} matching guide${visible === 1 ? '' : 's'}`;
       empty?.classList.toggle('hidden', visible !== 0);
