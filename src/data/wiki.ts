@@ -29,12 +29,7 @@ export function categoryLabel(slug: string) {
 }
 
 export function statusLabel(status: string) {
-  switch (status) {
-    case 'needs-review': return 'Needs Review';
-    case 'outdated': return 'Outdated';
-    case 'archived': return 'Archived';
-    default: return 'Current';
-  }
+  return status === 'outdated' ? 'Outdated' : 'Current';
 }
 
 export function sourcePath(id: string) {
