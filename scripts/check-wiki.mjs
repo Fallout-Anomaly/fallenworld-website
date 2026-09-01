@@ -25,6 +25,7 @@ const allowedCategories = new Set([
 const allowedTypes = new Set(['official', 'community']);
 const allowedStatuses = new Set(['current', 'needs-review', 'outdated', 'archived']);
 const allowedDifficulties = new Set(['beginner', 'intermediate', 'advanced', 'all']);
+const staticWikiRoutes = new Set(['mods', 'troubleshooting']);
 const allowedCommunityHtmlTags = new Set(['details', 'summary']);
 const githubAuthorPattern = /^@[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?$/;
 const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
@@ -214,7 +215,9 @@ for (const file of files) {
 for (const page of pages) {
   for (const match of page.body.matchAll(/\]\((\/wiki\/[^)#?\s]+)[^)]*\)/g)) {
     const target = match[1].replace(/^\/wiki\//, '').replace(/\/$/, '');
-    if (target && !slugs.has(target)) failures.push(`${page.rel}: broken wiki link ${match[1]}`);
+    if (target && !slugs.has(target) && !staticWikiRoutes.has(target)) {
+      failures.push(`${page.rel}: broken wiki link ${match[1]}`);
+    }
   }
 
   const seenRelated = new Set();
