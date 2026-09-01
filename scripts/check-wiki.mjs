@@ -23,7 +23,7 @@ const allowedCategories = new Set([
   'developer-documentation',
 ]);
 const allowedTypes = new Set(['official', 'community']);
-const allowedStatuses = new Set(['current', 'needs-review', 'outdated', 'archived']);
+const allowedStatuses = new Set(['current', 'outdated']);
 const allowedDifficulties = new Set(['beginner', 'intermediate', 'advanced', 'all']);
 const staticWikiRoutes = new Set(['mods', 'troubleshooting']);
 const allowedCommunityHtmlTags = new Set(['details', 'summary']);
@@ -133,7 +133,6 @@ for (const file of files) {
     category: scalar(frontmatter, 'category'),
     type: scalar(frontmatter, 'type'),
     status: scalar(frontmatter, 'status'),
-    fallenWorldVersion: scalar(frontmatter, 'fallenWorldVersion'),
     updated: scalar(frontmatter, 'updated'),
     lastTested: scalar(frontmatter, 'lastTested'),
     difficulty: scalar(frontmatter, 'difficulty'),
@@ -142,7 +141,7 @@ for (const file of files) {
   const related = stringList(frontmatter, 'related');
   const isCommunityPath = rel.startsWith('community-guides/');
 
-  for (const key of ['title', 'description', 'category', 'type', 'status', 'fallenWorldVersion', 'updated', 'difficulty']) {
+  for (const key of ['title', 'description', 'category', 'type', 'status', 'updated', 'difficulty']) {
     if (!values[key]) failures.push(`${rel}: missing required field ${key}`);
   }
 
