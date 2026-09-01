@@ -4,7 +4,6 @@ description: "What PrismaUI does in Fallen World, why the project uses it, and w
 category: "mods"
 type: "official"
 status: "current"
-fallenWorldVersion: "Current Alpha"
 updated: "2026-09-01"
 lastTested: "2026-09-01"
 difficulty: "all"
@@ -49,7 +48,7 @@ If a PrismaUI-powered interface does not appear or behaves incorrectly:
 
 1. Confirm Fallen World is fully updated.
 2. Test without additional interface mods.
-3. Confirm the affected feature is actually expected on your current Fallen World version.
+3. Confirm the affected feature is expected on the current Fallen World build.
 4. Restart the game after changing UI-related files or plugins.
 5. Check whether every PrismaUI interface is broken or only one specific feature.
 
@@ -82,8 +81,8 @@ Developer documentation should separate three layers:
 2. **Bridge contract**: the messages, callbacks, and data formats passed between native code and the interface.
 3. **Frontend**: the UI application itself, including state, rendering, input, and styling.
 
-Keeping those layers documented separately makes versioning and compatibility failures easier to identify.
+Keeping those layers documented separately makes compatibility failures easier to identify.
 
 ## Reporting a problem
 
-Use **Report a Problem** below and include the exact Fallen World version, the interface that failed, what you expected, what actually happened, and whether other PrismaUI interfaces still work.
+Use **Report a Problem** below and include the interface that failed, what you expected, what actually happened, and whether other PrismaUI interfaces still work.
