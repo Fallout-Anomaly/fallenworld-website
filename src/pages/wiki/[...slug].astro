@@ -1,0 +1,193 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import TerminalCard from '../../components/TerminalCard.astro';
+import LinkCard from '../../components/LinkCard.astro';
+import Admonition from '../../components/Admonition.astro';
+import {
+  articleSlug,
+  categoryLabel,
+  sourcePath,
+  statusLabel,
+  wikiCategories,
+  wikiRepositoryUrl,
+} from '../../data/wiki';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('wiki');
+  return entries.map((entry) => ({
+    params: { slug: articleSlug(entry.id) },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+const currentSlug = articleSlug(entry.id);
+const allEntries = (await getCollection('wiki'))
+  .sort((a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title));
+const currentCategoryEntries = allEntries.filter((item) => item.data.category === entry.data.category);
+const relatedEntries = entry.data.related
+  .map((relatedSlug) => allEntries.find((item) => articleSlug(item.id) === relatedSlug))
+  .filter(Boolean);
+const tocHeadings = headings.filter((heading) => heading.depth >= 2 && heading.depth <= 3);
+const editUrl = `${wikiRepositoryUrl}/edit/main/${sourcePath(entry.id)}`;
+const reportUrl = `${wikiRepositoryUrl}/issues/new?template=wiki-report.yml&title=${encodeURIComponent(`Wiki: ${entry.data.title}`)}`;
+const authorName = entry.data.author?.replace(/^@/, '');
+const authorUrl = authorName ? `https://github.com/${authorName}` : undefined;
+
+const statusClass = entry.data.status === 'outdated'
+  ? 'border-red-500/40 bg-red-500/10 text-red-300'
+  : entry.data.status === 'needs-review'
+    ? 'border-amber-500/40 bg-amber-500/10 text-amber-300'
+    : entry.data.status === 'archived'
+      ? 'border-gray-500/40 bg-gray-500/10 text-gray-300'
+      : 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300';
+---
+
+<Layout title={entry.data.title} description={entry.data.description}>
+  <div class="border-b border-white/10 bg-[#0d0d0d]">
+    <div class="mx-auto max-w-7xl px-4 py-3 sm:px-6">
+      <nav aria-label="Breadcrumb" class="flex flex-wrap items-center gap-2 text-xs text-gray-500">
+        <a href="/wiki" class="transition-colors hover:text-emerald-400">Wiki</a>
+        <span aria-hidden="true">/</span>
+        <a href={`/wiki?category=${entry.data.category}`} class="transition-colors hover:text-emerald-400">{categoryLabel(entry.data.category)}</a>
+        <span aria-hidden="true">/</span>
+        <span class="text-gray-300" aria-current="page">{entry.data.title}</span>
+      </nav>
+    </div>
+  </div>
+
+  <div class="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-8 sm:px-6 lg:grid-cols-[14rem_minmax(0,1fr)] xl:grid-cols-[14rem_minmax(0,1fr)_14rem] lg:py-10">
+    <aside>
+      <details class="rounded-md border border-white/10 bg-[#111] p-3 lg:hidden">
+        <summary class="cursor-pointer font-semibold text-gray-200">Wiki navigation</summary>
+        <nav class="mt-3" aria-label="Wiki navigation">
+          <ul class="space-y-1 text-sm">
+            {wikiCategories.map((category) => (
+              <li>
+                <a
+                  href={`/wiki?category=${category.slug}`}
+                  class={`block rounded px-2 py-1.5 transition-colors hover:bg-white/5 hover:text-emerald-300 ${category.slug === entry.data.category ? 'text-emerald-400' : 'text-gray-400'}`}
+                >
+                  {category.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </details>
+
+      <nav class="sticky top-20 hidden lg:block" aria-label="Wiki navigation">
+        <a href="/wiki" class="mb-3 block px-2 text-xs font-bold uppercase tracking-[0.18em] text-emerald-400">Fallen World Wiki</a>
+        <ul class="space-y-0.5 text-sm">
+          {wikiCategories.map((category) => (
+            <li>
+              <a
+                href={`/wiki?category=${category.slug}`}
+                class={`block rounded px-2 py-1.5 transition-colors hover:bg-white/5 hover:text-gray-100 ${category.slug === entry.data.category ? 'bg-emerald-500/10 font-semibold text-emerald-300' : 'text-gray-500'}`}
+              >
+                {category.label}
+              </a>
+              {category.slug === entry.data.category && (
+                <ul class="ml-3 mt-1 space-y-0.5 border-l border-white/10 pl-2">
+                  {currentCategoryEntries.map((item) => (
+                    <li>
+                      <a
+                        href={`/wiki/${articleSlug(item.id)}`}
+                        class={`block rounded px-2 py-1 text-xs transition-colors hover:text-emerald-300 ${articleSlug(item.id) === currentSlug ? 'text-emerald-400' : 'text-gray-600'}`}
+                        aria-current={articleSlug(item.id) === currentSlug ? 'page' : undefined}
+                      >
+                        {item.data.title}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </aside>
+
+    <section class="min-w-0">
+      <header class="border-b border-white/10 pb-6">
+        <div class="flex flex-wrap items-center gap-2 text-[11px] font-bold uppercase tracking-wider">
+          <span class={entry.data.type === 'official' ? 'text-emerald-400' : 'text-sky-400'}>{entry.data.type === 'official' ? 'Official Guide' : 'Community Guide'}</span>
+          <span class={`rounded border px-2 py-0.5 ${statusClass}`}>{statusLabel(entry.data.status)}</span>
+          <span class="rounded border border-white/10 bg-white/5 px-2 py-0.5 text-gray-400">{entry.data.fallenWorldVersion}</span>
+        </div>
+
+        <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">{entry.data.title}</h1>
+        <p class="mt-3 max-w-3xl text-base leading-7 text-gray-400">{entry.data.description}</p>
+
+        <div class="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-xs text-gray-500">
+          <span>Updated {entry.data.updated}</span>
+          {entry.data.lastTested && <span>Last tested {entry.data.lastTested}</span>}
+          <span>Difficulty: {entry.data.difficulty}</span>
+          {authorUrl && (
+            <span>
+              Written by <a href={authorUrl} target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-sky-300">@{authorName}</a>
+            </span>
+          )}
+        </div>
+      </header>
+
+      {entry.data.status !== 'current' && (
+        <div class={`mt-6 rounded-md border p-4 text-sm leading-6 ${statusClass}`}>
+          {entry.data.status === 'outdated' && 'This guide targets an older Fallen World version and may no longer be accurate.'}
+          {entry.data.status === 'needs-review' && 'This guide needs verification against the current Fallen World build. Use caution until it is reviewed.'}
+          {entry.data.status === 'archived' && 'This guide is archived for historical reference and is not maintained for the current build.'}
+        </div>
+      )}
+
+      {tocHeadings.length > 0 && (
+        <details class="mt-6 rounded-md border border-white/10 bg-[#111] p-4 xl:hidden">
+          <summary class="cursor-pointer text-sm font-semibold text-gray-200">On this page</summary>
+          <ol class="mt-3 space-y-1.5 text-sm text-gray-500">
+            {tocHeadings.map((heading) => (
+              <li class={heading.depth === 3 ? 'pl-4' : ''}><a href={`#${heading.slug}`} class="hover:text-emerald-300">{heading.text}</a></li>
+            ))}
+          </ol>
+        </details>
+      )}
+
+      <article class="prose-doc mt-7 max-w-none">
+        <Content components={{ TerminalCard, LinkCard, Admonition }} />
+      </article>
+
+      {relatedEntries.length > 0 && (
+        <section class="mt-10 border-t border-white/10 pt-6" aria-labelledby="related-guides-heading">
+          <h2 id="related-guides-heading" class="text-lg font-bold text-white">Related Guides</h2>
+          <div class="mt-3 grid gap-3 sm:grid-cols-2">
+            {relatedEntries.map((item) => item && (
+              <a href={`/wiki/${articleSlug(item.id)}`} class="rounded-md border border-white/10 bg-[#111] p-4 transition hover:border-emerald-500/35">
+                <div class="text-sm font-semibold text-gray-200">{item.data.title}</div>
+                <div class="mt-1 text-xs leading-5 text-gray-500">{item.data.description}</div>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <footer class="mt-10 flex flex-col gap-3 border-t border-white/10 pt-6 sm:flex-row sm:flex-wrap">
+        <a href={editUrl} target="_blank" rel="noopener noreferrer" class="rounded-md border border-white/15 bg-white/5 px-4 py-2 text-center text-sm font-semibold text-gray-200 transition hover:border-emerald-500/40 hover:text-white">Edit this page on GitHub</a>
+        <a href={reportUrl} target="_blank" rel="noopener noreferrer" class="rounded-md border border-white/15 px-4 py-2 text-center text-sm font-semibold text-gray-400 transition hover:border-amber-500/40 hover:text-gray-200">Report a Problem</a>
+        <a href="/wiki/contribute" class="rounded-md border border-white/15 px-4 py-2 text-center text-sm font-semibold text-gray-400 transition hover:border-sky-500/40 hover:text-gray-200">Submit a Guide</a>
+      </footer>
+    </section>
+
+    <aside class="hidden xl:block">
+      {tocHeadings.length > 0 && (
+        <nav class="sticky top-20" aria-label="Table of contents">
+          <div class="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-gray-500">On this page</div>
+          <ol class="space-y-2 border-l border-white/10 pl-3 text-xs leading-5 text-gray-500">
+            {tocHeadings.map((heading) => (
+              <li class={heading.depth === 3 ? 'pl-3' : ''}><a href={`#${heading.slug}`} class="transition-colors hover:text-emerald-300">{heading.text}</a></li>
+            ))}
+          </ol>
+        </nav>
+      )}
+    </aside>
+  </div>
+</Layout>

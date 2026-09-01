@@ -1,0 +1,66 @@
+name: Wiki PR checks
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "src/content/wiki/**"
+      - "public/img/wiki/**"
+      - "scripts/check-wiki.mjs"
+      - "src/content.config.ts"
+      - "src/pages/wiki/**"
+      - "src/data/wiki.ts"
+      - ".github/PULL_REQUEST_TEMPLATE/community-guide.md"
+      - ".github/workflows/wiki-pr.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  content-safety:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: Load trusted wiki validator
+        shell: bash
+        env:
+          HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
+          BASE_REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          if [[ "$HEAD_REPOSITORY" == "$BASE_REPOSITORY" ]]; then
+            cp scripts/check-wiki.mjs /tmp/check-wiki.mjs
+            echo "Using validator from the trusted repository branch."
+            exit 0
+          fi
+
+          git fetch --no-tags --depth=1 origin "${GITHUB_BASE_REF}:refs/remotes/origin/${GITHUB_BASE_REF}"
+          if ! git show "origin/${GITHUB_BASE_REF}:scripts/check-wiki.mjs" > /tmp/check-wiki.mjs; then
+            echo "Trusted wiki validator is missing from ${GITHUB_BASE_REF}."
+            exit 1
+          fi
+          echo "Using validator from trusted base branch ${GITHUB_BASE_REF}."
+
+      - name: Validate wiki content without installing dependencies
+        run: node /tmp/check-wiki.mjs
+
+  trusted-full-build:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "22"
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build and verify generated site
+        run: npm run verify

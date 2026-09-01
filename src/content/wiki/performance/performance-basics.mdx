@@ -1,0 +1,102 @@
+---
+title: "Performance Basics"
+description: "A safe first-pass workflow for diagnosing low FPS, stutter, long loads, and instability without making the install harder to troubleshoot."
+category: "performance"
+type: "official"
+status: "current"
+fallenWorldVersion: "Current Alpha"
+updated: "2026-09-01"
+lastTested: "2026-09-01"
+difficulty: "beginner"
+tags:
+  - fps
+  - stutter
+  - freezing
+  - load times
+  - stability
+featured: true
+order: 10
+related:
+  - "getting-started/first-steps"
+---
+
+## Start with the symptom
+
+Performance problems are easier to fix when you identify what is actually happening before changing settings.
+
+| Symptom | Start here |
+| --- | --- |
+| Constant low FPS | GPU load, resolution, graphics settings |
+| Short repeated freezes | Background load, script spam, storage, mod conflicts |
+| Long startup or loading | Storage speed, antivirus scanning, install health |
+| Random crash | Troubleshooting and crash-specific documentation |
+| Smooth indoors, poor outdoors | View distance, shadows, vegetation, weather |
+
+## Change one thing at a time
+
+The fastest way to lose track of a performance problem is to change ten settings at once.
+
+1. Reproduce the issue in the same place.
+2. Change one relevant setting.
+3. Restart when the setting requires it.
+4. Test the same location again.
+5. Keep the change only if it clearly improves the problem.
+
+<Admonition type="warning" title="Do not stack random performance mods">
+Fallen World already includes performance and engine-level changes. Adding unrelated optimization mods can replace configuration, introduce incompatible DLLs, or hide the real cause of a problem.
+</Admonition>
+
+## Low FPS
+
+Prioritize the settings that are most likely to affect your actual bottleneck.
+
+### GPU-limited systems
+
+Reduce resolution or render scale first, then expensive lighting, shadow, and post-processing options. If GPU usage stays near full load while FPS is low, the graphics card is probably the limiting component.
+
+### CPU-limited systems
+
+Large outdoor areas, dense settlements, draw distance, object counts, scripting, and simulation can become CPU-bound. Lowering purely graphical effects may do very little if the GPU is already waiting on the CPU.
+
+## Stutter and freezes
+
+Repeated pauses are not the same problem as consistently low FPS.
+
+Check:
+
+- Whether the game is installed on an SSD.
+- Whether Windows Defender or another scanner is repeatedly touching the game files.
+- Whether the pause occurs at a fixed interval.
+- Whether it began after adding or changing a mod.
+- Whether logs are growing rapidly during the freeze.
+
+If a freeze repeats every few seconds, treat it as a bug or background-processing problem before treating it as a graphics problem.
+
+## Load times
+
+Fallen World contains a large amount of content. Fast storage matters.
+
+- Prefer an SSD or NVMe drive.
+- Keep enough free space for Windows, temporary files, and game updates.
+- Avoid moving only part of the install manually.
+- Do not enable compatibility tweaks from old Fallout 4 guides unless they are documented for the current Fallen World build.
+
+## A useful troubleshooting baseline
+
+When asking for help, include:
+
+- CPU
+- GPU
+- RAM
+- Storage type
+- Display resolution
+- Fallen World version
+- Exact symptom
+- Where it happens
+- Whether extra mods were added
+
+That information is more useful than saying the game "runs bad."
+
+## Next step
+
+If the issue is a crash, missing feature, broken control, or repeatable gameplay bug rather than raw performance, move to the [Troubleshooting section](/wiki?category=troubleshooting).

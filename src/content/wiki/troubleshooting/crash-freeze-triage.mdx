@@ -1,0 +1,80 @@
+---
+title: "Crash and Freeze Triage"
+description: "A first-response guide for separating crashes, hangs, repeated freezes, loading failures, and interface problems before changing the install."
+category: "troubleshooting"
+type: "official"
+status: "current"
+fallenWorldVersion: "Current Alpha"
+updated: "2026-09-01"
+lastTested: "2026-09-01"
+difficulty: "beginner"
+tags:
+  - crash
+  - ctd
+  - freeze
+  - hang
+  - loading
+  - startup
+  - black screen
+  - stutter
+featured: true
+order: 10
+related:
+  - "performance/performance-basics"
+  - "getting-started/first-steps"
+---
+
+## Identify the failure first
+
+Do not use "crash" to describe every failure. The symptom determines what evidence matters.
+
+| What happens | Treat it as |
+| --- | --- |
+| Game closes to desktop | Crash or CTD |
+| Game stays open but never responds | Hang or freeze |
+| Game pauses repeatedly and resumes | Stutter or periodic freeze |
+| Loading screen never completes | Load failure |
+| Only a menu stops working | UI or input problem |
+| Game never reaches the main menu | Startup failure |
+
+## If the game closes to desktop
+
+Record:
+
+- where you were
+- what you were doing
+- whether it happens every time
+- Fallen World version
+- whether extra mods were added
+- whether a crash log was created
+
+A repeatable crash at the same action or location is usually more useful than a crash that happened once after several hours.
+
+## If the game freezes but stays open
+
+Wait long enough to determine whether it recovers. If it repeatedly freezes and resumes at a regular interval, do not immediately lower graphics settings. Periodic stalls can come from logging, scripts, storage, background scanning, or a broken system repeatedly retrying work.
+
+See [Performance Basics](/wiki/performance/performance-basics) for the performance-side checks.
+
+## If loading never finishes
+
+Check whether the failure affects:
+
+1. only one save
+2. every save
+3. only a new game
+4. the game before the main menu
+
+Those are different failure classes. Do not delete saves or reinstall the full modlist until you know which class you are dealing with.
+
+## Return to a supported baseline
+
+When extra mods or manual file edits are involved, reproduce the issue on the supported Fallen World configuration before reporting it as a Fallen World bug.
+
+<Admonition type="warning" title="Preserve evidence">
+Do not delete logs, crash reports, or the affected save before you know whether they are needed to reproduce the problem.
+</Admonition>
+
+## What to include in a report
+
+Use **Report a Problem** on the relevant wiki page for documentation errors. For a game bug, include the exact symptom, reproduction steps, version, extra modifications, and any relevant logs through the project's supported bug-report process.

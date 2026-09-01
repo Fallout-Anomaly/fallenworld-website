@@ -1,0 +1,194 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { articleSlug, categoryLabel, statusLabel, wikiCategories, wikiRepositoryUrl } from '../../data/wiki';
+
+const entries = (await getCollection('wiki'))
+  .sort((a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title));
+
+const activeEntries = entries.filter((entry) => entry.data.status !== 'archived');
+const featuredEntries = activeEntries.filter((entry) => entry.data.featured).slice(0, 6);
+const officialEntries = activeEntries.filter((entry) => entry.data.type === 'official');
+const communityEntries = activeEntries.filter((entry) => entry.data.type === 'community');
+
+const statusClass = (status: string) => {
+  if (status === 'outdated') return 'border-red-500/40 bg-red-500/10 text-red-300';
+  if (status === 'needs-review') return 'border-amber-500/40 bg-amber-500/10 text-amber-300';
+  return 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300';
+};
+
+const searchText = (entry: (typeof entries)[number]) => `${entry.data.title} ${entry.data.description} ${entry.data.tags.join(' ')} ${categoryLabel(entry.data.category)} ${entry.data.type} ${entry.body ?? ''}`
+  .replace(/```[\s\S]*?```/g, ' ')
+  .replace(/<[^>]+>/g, ' ')
+  .replace(/[#*_`>|\[\]()]/g, ' ')
+  .replace(/\s+/g, ' ')
+  .toLowerCase();
+
+const categoryHref = (slug: string) => {
+  if (slug === 'mods') return '/wiki/mods';
+  if (slug === 'troubleshooting') return '/wiki/troubleshooting';
+  return `/wiki?category=${slug}`;
+};
+---
+
+<Layout title="Wiki" description="The official Fallen World wiki for gameplay, mods, performance, troubleshooting, community guides, and developer documentation.">
+  <section class="border-b border-white/10 bg-[radial-gradient(circle_at_top,rgba(13,148,136,0.12),transparent_42%)]">
+    <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:py-16">
+      <div class="max-w-3xl">
+        <div class="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-emerald-400">Fallen World Knowledge Base</div>
+        <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">Fallen World Wiki</h1>
+        <p class="mt-4 max-w-2xl text-base leading-7 text-gray-300 sm:text-lg">
+          The canonical home for gameplay guides, mod documentation, performance help, troubleshooting, builds, and community knowledge.
+        </p>
+      </div>
+
+      <div class="mt-8 max-w-3xl rounded-lg border border-white/10 bg-[#111]/90 p-3 shadow-2xl shadow-black/20">
+        <label for="wiki-search" class="sr-only">Search the wiki</label>
+        <div class="flex flex-col gap-2 sm:flex-row">
+          <input
+            id="wiki-search"
+            type="search"
+            placeholder="Search radiation, crashes, PrismaUI, crafting..."
+            class="min-w-0 flex-1 rounded-md border border-white/10 bg-black/30 px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:border-emerald-500/60 focus:outline-none"
+            autocomplete="off"
+          />
+          <label for="wiki-category" class="sr-only">Filter by category</label>
+          <select id="wiki-category" class="rounded-md border border-white/10 bg-[#171717] px-3 py-3 text-sm text-gray-200 focus:border-emerald-500/60 focus:outline-none">
+            <option value="">All categories</option>
+            {wikiCategories.map((category) => <option value={category.slug}>{category.label}</option>)}
+          </select>
+        </div>
+        <p id="wiki-search-count" class="mt-2 px-1 text-xs text-gray-500">Search titles, full article text, tags, and categories.</p>
+      </div>
+
+      <div class="mt-5 flex flex-wrap gap-3 text-sm">
+        <a href="/wiki/getting-started/first-steps" class="rounded-md bg-emerald-600 px-4 py-2 font-semibold text-white transition-colors hover:bg-emerald-500">Start Here</a>
+        <a href="/wiki/contribute" class="rounded-md border border-white/15 bg-white/5 px-4 py-2 font-semibold text-gray-200 transition-colors hover:border-emerald-500/50 hover:text-white">Submit a Guide</a>
+        <a href={`${wikiRepositoryUrl}/issues/new?template=wiki-report.yml`} target="_blank" rel="noopener noreferrer" class="rounded-md border border-white/15 px-4 py-2 font-semibold text-gray-300 transition-colors hover:border-emerald-500/50 hover:text-white">Report Wiki Problem</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6">
+    <section aria-labelledby="wiki-categories-heading">
+      <div class="mb-5 flex items-end justify-between gap-4">
+        <div>
+          <h2 id="wiki-categories-heading" class="text-2xl font-bold text-white">Browse the Wiki</h2>
+          <p class="mt-1 text-sm text-gray-400">Pick a subject or use search to jump directly to an answer.</p>
+        </div>
+      </div>
+      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {wikiCategories.map((category) => {
+          const count = activeEntries.filter((entry) => entry.data.category === category.slug).length;
+          return (
+            <a href={categoryHref(category.slug)} class="group rounded-lg border border-white/10 bg-[#111] p-4 transition hover:-translate-y-0.5 hover:border-emerald-500/40 hover:bg-[#141414]">
+              <div class="flex items-center justify-between gap-3">
+                <h3 class="font-semibold text-gray-100 group-hover:text-emerald-300">{category.label}</h3>
+                <span class="rounded bg-white/5 px-2 py-0.5 text-xs text-gray-500">{count}</span>
+              </div>
+              <p class="mt-2 text-sm leading-6 text-gray-500">{category.description}</p>
+            </a>
+          );
+        })}
+      </div>
+    </section>
+
+    {featuredEntries.length > 0 && (
+      <section class="mt-12" aria-labelledby="featured-guides-heading">
+        <h2 id="featured-guides-heading" class="text-2xl font-bold text-white">Featured Guides</h2>
+        <div class="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {featuredEntries.map((entry) => (
+            <a
+              href={`/wiki/${articleSlug(entry.id)}`}
+              class="wiki-search-item rounded-lg border border-white/10 bg-[#111] p-5 transition hover:border-emerald-500/40 hover:bg-[#141414]"
+              data-category={entry.data.category}
+              data-search={searchText(entry)}
+            >
+              <div class="flex flex-wrap items-center gap-2 text-[11px] font-bold uppercase tracking-wider">
+                <span class={entry.data.type === 'official' ? 'text-emerald-400' : 'text-sky-400'}>{entry.data.type}</span>
+                <span class={`rounded border px-2 py-0.5 ${statusClass(entry.data.status)}`}>{statusLabel(entry.data.status)}</span>
+              </div>
+              <h3 class="mt-3 text-lg font-semibold text-white">{entry.data.title}</h3>
+              <p class="mt-2 text-sm leading-6 text-gray-400">{entry.data.description}</p>
+              <div class="mt-4 flex items-center justify-between gap-3 text-xs text-gray-500">
+                <span>{categoryLabel(entry.data.category)}</span>
+                <span>{entry.data.fallenWorldVersion}</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <section class="mt-12" aria-labelledby="all-guides-heading">
+      <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h2 id="all-guides-heading" class="text-2xl font-bold text-white">All Guides</h2>
+          <p class="mt-1 text-sm text-gray-400">Official documentation and reviewed community guides use the same searchable catalog.</p>
+        </div>
+        <div class="text-xs text-gray-500">{officialEntries.length} official · {communityEntries.length} community</div>
+      </div>
+
+      <div id="wiki-results" class="mt-5 grid gap-3 lg:grid-cols-2">
+        {activeEntries.map((entry) => (
+          <a
+            href={`/wiki/${articleSlug(entry.id)}`}
+            class="wiki-search-item flex flex-col rounded-lg border border-white/10 bg-[#101010] p-4 transition hover:border-emerald-500/35 hover:bg-[#141414]"
+            data-category={entry.data.category}
+            data-search={searchText(entry)}
+          >
+            <div class="flex flex-wrap items-center gap-2 text-[10px] font-bold uppercase tracking-wider">
+              <span class={entry.data.type === 'official' ? 'text-emerald-400' : 'text-sky-400'}>{entry.data.type}</span>
+              <span class="text-gray-600">/</span>
+              <span class="text-gray-500">{categoryLabel(entry.data.category)}</span>
+              <span class={`ml-auto rounded border px-2 py-0.5 ${statusClass(entry.data.status)}`}>{statusLabel(entry.data.status)}</span>
+            </div>
+            <h3 class="mt-2 font-semibold text-gray-100">{entry.data.title}</h3>
+            <p class="mt-1 text-sm leading-6 text-gray-500">{entry.data.description}</p>
+            <div class="mt-3 text-xs text-gray-600">Tested for {entry.data.fallenWorldVersion}</div>
+          </a>
+        ))}
+      </div>
+
+      <div id="wiki-empty" class="mt-5 hidden rounded-lg border border-dashed border-white/15 p-8 text-center text-sm text-gray-500">
+        No wiki pages match that search yet.
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const input = document.querySelector('#wiki-search');
+    const category = document.querySelector('#wiki-category');
+    const items = [...document.querySelectorAll('.wiki-search-item')];
+    const resultItems = [...document.querySelectorAll('#wiki-results .wiki-search-item')];
+    const count = document.querySelector('#wiki-search-count');
+    const empty = document.querySelector('#wiki-empty');
+
+    const params = new URLSearchParams(window.location.search);
+    const initialCategory = params.get('category') ?? '';
+    if (category instanceof HTMLSelectElement && initialCategory) category.value = initialCategory;
+
+    function filterWiki() {
+      const query = input instanceof HTMLInputElement ? input.value.trim().toLowerCase() : '';
+      const selectedCategory = category instanceof HTMLSelectElement ? category.value : '';
+
+      for (const item of items) {
+        if (!(item instanceof HTMLElement)) continue;
+        const matchesQuery = !query || (item.dataset.search ?? '').includes(query);
+        const matchesCategory = !selectedCategory || item.dataset.category === selectedCategory;
+        item.classList.toggle('hidden', !(matchesQuery && matchesCategory));
+      }
+
+      const visible = resultItems.reduce((total, item) => (
+        item instanceof HTMLElement && !item.classList.contains('hidden') ? total + 1 : total
+      ), 0);
+
+      if (count) count.textContent = `${visible} matching guide${visible === 1 ? '' : 's'}`;
+      empty?.classList.toggle('hidden', visible !== 0);
+    }
+
+    input?.addEventListener('input', filterWiki);
+    category?.addEventListener('change', filterWiki);
+    filterWiki();
+  </script>
+</Layout>
