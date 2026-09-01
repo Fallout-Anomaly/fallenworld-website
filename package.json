@@ -9,7 +9,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "verify": "npm run build && node scripts/check-site.mjs && node scripts/check-wiki.mjs"
+    "verify": "node scripts/check-wiki.mjs && npm run build && node scripts/check-site.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "7.0.2",
