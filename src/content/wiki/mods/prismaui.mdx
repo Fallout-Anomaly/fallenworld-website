@@ -1,0 +1,89 @@
+---
+title: "PrismaUI"
+description: "What PrismaUI does in Fallen World, why the project uses it, and where players and developers should start when troubleshooting interface problems."
+category: "mods"
+type: "official"
+status: "current"
+fallenWorldVersion: "Current Alpha"
+updated: "2026-09-01"
+lastTested: "2026-09-01"
+difficulty: "all"
+tags:
+  - prismaui
+  - ui
+  - hud
+  - interface
+  - f4se
+featured: true
+order: 20
+related:
+  - "getting-started/first-steps"
+  - "performance/performance-basics"
+---
+
+## Overview
+
+PrismaUI is the interface framework used by Fallen World for modern native-backed user interfaces. It allows Fallen World systems to use responsive HTML-style interfaces while communicating with native Fallout 4 plugins.
+
+For players, the important part is simple: several Fallen World menus and HUD features rely on PrismaUI, so a PrismaUI problem can look like multiple unrelated interface features failing at the same time.
+
+## What it changes
+
+PrismaUI provides the foundation for interfaces that need more flexibility than traditional Fallout 4 menu scripting can comfortably provide.
+
+Typical uses include:
+
+- HUD elements
+- configuration interfaces
+- crafting or settlement interfaces
+- native plugin to UI communication
+- responsive menus that do not depend on heavy Papyrus polling
+
+## Why Fallen World uses it
+
+Fallen World has several systems that need immediate UI updates and richer interaction than a basic vanilla menu can provide. PrismaUI gives those systems a shared interface layer instead of making each feature invent its own rendering and communication stack.
+
+## Player troubleshooting
+
+If a PrismaUI-powered interface does not appear or behaves incorrectly:
+
+1. Confirm Fallen World is fully updated.
+2. Test without additional interface mods.
+3. Confirm the affected feature is actually expected on your current Fallen World version.
+4. Restart the game after changing UI-related files or plugins.
+5. Check whether every PrismaUI interface is broken or only one specific feature.
+
+That last step matters. If every PrismaUI menu fails, the framework or native integration may be the problem. If only one interface fails, the problem is more likely inside that feature.
+
+## Compatibility
+
+Interface mods can conflict even when they do not edit the same visible screen. Problems can come from input hooks, graphics hooks, F4SE plugins, menu registration, or files that replace shared assets.
+
+<Admonition type="warning" title="Test the supported setup first">
+Do not diagnose PrismaUI with a heavily modified Fallen World installation. Reproduce the problem on the supported base setup before assuming the framework itself is broken.
+</Admonition>
+
+## Performance impact
+
+PrismaUI is intended to avoid using Papyrus as a high-frequency bridge for modern interfaces. That does not mean every interface is free. A page can still be expensive if it renders too much, updates too often, or performs unnecessary native communication.
+
+For a player-facing performance issue, document whether the slowdown happens:
+
+- only while a specific interface is open
+- immediately after opening or closing it
+- continuously while playing
+- after a particular UI event or notification
+
+## Developer notes
+
+Developer documentation should separate three layers:
+
+1. **Native integration**: the F4SE and C++ side that exposes game data or actions.
+2. **Bridge contract**: the messages, callbacks, and data formats passed between native code and the interface.
+3. **Frontend**: the UI application itself, including state, rendering, input, and styling.
+
+Keeping those layers documented separately makes versioning and compatibility failures easier to identify.
+
+## Reporting a problem
+
+Use **Report a Problem** below and include the exact Fallen World version, the interface that failed, what you expected, what actually happened, and whether other PrismaUI interfaces still work.
