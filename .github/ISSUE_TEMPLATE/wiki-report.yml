@@ -1,5 +1,5 @@
 name: Wiki problem
-about: Report incorrect, outdated, broken, or missing wiki information.
+description: Report incorrect, outdated, broken, or missing wiki information.
 title: "Wiki: "
 labels: []
 body:
