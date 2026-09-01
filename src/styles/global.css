@@ -90,10 +90,11 @@ body {
   line-height: 1.7;
 }
 
-/* Wiki articles use more of the available desktop canvas than legacy docs. */
+/* Wiki articles are allowed to use the full center column. */
 .prose-doc.wiki-prose {
   width: 100%;
-  max-width: 104ch;
+  max-width: none;
+  line-height: 1.65;
 }
 
 .prose-doc h1, .prose-doc h2, .prose-doc h3 {
