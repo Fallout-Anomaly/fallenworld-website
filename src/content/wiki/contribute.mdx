@@ -34,7 +34,7 @@ Nothing becomes part of the live wiki until repository contributors review and m
 
 ## Submit a new community guide
 
-<a href="https://github.com/Fallout-Anomaly/fallenworld-website/new/main/src/content/wiki/community-guides?filename=my-guide.mdx" target="_blank" rel="noopener noreferrer">Create a community guide on GitHub</a>.
+<a href="https://github.com/Fallout-Anomaly/fallenworld-website/new/main/src/content/wiki/community-guides?filename=my-guide.md" target="_blank" rel="noopener noreferrer">Create a community guide on GitHub</a>.
 
 GitHub will guide you through creating the file and proposing it as a pull request if you do not have direct repository access.
 
@@ -61,7 +61,7 @@ related: []
 ---
 ```
 
-Then write the guide below the metadata using Markdown or MDX.
+Then write the guide below the metadata using Markdown. Community submissions use `.md` files instead of MDX so guide content stays data-only and cannot import or execute site code.
 
 ## What a good guide includes
 
@@ -81,13 +81,17 @@ Screenshots are encouraged when they make the steps easier to understand.
 
 Commit screenshots with the same pull request instead of depending on temporary image hosts.
 
-Put wiki media under a sensible path in `public/img/wiki/` and reference it from the guide using a root-relative path such as:
+Put community wiki media under `public/img/wiki/` and reference it from the guide using a root-relative path such as:
 
 ```markdown
 ![Example interface](/img/wiki/example-interface.webp)
 ```
 
-Use compressed web-friendly formats when possible. Avoid uploading huge raw screenshots when a smaller image communicates the same thing.
+Use compressed web-friendly formats when possible. Avoid uploading huge raw screenshots when a smaller image communicates the same thing. Link to videos using normal Markdown links. Maintainers can add a reviewed embed later when an inline video materially improves an official page.
+
+## Spoilers
+
+Community Markdown may use `<details>` and `<summary>` for collapsible spoiler sections. Other raw HTML is intentionally rejected by wiki validation.
 
 ## Official vs community pages
 
@@ -121,5 +125,6 @@ A pull request may be rejected or asked for changes when it:
 - contains broken media or links
 - is too vague to follow
 - belongs outside the wiki's controlled top-level categories
+- uses MDX or unapproved raw HTML in a community guide
 
 The goal is not to make contribution difficult. The goal is to keep the wiki reliable enough that players can trust what they read.
