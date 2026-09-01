@@ -27,15 +27,23 @@ jobs:
 
       - name: Load trusted wiki validator
         shell: bash
+        env:
+          HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
+          BASE_REPOSITORY: ${{ github.repository }}
         run: |
           set -euo pipefail
-          git fetch --no-tags --depth=1 origin "${GITHUB_BASE_REF}:refs/remotes/origin/${GITHUB_BASE_REF}"
-          if git show "origin/${GITHUB_BASE_REF}:scripts/check-wiki.mjs" > /tmp/check-wiki.mjs 2>/dev/null; then
-            echo "Using validator from ${GITHUB_BASE_REF}."
-          else
+          if [[ "$HEAD_REPOSITORY" == "$BASE_REPOSITORY" ]]; then
             cp scripts/check-wiki.mjs /tmp/check-wiki.mjs
-            echo "Base validator is not available yet; using this foundation PR's validator."
+            echo "Using validator from the trusted repository branch."
+            exit 0
           fi
+
+          git fetch --no-tags --depth=1 origin "${GITHUB_BASE_REF}:refs/remotes/origin/${GITHUB_BASE_REF}"
+          if ! git show "origin/${GITHUB_BASE_REF}:scripts/check-wiki.mjs" > /tmp/check-wiki.mjs; then
+            echo "Trusted wiki validator is missing from ${GITHUB_BASE_REF}."
+            exit 1
+          fi
+          echo "Using validator from trusted base branch ${GITHUB_BASE_REF}."
 
       - name: Validate wiki content without installing dependencies
         run: node /tmp/check-wiki.mjs
