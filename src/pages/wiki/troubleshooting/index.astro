@@ -6,6 +6,11 @@ import { articleSlug, statusLabel, wikiRepositoryUrl } from '../../../data/wiki'
 const guides = (await getCollection('wiki'))
   .filter((entry) => entry.data.category === 'troubleshooting')
   .sort((a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title));
+
+const searchText = (entry: (typeof guides)[number]) => `${entry.data.title} ${entry.data.description} ${entry.data.tags.join(' ')} ${entry.data.status} ${entry.body ?? ''}`
+  .replace(/<[^>]+>/g, ' ')
+  .replace(/\s+/g, ' ')
+  .toLowerCase();
 ---
 
 <Layout title="Troubleshooting" description="Search Fallen World troubleshooting guides by exact symptom, error, crash behavior, or broken feature.">
@@ -25,7 +30,7 @@ const guides = (await getCollection('wiki'))
     <div class="mt-7 max-w-3xl rounded-lg border border-white/10 bg-[#111] p-3">
       <label for="troubleshooting-search" class="sr-only">Search troubleshooting</label>
       <input id="troubleshooting-search" type="search" placeholder="Try: repeated freeze, black screen, CTD, loading..." class="w-full rounded-md border border-white/10 bg-black/30 px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:border-amber-500/50 focus:outline-none" autocomplete="off" />
-      <p id="troubleshooting-count" class="mt-2 px-1 text-xs text-gray-500">{guides.length} troubleshooting guide{guides.length === 1 ? '' : 's'}</p>
+      <p id="troubleshooting-count" aria-live="polite" class="mt-2 px-1 text-xs text-gray-500">{guides.length} troubleshooting guide{guides.length === 1 ? '' : 's'}</p>
     </div>
 
     <div id="troubleshooting-results" class="mt-7 grid gap-4 md:grid-cols-2">
@@ -33,7 +38,7 @@ const guides = (await getCollection('wiki'))
         <a
           href={`/wiki/${articleSlug(entry.id)}`}
           class="troubleshooting-card rounded-lg border border-white/10 bg-[#111] p-5 transition hover:border-amber-500/40 hover:bg-[#141414]"
-          data-search={`${entry.data.title} ${entry.data.description} ${entry.data.tags.join(' ')} ${entry.data.status}`.toLowerCase()}
+          data-search={searchText(entry)}
         >
           <div class="flex flex-wrap items-center gap-2 text-[10px] font-bold uppercase tracking-wider">
             <span class="text-amber-400">Troubleshooting</span>
