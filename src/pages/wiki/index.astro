@@ -16,6 +16,19 @@ const statusClass = (status: string) => {
   if (status === 'needs-review') return 'border-amber-500/40 bg-amber-500/10 text-amber-300';
   return 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300';
 };
+
+const searchText = (entry: (typeof entries)[number]) => `${entry.data.title} ${entry.data.description} ${entry.data.tags.join(' ')} ${categoryLabel(entry.data.category)} ${entry.data.type} ${entry.body ?? ''}`
+  .replace(/```[\s\S]*?```/g, ' ')
+  .replace(/<[^>]+>/g, ' ')
+  .replace(/[#*_`>|\[\]()]/g, ' ')
+  .replace(/\s+/g, ' ')
+  .toLowerCase();
+
+const categoryHref = (slug: string) => {
+  if (slug === 'mods') return '/wiki/mods';
+  if (slug === 'troubleshooting') return '/wiki/troubleshooting';
+  return `/wiki?category=${slug}`;
+};
 ---
 
 <Layout title="Wiki" description="The official Fallen World wiki for gameplay, mods, performance, troubleshooting, community guides, and developer documentation.">
@@ -45,7 +58,7 @@ const statusClass = (status: string) => {
             {wikiCategories.map((category) => <option value={category.slug}>{category.label}</option>)}
           </select>
         </div>
-        <p id="wiki-search-count" class="mt-2 px-1 text-xs text-gray-500">Search titles, descriptions, tags, and categories.</p>
+        <p id="wiki-search-count" class="mt-2 px-1 text-xs text-gray-500">Search titles, full article text, tags, and categories.</p>
       </div>
 
       <div class="mt-5 flex flex-wrap gap-3 text-sm">
@@ -68,7 +81,7 @@ const statusClass = (status: string) => {
         {wikiCategories.map((category) => {
           const count = activeEntries.filter((entry) => entry.data.category === category.slug).length;
           return (
-            <a href={`/wiki?category=${category.slug}`} class="group rounded-lg border border-white/10 bg-[#111] p-4 transition hover:-translate-y-0.5 hover:border-emerald-500/40 hover:bg-[#141414]">
+            <a href={categoryHref(category.slug)} class="group rounded-lg border border-white/10 bg-[#111] p-4 transition hover:-translate-y-0.5 hover:border-emerald-500/40 hover:bg-[#141414]">
               <div class="flex items-center justify-between gap-3">
                 <h3 class="font-semibold text-gray-100 group-hover:text-emerald-300">{category.label}</h3>
                 <span class="rounded bg-white/5 px-2 py-0.5 text-xs text-gray-500">{count}</span>
@@ -89,7 +102,7 @@ const statusClass = (status: string) => {
               href={`/wiki/${articleSlug(entry.id)}`}
               class="wiki-search-item rounded-lg border border-white/10 bg-[#111] p-5 transition hover:border-emerald-500/40 hover:bg-[#141414]"
               data-category={entry.data.category}
-              data-search={`${entry.data.title} ${entry.data.description} ${entry.data.tags.join(' ')} ${categoryLabel(entry.data.category)}`.toLowerCase()}
+              data-search={searchText(entry)}
             >
               <div class="flex flex-wrap items-center gap-2 text-[11px] font-bold uppercase tracking-wider">
                 <span class={entry.data.type === 'official' ? 'text-emerald-400' : 'text-sky-400'}>{entry.data.type}</span>
@@ -122,7 +135,7 @@ const statusClass = (status: string) => {
             href={`/wiki/${articleSlug(entry.id)}`}
             class="wiki-search-item flex flex-col rounded-lg border border-white/10 bg-[#101010] p-4 transition hover:border-emerald-500/35 hover:bg-[#141414]"
             data-category={entry.data.category}
-            data-search={`${entry.data.title} ${entry.data.description} ${entry.data.tags.join(' ')} ${categoryLabel(entry.data.category)} ${entry.data.type}`.toLowerCase()}
+            data-search={searchText(entry)}
           >
             <div class="flex flex-wrap items-center gap-2 text-[10px] font-bold uppercase tracking-wider">
               <span class={entry.data.type === 'official' ? 'text-emerald-400' : 'text-sky-400'}>{entry.data.type}</span>
