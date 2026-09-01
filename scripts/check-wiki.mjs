@@ -46,8 +46,17 @@ function slugFor(file) {
 }
 
 function scalar(frontmatter, key) {
-  const match = frontmatter.match(new RegExp(`^${key}:\\s*["']?([^"'\\n]+?)["']?\\s*$`, 'm'));
-  return match?.[1]?.trim() ?? '';
+  const match = frontmatter.match(new RegExp(`^${key}:\\s*(.+?)\\s*$`, 'm'));
+  if (!match) return '';
+  const value = match[1].trim();
+  if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+    return value.slice(1, -1).trim();
+  }
+  return value;
+}
+
+function withoutCodeFences(source) {
+  return source.replace(/```[\s\S]*?```/g, '');
 }
 
 const files = await walk(wikiDir);
@@ -65,6 +74,7 @@ for (const file of files) {
   }
 
   const frontmatter = frontmatterMatch[1];
+  const body = withoutCodeFences(source.slice(frontmatterMatch[0].length));
   const values = {
     title: scalar(frontmatter, 'title'),
     description: scalar(frontmatter, 'description'),
@@ -94,15 +104,15 @@ for (const file of files) {
 
   if (slugs.has(slug)) failures.push(`${rel}: duplicate wiki slug ${slug}`);
   slugs.add(slug);
-  pages.push({ rel, slug, source });
+  pages.push({ rel, slug, body });
 
-  for (const match of source.matchAll(/!\[[^\]]*\]\((https?:\/\/[^)\s]+)[^)]*\)/gi)) {
+  for (const match of body.matchAll(/!\[[^\]]*\]\((https?:\/\/[^)\s]+)[^)]*\)/gi)) {
     failures.push(`${rel}: external image host is not allowed (${match[1]})`);
   }
 
   const localImages = [
-    ...source.matchAll(/!\[[^\]]*\]\((\/[^)\s]+)[^)]*\)/g),
-    ...source.matchAll(/\bsrc=["'](\/[^"']+)["']/gi),
+    ...body.matchAll(/!\[[^\]]*\]\((\/[^)\s]+)[^)]*\)/g),
+    ...body.matchAll(/\bsrc=["'](\/[^"']+)["']/gi),
   ].map((match) => match[1]);
 
   for (const imageUrl of localImages) {
@@ -117,7 +127,7 @@ for (const file of files) {
 }
 
 for (const page of pages) {
-  for (const match of page.source.matchAll(/\]\((\/wiki\/[^)#?\s]+)[^)]*\)/g)) {
+  for (const match of page.body.matchAll(/\]\((\/wiki\/[^)#?\s]+)[^)]*\)/g)) {
     const target = match[1].replace(/^\/wiki\//, '').replace(/\/$/, '');
     if (target && !slugs.has(target)) failures.push(`${page.rel}: broken wiki link ${match[1]}`);
   }
