@@ -7,7 +7,7 @@ Describe the guide or documentation change and who it is for.
 ### Verification
 
 - [ ] I used a `.md` file for community content, not MDX.
-- [ ] I included the Fallen World version I tested.
+- [ ] I marked the guide as either `status: "current"` or `status: "outdated"`.
 - [ ] I included a valid `YYYY-MM-DD` last-tested date.
 - [ ] I used an existing wiki category.
 - [ ] I marked community content as `type: "community"` and included my GitHub username in `author`.
@@ -20,4 +20,4 @@ Describe the guide or documentation change and who it is for.
 
 ### Review notes
 
-Call out anything maintainers should verify carefully, including version-sensitive behavior, compatibility claims, commands, file edits, or performance advice.
+Call out anything maintainers should verify carefully, including compatibility claims, commands, file edits, or performance advice.

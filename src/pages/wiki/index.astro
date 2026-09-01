@@ -6,21 +6,16 @@ import { articleSlug, categoryLabel, statusLabel, wikiCategories, wikiRepository
 const entries = (await getCollection('wiki'))
   .sort((a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title));
 
-const activeEntries = entries.filter((entry) => entry.data.status !== 'archived');
+const activeEntries = entries;
 const featuredEntries = activeEntries.filter((entry) => entry.data.featured).slice(0, 6);
 const officialEntries = activeEntries.filter((entry) => entry.data.type === 'official');
 const communityEntries = activeEntries.filter((entry) => entry.data.type === 'community');
 
-const statusClass = (status: string) => {
-  if (status === 'outdated') return 'border-red-500/40 bg-red-500/10 text-red-300';
-  if (status === 'needs-review') return 'border-amber-500/40 bg-amber-500/10 text-amber-300';
-  return 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300';
-};
+const statusClass = (status: string) => status === 'outdated'
+  ? 'border-red-500/40 bg-red-500/10 text-red-300'
+  : 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300';
 
-const searchText = (entry: (typeof entries)[number]) => `${entry.data.title} ${entry.data.description} ${entry.data.tags.join(' ')} ${categoryLabel(entry.data.category)} ${entry.data.type} ${entry.body ?? ''}`
-  .replace(/```[\s\S]*?```/g, ' ')
-  .replace(/<[^>]+>/g, ' ')
-  .replace(/[#*_`>|\[\]()]/g, ' ')
+const searchText = (entry: (typeof entries)[number]) => `${entry.data.title} ${entry.data.description} ${entry.data.tags.join(' ')} ${categoryLabel(entry.data.category)} ${entry.data.type}`
   .replace(/\s+/g, ' ')
   .toLowerCase();
 
@@ -33,16 +28,16 @@ const categoryHref = (slug: string) => {
 
 <Layout title="Wiki" description="The official Fallen World wiki for gameplay, mods, performance, troubleshooting, community guides, and developer documentation.">
   <section class="border-b border-white/10 bg-[radial-gradient(circle_at_top,rgba(13,148,136,0.12),transparent_42%)]">
-    <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:py-16">
-      <div class="max-w-3xl">
+    <div class="mx-auto max-w-[1680px] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+      <div class="max-w-4xl">
         <div class="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-emerald-400">Fallen World Knowledge Base</div>
         <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">Fallen World Wiki</h1>
-        <p class="mt-4 max-w-2xl text-base leading-7 text-gray-300 sm:text-lg">
+        <p class="mt-4 max-w-3xl text-base leading-7 text-gray-300 sm:text-lg">
           The canonical home for gameplay guides, mod documentation, performance help, troubleshooting, builds, and community knowledge.
         </p>
       </div>
 
-      <div class="mt-8 max-w-3xl rounded-lg border border-white/10 bg-[#111]/90 p-3 shadow-2xl shadow-black/20">
+      <div class="mt-8 max-w-4xl rounded-lg border border-white/10 bg-[#111] p-3">
         <label for="wiki-search" class="sr-only">Search the wiki</label>
         <div class="flex flex-col gap-2 sm:flex-row">
           <input
@@ -58,7 +53,7 @@ const categoryHref = (slug: string) => {
             {wikiCategories.map((category) => <option value={category.slug}>{category.label}</option>)}
           </select>
         </div>
-        <p id="wiki-search-count" class="mt-2 px-1 text-xs text-gray-500">Search titles, full article text, tags, and categories.</p>
+        <p id="wiki-search-count" aria-live="polite" class="mt-2 px-1 text-xs text-gray-500">Search titles, descriptions, tags, and categories.</p>
       </div>
 
       <div class="mt-5 flex flex-wrap gap-3 text-sm">
@@ -69,7 +64,7 @@ const categoryHref = (slug: string) => {
     </div>
   </section>
 
-  <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6">
+  <div class="mx-auto max-w-[1680px] px-4 py-10 sm:px-6 lg:px-8">
     <section aria-labelledby="wiki-categories-heading">
       <div class="mb-5 flex items-end justify-between gap-4">
         <div>
@@ -77,11 +72,11 @@ const categoryHref = (slug: string) => {
           <p class="mt-1 text-sm text-gray-400">Pick a subject or use search to jump directly to an answer.</p>
         </div>
       </div>
-      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
         {wikiCategories.map((category) => {
           const count = activeEntries.filter((entry) => entry.data.category === category.slug).length;
           return (
-            <a href={categoryHref(category.slug)} class="group rounded-lg border border-white/10 bg-[#111] p-4 transition hover:-translate-y-0.5 hover:border-emerald-500/40 hover:bg-[#141414]">
+            <a href={categoryHref(category.slug)} class="group rounded-lg border border-white/10 bg-[#111] p-4 transition-colors hover:border-emerald-500/40 hover:bg-[#141414]">
               <div class="flex items-center justify-between gap-3">
                 <h3 class="font-semibold text-gray-100 group-hover:text-emerald-300">{category.label}</h3>
                 <span class="rounded bg-white/5 px-2 py-0.5 text-xs text-gray-500">{count}</span>
@@ -100,7 +95,7 @@ const categoryHref = (slug: string) => {
           {featuredEntries.map((entry) => (
             <a
               href={`/wiki/${articleSlug(entry.id)}`}
-              class="wiki-search-item rounded-lg border border-white/10 bg-[#111] p-5 transition hover:border-emerald-500/40 hover:bg-[#141414]"
+              class="wiki-search-item rounded-lg border border-white/10 bg-[#111] p-5 transition-colors hover:border-emerald-500/40 hover:bg-[#141414]"
               data-category={entry.data.category}
               data-search={searchText(entry)}
             >
@@ -110,10 +105,7 @@ const categoryHref = (slug: string) => {
               </div>
               <h3 class="mt-3 text-lg font-semibold text-white">{entry.data.title}</h3>
               <p class="mt-2 text-sm leading-6 text-gray-400">{entry.data.description}</p>
-              <div class="mt-4 flex items-center justify-between gap-3 text-xs text-gray-500">
-                <span>{categoryLabel(entry.data.category)}</span>
-                <span>{entry.data.fallenWorldVersion}</span>
-              </div>
+              <div class="mt-4 text-xs text-gray-500">{categoryLabel(entry.data.category)}</div>
             </a>
           ))}
         </div>
@@ -129,11 +121,11 @@ const categoryHref = (slug: string) => {
         <div class="text-xs text-gray-500">{officialEntries.length} official · {communityEntries.length} community</div>
       </div>
 
-      <div id="wiki-results" class="mt-5 grid gap-3 lg:grid-cols-2">
+      <div id="wiki-results" class="mt-5 grid gap-3 lg:grid-cols-2 xl:grid-cols-3">
         {activeEntries.map((entry) => (
           <a
             href={`/wiki/${articleSlug(entry.id)}`}
-            class="wiki-search-item flex flex-col rounded-lg border border-white/10 bg-[#101010] p-4 transition hover:border-emerald-500/35 hover:bg-[#141414]"
+            class="wiki-search-item flex flex-col rounded-lg border border-white/10 bg-[#101010] p-4 transition-colors hover:border-emerald-500/35 hover:bg-[#141414]"
             data-category={entry.data.category}
             data-search={searchText(entry)}
           >
@@ -145,7 +137,6 @@ const categoryHref = (slug: string) => {
             </div>
             <h3 class="mt-2 font-semibold text-gray-100">{entry.data.title}</h3>
             <p class="mt-1 text-sm leading-6 text-gray-500">{entry.data.description}</p>
-            <div class="mt-3 text-xs text-gray-600">Tested for {entry.data.fallenWorldVersion}</div>
           </a>
         ))}
       </div>

@@ -90,6 +90,12 @@ body {
   line-height: 1.7;
 }
 
+/* Wiki articles use more of the available desktop canvas than legacy docs. */
+.prose-doc.wiki-prose {
+  width: 100%;
+  max-width: 104ch;
+}
+
 .prose-doc h1, .prose-doc h2, .prose-doc h3 {
   color: var(--text);
   margin-top: 2rem;
