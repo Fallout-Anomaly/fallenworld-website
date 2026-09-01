@@ -6,6 +6,11 @@ import { articleSlug, statusLabel } from '../../../data/wiki';
 const mods = (await getCollection('wiki'))
   .filter((entry) => entry.data.category === 'mods')
   .sort((a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title));
+
+const searchText = (entry: (typeof mods)[number]) => `${entry.data.title} ${entry.data.description} ${entry.data.tags.join(' ')} ${entry.data.type} ${entry.data.status} ${entry.body ?? ''}`
+  .replace(/<[^>]+>/g, ' ')
+  .replace(/\s+/g, ' ')
+  .toLowerCase();
 ---
 
 <Layout title="Mod Catalog" description="Searchable documentation for mods included in or developed for Fallen World.">
@@ -25,7 +30,7 @@ const mods = (await getCollection('wiki'))
     <div class="mt-7 max-w-3xl rounded-lg border border-white/10 bg-[#111] p-3">
       <label for="mod-search" class="sr-only">Search mods</label>
       <input id="mod-search" type="search" placeholder="Search PrismaUI, radiation, crafting, interface..." class="w-full rounded-md border border-white/10 bg-black/30 px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:border-emerald-500/50 focus:outline-none" autocomplete="off" />
-      <p id="mod-count" class="mt-2 px-1 text-xs text-gray-500">{mods.length} documented mod{mods.length === 1 ? '' : 's'}</p>
+      <p id="mod-count" aria-live="polite" class="mt-2 px-1 text-xs text-gray-500">{mods.length} documented mod{mods.length === 1 ? '' : 's'}</p>
     </div>
 
     <div id="mod-results" class="mt-7 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -33,7 +38,7 @@ const mods = (await getCollection('wiki'))
         <a
           href={`/wiki/${articleSlug(entry.id)}`}
           class="mod-card rounded-lg border border-white/10 bg-[#111] p-5 transition hover:-translate-y-0.5 hover:border-emerald-500/40 hover:bg-[#141414]"
-          data-search={`${entry.data.title} ${entry.data.description} ${entry.data.tags.join(' ')} ${entry.data.type} ${entry.data.status}`.toLowerCase()}
+          data-search={searchText(entry)}
         >
           <div class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider">
             <span class={entry.data.type === 'official' ? 'text-emerald-400' : 'text-sky-400'}>{entry.data.type}</span>
