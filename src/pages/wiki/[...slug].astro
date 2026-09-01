@@ -110,7 +110,7 @@ const statusClass = entry.data.status === 'outdated'
       </nav>
     </aside>
 
-    <main class="min-w-0">
+    <section class="min-w-0">
       <header class="border-b border-white/10 pb-6">
         <div class="flex flex-wrap items-center gap-2 text-[11px] font-bold uppercase tracking-wider">
           <span class={entry.data.type === 'official' ? 'text-emerald-400' : 'text-sky-400'}>{entry.data.type === 'official' ? 'Official Guide' : 'Community Guide'}</span>
@@ -175,7 +175,7 @@ const statusClass = entry.data.status === 'outdated'
         <a href={reportUrl} target="_blank" rel="noopener noreferrer" class="rounded-md border border-white/15 px-4 py-2 text-center text-sm font-semibold text-gray-400 transition hover:border-amber-500/40 hover:text-gray-200">Report a Problem</a>
         <a href="/wiki/contribute" class="rounded-md border border-white/15 px-4 py-2 text-center text-sm font-semibold text-gray-400 transition hover:border-sky-500/40 hover:text-gray-200">Submit a Guide</a>
       </footer>
-    </main>
+    </section>
 
     <aside class="hidden xl:block">
       {tocHeadings.length > 0 && (
