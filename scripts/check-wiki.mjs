@@ -139,6 +139,7 @@ for (const file of files) {
     author: scalar(frontmatter, 'author'),
   };
   const related = stringList(frontmatter, 'related');
+  const isCommunityPath = rel.startsWith('community-guides/');
 
   for (const key of ['title', 'description', 'category', 'type', 'status', 'fallenWorldVersion', 'updated', 'difficulty']) {
     if (!values[key]) failures.push(`${rel}: missing required field ${key}`);
@@ -150,6 +151,13 @@ for (const file of files) {
   if (!allowedDifficulties.has(values.difficulty)) failures.push(`${rel}: invalid difficulty ${values.difficulty}`);
   if (values.updated && !isIsoDate(values.updated)) failures.push(`${rel}: updated must be a real YYYY-MM-DD date`);
   if (values.lastTested && !isIsoDate(values.lastTested)) failures.push(`${rel}: lastTested must be a real YYYY-MM-DD date`);
+
+  if (isCommunityPath && values.type !== 'community') {
+    failures.push(`${rel}: files under community-guides/ must use type: community`);
+  }
+  if (values.type === 'community' && !isCommunityPath) {
+    failures.push(`${rel}: community guides must live under src/content/wiki/community-guides/`);
+  }
 
   if (values.type === 'community') {
     if (!githubAuthorPattern.test(values.author)) failures.push(`${rel}: community guides must include a valid author as @GitHubUsername`);
