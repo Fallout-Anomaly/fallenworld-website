@@ -8,35 +8,52 @@ sidebar_label: Survival mechanics
 
 Fallen World is a brutal experience where staying alive is a constant struggle. Understanding these systems is the difference between thriving and dying.
 
+<Admonition type="important" title="Play on Very Hard">
+
+Fallen World is balanced for **Very Hard** difficulty. Do not pick **Survival** difficulty: at Survival, vanilla survival takes over hunger, thirst and sleep, and Ashfall switches its own needs layer off.
+
+</Admonition>
+
 ---
 
-<TerminalCard title="Survival Mode Overhaul">
+<TerminalCard title="Ashfall">
 
-We use **[Survival Mode Overhaul](https://www.nexusmods.com/fallout4/mods/101900)** as the backbone of our survival experience. This system significantly expands the core survival mechanics of Fallout 4 with deeper needs, complex diseases, and tactical companion management.
+**Ashfall** is our survival and environment overhaul, **custom built** by our team. It turns the Commonwealth into an environment you have to read, dress for and survive: storms that hunt you, air you cannot always breathe, and a body that gets hungry, thirsty, exhausted and sick. Everything it tracks is shown on the HUD and in the Pip-Boy.
 
 <details>
-<summary>Explore the Needs, Disease & Companion overhauls</summary>
+<summary>Explore needs, disease and storms</summary>
 
-### Needs Overhaul
-*   **Dynamic Influences**: Hunger and Thirst are influenced by perks (Lead Belly), Endurance, and weight.
-*   **Overcharge Bonuses**: "Well Fed" and "Well Hydrated" bonuses boost disease resistance when needs are over-maintained.
-*   **Enhanced Interface**: View precise hunger, thirst, and sleep levels in the Pip-Boy NEEDS tab (requires PipboyTabs).
-*   **Sleep Buffs**: "Well Rested" provides significant resistance bonuses.
+### Hunger, thirst and sleep
+Three pools climb with game time and hit you in stages (34%, 67% and 90%):
 
-### Disease Overhaul
-The most complex part of the overhaul, introducing 27 distinct diseases across three types:
-*   **Ailments**: Gained from contaminated food/drink or radiation.
-*   **Infections**: Gained from taking damage, especially from diseased creatures.
-*   **Mental Issues**: Gained from combat stress, killing humans, or Adrenaline spikes.
+| Need | Climbs | Penalty by stage |
+|:---|:---|:---|
+| **Hunger** | +5% per hour | Carry weight -10 / -25 / -45 |
+| **Thirst** | +10% per hour | Action points -5 / -15 / -30 |
+| **Sleep debt** | +2.5% per hour | Healing rate -15% / -30% / -50% |
 
-**Risks & Treatment:**
-*   **Risks vs. Resists**: Track your Disease and Stress risks in the Pip-Boy.
-*   **Progressive Stages**: Diseases have 3 stages, worsening every 24 hours if untreated.
-*   **Complex Cures**: Antibiotics and Doctors are no longer instant cures. Doctors only treat Stage 2/3 down to Stage 1. Stage 1 requires medication paired with 7+ hours of sleep.
+*   **Relief**: Food, drink and alcohol bring the pools back down. Sleep recovers 12% per hour, and an interrupted night recovers half.
+*   **Waiting is not sleeping**: The wait menu does not recover sleep debt.
 
-### Companion & Combat
-*   **Exhaustion**: Downed companions gain exhaustion, lowering their combat effectiveness by up to 50%. Rest or healing is required to recover.
-*   **Adrenaline**: Now provides damage resistance (2.5% per rank) instead of a damage boost, making it a defensive tactical resource.
+### Disease
+Two illnesses, three stages each:
+*   **Fever**: Damage resistance -10 / -25 / -40.
+*   **Wasting**: Movement speed -5% / -10% / -15%.
+
+You catch them from ambient exposure, wounds, swimming, radiation weather, rain and snow, and tainted food or water. Being hungry, thirsty or exhausted makes you more vulnerable. An illness incubates for 4 hours, reaches stage 2 at 10 hours and stage 3 at 24 hours. While you are sick, a named perk (Fever or Wasting, stage 1 to 3) appears in your Pip-Boy **PERKS** tab.
+
+**Cures:** An uninterrupted rest of 4 to 7 hours, or a dose of vanilla **RadAway**. Ca-DTPA does not count as a cure. A cure gives you 24 hours of immunity.
+
+### Storms
+Ash Fallout, Rad Firestorm, Toxic Sulfur, Acid Rain and Dust Storm roll in on a cycle, roughly 35 to 90 real minutes apart. Three minutes before most storms hit, the storm dome appears silently on the horizon: that is your warning to get indoors, into power armor, or behind a gas mask. The Rad Firestorm has no dome: during it, distant strikes land on the horizon and a ring of fire closes in. Lethal storms send feral-ghoul hunter packs after you, and the pack keeps hunting after the sky clears until you leave the area or get indoors.
+
+### Gas masks
+*   **Filter**: Drains only while you wear the mask in contaminated air, about 20 minutes of exposed wear per filter. Press **F6** to swap in a fresh filter.
+*   **Condition**: Every hit you take damages the mask. Press **F7** to repair a broken mask with a repair kit.
+*   **Choking**: Outdoors in contaminated air without a mask, you take damage every second. A dead filter or broken mask only halves that damage, and a spent filter doses you with radiation. A full power armor suit protects you completely.
+
+### Heat, cold and wet
+Body temperature, wetness, wind, shelter, nearby fire and clothing insulation are tracked and shown on the HUD. In the current build these readouts are informational: hypothermia penalties are coming in a later Ashfall update.
 
 </details>
 
@@ -78,19 +95,25 @@ Healing items do not stack with themselves, but you can combine different items.
 
 <TerminalCard title="Radiation System">
 
-Radiation in Fallen World is not just a nuisance. It is a lethal poison that accumulates and degrades your body until treated.
+Radiation in Fallen World is not just a nuisance. Ashfall turns it into a poison that leaves lasting marks on your body.
 
 <details>
 <summary>View Radiation Poisoning & Medicines</summary>
 
 ### How it Works
-Radiation poisoning causes stacked debuffs that worsen over time even after you leave the hot zone. If left untreated, the poison will eventually be fatal.
+Radiation sickness runs in stages, from **Minor Exposure** at 100 rads to **Systemic Failure** at 1000. Each stage lowers Endurance, and from stage 2 Strength too, and shows up as a named perk in your Pip-Boy.
+
+Ashfall splits radiation into two pools:
+*   **Rads**: Ordinary radiation. RadAway clears it.
+*   **Tissue damage**: Builds from continued exposure and is **not** cleared by RadAway. It heals only while you stay under 150 rads.
+
+High tissue damage costs you carry weight, healing rate, speed and action points, and makes you take damage faster. Above 200 tissue damage, your body starts to scar: that maximum health is lost until you are treated with the chelation compound.
 
 <Admonition type="danger" title="Radiation Essentials">
 
-*   **Monitor your Geiger counter**: Watch ambient levels and internal poisoning.
-*   **Storm Protection**: Gas masks or power armor helmets are required during rad storms.
-*   **Immediate Treatment**: Do not wait. Debuffs stack quickly and become deadly.
+*   **Monitor your Geiger counter**: Watch ambient levels and your tissue damage.
+*   **Storm Protection**: Wear a working gas mask or a full power armor suit during storms.
+*   **Get Clean Early**: Tissue damage only heals while your rads are low. Treat radiation before it starts to scar.
 
 </Admonition>
 
@@ -112,8 +135,8 @@ Radiation poisoning causes stacked debuffs that worsen over time even after you 
 *   **Bandages & QuikClot**: To stop bleeding instantly.
 *   **TXA & Ibuprofen**: To pre-medicate before expected combat.
 *   **Ca-DTPA & Potassium Iodide**: To navigate radioactive zones safely.
-*   **Working Gas Mask**: To survive sudden radiation storms.
-*   **Fresh Food & Water**: To keep your needs from reaching critical levels.
+*   **Working Gas Mask, Spare Filters & a Repair Kit**: To survive storms and contaminated air.
+*   **Fresh Food & Clean Water**: To keep your needs low and avoid catching an illness.
 
 </Admonition>
 

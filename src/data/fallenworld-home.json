@@ -45,15 +45,15 @@
       "href": "/docs/gameplay/survival"
     },
     {
-      "title": "Radiation Overhaul",
+      "title": "Ashfall Survival",
       "category": "Survival",
-      "description": "Radiation and environmental exposure have lasting consequences.",
+      "description": "Needs, disease, radiation and tissue damage that RadAway cannot clear, built for Very Hard.",
       "href": "/docs/gameplay/survival"
     },
     {
       "title": "Dangerous Weather",
       "category": "World",
-      "description": "Storms and weather can force you to change how and when you travel.",
+      "description": "Ashfall storms arrive on a cycle with warning, and you need a mask or shelter to ride them out.",
       "href": "/docs/gameplay/survival"
     },
     {
